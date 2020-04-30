@@ -9,7 +9,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { Home, AuthScreens } from './screens/index';
+import { Home, AuthScreens, OnboardScreen, SplashScreen } from './screens';
 import { NavigationBars } from './components/index';
 import { Store } from './helpers/index';
 library.add(fab, fas, far);
@@ -43,7 +43,21 @@ export default function App() {
   return (
     <Provider store={Store.store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="LoginOptions" headerMode="screen" mode="modal" >
+        <Stack.Navigator initialRouteName="SplashScreen" mode="modal" >
+          <Stack.Screen
+            name="SplashScreen"
+            component={SplashScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Onboard"
+            component={OnboardScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
           <Stack.Screen
             name="Home"
             component={HomeTabScreen}

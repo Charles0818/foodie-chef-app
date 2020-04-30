@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, StatusBar, TouchableNativeFeedback } from 'react-native';
+import { View, Text, StyleSheet, TouchableNativeFeedback } from 'react-native';
 import { StackActions } from '@react-navigation/native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -18,7 +18,6 @@ const Login = ({navigation, route: { params }, signInRequest}) => {
   const validateFields = emailIsValid && passIsValid
   return (
     <Screen style={[styles.paddingTop_lg, styles.paddingHorizontal_md]}>
-      <StatusBar backgroundColor={colors.color1} />
       <Section style={[{flex: 1}]}>
         <FormInput label="Email" value={email} onChange={setEmail} err={emailErr} placeholder="Your email address" autoCompleteType="email" keyboardType="email-address" />
         <FormInput label="Password" value={password} onChange={setPassword} err={passwordErr} placeholder="Password" autoCompleteType="password" />

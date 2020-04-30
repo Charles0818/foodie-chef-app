@@ -1,5 +1,5 @@
 import { call, put, takeEvery, takeLatest, spawn} from 'redux-saga/effects';
-import AsyncStorage  from '@react-native-community/async-storage';
+import { AsyncStorage }  from 'react-native';
 import { auth } from '../actions/types';
 import { authActions } from '../actions';
 const { RESTORE_TOKEN, RESTORE_TOKEN_REQUEST, RESTORE_TOKEN_SUCCESS, SIGN_IN, SIGN_IN_REQUEST, SIGN_OUT_REQUEST, SIGN_OUT_SUCCESS } = auth;

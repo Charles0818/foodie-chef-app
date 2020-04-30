@@ -6,13 +6,14 @@ import { connect } from 'react-redux';
 import { helpers } from '../helpers';
 import { styles } from '../styles';
 import { ScaleToSize } from '../Animations/index';
-const ServiceCard = (props) => {
+import Button from '../Buttons';
+const SquareServiceCard = (props) => {
   const { service, navigation } = props;
   // const { id, name, price, thumbnail } = service;
   return (
-    <TouchableOpacity activeOpacity={.9} setOpacityTo={(6, 1)} onPress={() => navigation.navigate("Service", { service })}>
-      <ScaleToSize
-        style={[cardStyle.container, styles.boxShadow_sm, styles.marginRight_sm, styles.marginBottom_sm]}>
+    <ScaleToSize
+      style={[cardStyle.container, styles.boxShadow_sm, styles.marginRight_sm, styles.marginBottom_sm]}>
+      <Button action={() => navigation.navigate("Service", { service })}>
         <ImageBackground
           source={{uri: 'https://res.cloudinary.com/dx5lp5drd/image/upload/v1586035953/igbo-abacha-ncha_oeiamp.jpg'}} resizeMode="cover"
           style={[cardStyle.thumbnail]}
@@ -22,17 +23,23 @@ const ServiceCard = (props) => {
             <Text numberOfLines={1} style={[styles.color_white, styles.font_md, styles.fontWeight_700, { textAlign: 'center' }]}>Dish title</Text>
           </View>
         </ImageBackground>
-      </ScaleToSize>
-    </TouchableOpacity>
+      </Button>
+    </ScaleToSize>
   )
 }
+
+// const PortraitServiceCard = ()=> {
+//   return (
+    
+//   )
+// }
 
 const cardStyle = StyleSheet.create({
   container: {
     width: (Dimensions.get('window').width) - 25,
     height: 'auto',
     borderRadius: 5,
-    overflow: 'hidden'
+    ...styles.boxShadow_sm,
   },
   thumbnail: {
     width: '100%',
@@ -51,4 +58,4 @@ const cardStyle = StyleSheet.create({
   }
 });
 
-export default ServiceCard;
+export default SquareServiceCard;

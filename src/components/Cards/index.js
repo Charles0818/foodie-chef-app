@@ -1,2 +1,2 @@
-import ServiceCard from './Service';
-export { ServiceCard };
+import SquareServiceCard from './Service';
+export { SquareServiceCard };

@@ -27,6 +27,9 @@ const font = {
   font_xlg: {
     fontSize: 32,
   },
+  font_xxlg: {
+    fontSize: 40,
+  },
 
   font_lg: {
     fontSize: 20,
@@ -215,6 +218,9 @@ const flex = {
   alignItems_center: {
     alignItems: 'center',
   },
+  alignItems_end: {
+    alignItems: 'flex-end',
+  },
   justifyContent_center: {
     justifyContent: 'center',
   },
@@ -245,7 +251,7 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     // paddingBottom: 20,
-    backgroundColor: colors.white2,
+    backgroundColor: colors.white,
   },
   color_white: {
     color: colors.white,
@@ -290,7 +296,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.color2,
   },
   bg_gray: {
-    backgroundColor: colors.gray_color,
+    backgroundColor: colors.gray_color2,
   },
   bg_danger: {
     backgroundColor: colors.danger

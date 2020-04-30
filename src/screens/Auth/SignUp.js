@@ -34,7 +34,7 @@ const SignUp = ({navigation}) => {
             <FormInput2 icon={"lock"} value={password2} onChange={setPassword2} err={validatePassword} placeholder="Password Confirmation" />
             <Button action={() => handleSignUp()}
               style={[styles.bg_danger, styles.flexCenter, { height: 50, width: '100%' }]}>
-              <Text numberOfLines={1} style={[styles.font_md, styles.fontWeight_700, styles.text_center]}>SIGN UP</Text>
+              <Text numberOfLines={1} style={[styles.font_md, styles.color_white, styles.fontWeight_700, styles.text_center]}>SIGN UP</Text>
             </Button>
           </View>
           <Button action={() => navigation.navigate("LoginOptions")}>

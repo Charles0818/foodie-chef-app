@@ -5,7 +5,7 @@ import { Cards, Carousels, Button } from '../components';
 import { Screen, Section } from './Wrapper';
 import styles from '../styles/index'
 
-const { ServiceCard } = Cards;
+const { SquareServiceCard } = Cards;
 const { ComponentCarousel } = Carousels;
 
 const Home = ({navigation}) => {
@@ -51,10 +51,10 @@ const Header = () => {
 
 const CategorizeServices = ({ navigation, screenName, section }) => {
   const Services = [
-    <ServiceCard navigation={navigation} />,
-    <ServiceCard navigation={navigation} />,
-    <ServiceCard navigation={navigation} />,
-    <ServiceCard navigation={navigation} />
+    <SquareServiceCard navigation={navigation} />,
+    <SquareServiceCard navigation={navigation} />,
+    <SquareServiceCard navigation={navigation} />,
+    <SquareServiceCard navigation={navigation} />
   ];
   return (
     <Section style={[styles.bg_white, styles.paddingVertical_md]}>

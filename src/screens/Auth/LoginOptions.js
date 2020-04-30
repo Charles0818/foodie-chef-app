@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, ImageBackground, Dimensions, StyleSheet, StatusBar } from 'react-native';
+import { View, Text, ImageBackground, Dimensions, StyleSheet } from 'react-native';
 import { Screen, Section } from '../Wrapper';
 import { Button } from '../../components';
 import { styles, colors } from '../styles';
@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 const LoginOptions = ({ navigation }) => {
   return (
     <Screen style={[]}>
-    <StatusBar backgroundColor={colors.color2} />
       <ImageBackground
         source={require("../../assets/chef.jpg")}
         resizeMethod="scale"
@@ -50,17 +49,17 @@ const LoginOptions = ({ navigation }) => {
                 </Text>
               </View>
               <Button action={() => navigation.navigate("SignUp")}
-                style={[styles.flexCenter, { height: 50, width: '100%', backgroundColor: 'transparent', borderColor: colors.color2, borderWidth: 1 }]}>
+                style={[styles.flexCenter, styles.bg_danger, { height: 50, width: '100%', borderColor: colors.danger, borderWidth: 1 }]}>
                 <Text numberOfLines={1} style={[styles.font_md, styles.color_white, styles.fontWeight_700, styles.text_center]}>SIGN UP</Text>
               </Button>
             </View>
           </View>
           <Section style={[styles.flexEnd, styles.paddingHorizontal_md, {width: '100%'}]}>
             <View style={[styles.row, {width: '100%'}, styles.justifyContent_between]}>
-              <Button>
+              <Button action={() => console.log('button fired')}>
                 <Text numberOfLines={1} style={[styles.fontWeight_700, styles.color_white, styles.font_sm, styles.uppercase]}>Terms of service</Text>
               </Button>
-              <Button>
+              <Button action={() => console.log('button fired')}>
                 <Text numberOfLines={1} style={[styles.fontWeight_700, styles.color_white, styles.font_sm, styles.uppercase]}>Privacy Policy</Text>
               </Button>
             </View>

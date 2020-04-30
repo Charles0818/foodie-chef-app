@@ -8,7 +8,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { Home, AuthScreens, OnboardScreen } from './src/screens/index';
+import { Home, AuthScreens, OnboardScreen, SplashScreen } from './src/screens/index';
 import { NavigationBars } from './src/components/index';
 import { Store } from './src/helpers/index';
 library.add(fab, fas);
@@ -42,7 +42,16 @@ export default function App() {
   return (
     <Provider store={Store.store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="LoginOptions" headerMode="screen" mode="modal" >
+        <Stack.Navigator
+          initialRouteName="SplashScreen"
+            mode="modal" >
+          <Stack.Screen
+            name="SplashScreen"
+            component={SplashScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
           <Stack.Screen
             name="Onboard"
             component={OnboardScreen}
