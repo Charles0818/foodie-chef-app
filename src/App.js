@@ -1,0 +1,86 @@
+import 'react-native-gesture-handler';
+import { enableScreens } from 'react-native-screens';
+import * as React from 'react';
+import { Provider } from 'react-redux';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { far } from '@fortawesome/free-regular-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { Home, AuthScreens } from './screens/index';
+import { NavigationBars } from './components/index';
+import { Store } from './helpers/index';
+library.add(fab, fas, far);
+const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+enableScreens ();
+const HomeTabScreen = () => {
+  return (
+    <Tab.Navigator initialRouteName="MyCook"
+      tabBar={props => <NavigationBars.BottomBar {...props} />} >
+      <Tab.Screen
+        name="MyCook"
+        component={Home}
+        options={{
+          tabBarLabel: 'My Cook Book',
+          icon: "store",
+        }}
+      />
+      <Tab.Screen
+        name="Bookings"
+        component={Home}
+        options={{
+          tabBarLabel: 'Bookings',
+          icon: "book"
+        }}
+      />
+    </Tab.Navigator>
+  )
+}
+export default function App() {
+  return (
+    <Provider store={Store.store}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="LoginOptions" headerMode="screen" mode="modal" >
+          <Stack.Screen
+            name="Home"
+            component={HomeTabScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
+           <Stack.Screen
+            name="LoginOptions"
+            component={AuthScreens.LoginOptions}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Login"
+            component={AuthScreens.Login}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="SignUp"
+            component={AuthScreens.SignUp}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="ConfirmEmail"
+            component={AuthScreens.ConfirmEmail}
+            options={{
+              headerShown: false,
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
+  );
+}
