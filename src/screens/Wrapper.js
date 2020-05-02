@@ -1,10 +1,13 @@
 import React from 'react';
-import { View, SafeAreaView } from 'react-native';
+import { View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import PropTypes from 'prop-types'
 import { styles } from './styles';
 export const Screen = ({children, style}) => {
   return (
-    <SafeAreaView style={[styles.screen, style ? style : null]}>{children}</SafeAreaView>
+    <SafeAreaView style={[styles.screen, style ? style : null]}>
+      {children}
+    </SafeAreaView>
   )
 }
 

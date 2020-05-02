@@ -32,7 +32,7 @@ const SignUp = ({navigation}) => {
             <FormInput2 icon={"at"} value={email} onChange={setEmail} err={emailErr} placeholder="Email Address" keyboardType="email-address" />
             <FormInput2 icon={"lock"} value={password} onChange={setPassword} err={passwordErr} placeholder="Password" />
             <FormInput2 icon={"lock"} value={password2} onChange={setPassword2} err={validatePassword} placeholder="Password Confirmation" />
-            <Button action={() => handleSignUp()}
+            <Button action={() => navigation.navigate("Home", {screen: 'MyCook'})}
               style={[styles.bg_danger, styles.flexCenter, { height: 50, width: '100%' }]}>
               <Text numberOfLines={1} style={[styles.font_md, styles.color_white, styles.fontWeight_700, styles.text_center]}>SIGN UP</Text>
             </Button>

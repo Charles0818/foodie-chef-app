@@ -1,6 +1,7 @@
 import 'react-native-gesture-handler';
 import { enableScreens } from 'react-native-screens';
 import * as React from 'react';
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { Provider } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -35,67 +36,77 @@ const HomeTabScreen = () => {
           icon: "book"
         }}
       />
+      <Tab.Screen
+        name="Earnings"
+        component={Home}
+        options={{
+          tabBarLabel: 'Earnings',
+          icon: "dollar-sign"
+        }}
+      />
     </Tab.Navigator>
   )
 }
 export default function App() {
   return (
-    <Provider store={Store.store}>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="SplashScreen"
-            mode="modal" >
-          <Stack.Screen
-            name="SplashScreen"
-            component={SplashScreen}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="Onboard"
-            component={OnboardScreen}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="Home"
-            component={HomeTabScreen}
-            options={{
-              headerShown: false,
-            }}
-          />
-           <Stack.Screen
-            name="LoginOptions"
-            component={AuthScreens.LoginOptions}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="Login"
-            component={AuthScreens.Login}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="SignUp"
-            component={AuthScreens.SignUp}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="ConfirmEmail"
-            component={AuthScreens.ConfirmEmail}
-            options={{
-              headerShown: false,
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </Provider>
+    <SafeAreaProvider>
+      <Provider store={Store.store}>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="Onboard"
+              mode="modal" >
+            <Stack.Screen
+              name="SplashScreen"
+              component={SplashScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Onboard"
+              component={OnboardScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Home"
+              component={HomeTabScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="LoginOptions"
+              component={AuthScreens.LoginOptions}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Login"
+              component={AuthScreens.Login}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="SignUp"
+              component={AuthScreens.SignUp}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="ConfirmEmail"
+              component={AuthScreens.ConfirmEmail}
+              options={{
+                headerShown: false,
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Provider>
+    </SafeAreaProvider>
   );
 }

@@ -3,13 +3,13 @@ import { StyleSheet } from 'react-native';
 export const colors = {
   dark: '#000',
   dark_opacity: 'rgba(0, 0, 0, 0.548)',
-  gray_color2: 'rgba(210, 210, 210, 0.75)',
+  gray_color2: 'rgba(210, 210, 210, 0.45)',
   opacity_white: '#d8cfcf75',
   white: '#fff',
-  white2: '#faf8f5',
+  white2: '#fcfbfa',
   danger: '#df0202',
   color1: '#FC1E19',
-  color1_opacity: '#ff680a49',
+  color1_opacity: 'rgba(252, 29, 25, 0.164)',
   color2: '#FBB288',
   color2_opacity: 'rgba(214, 57, 9, 0.801)',
   facebook: 'rgb(59, 89, 152)',
@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     // paddingBottom: 20,
-    backgroundColor: colors.white,
+    backgroundColor: colors.white2,
   },
   color_white: {
     color: colors.white,
@@ -326,8 +326,16 @@ const styles = StyleSheet.create({
   border_r_10: {
     borderRadius: 10,
   },
-  border_r_circle: {
-    borderRadius: 50,
+  border_r_35: {
+    borderRadius: 35,
+  },
+  borderLeft: {
+    borderLeftWidth: 1,
+    borderLeftColor: colors.gray_color2,
+  },
+  borderRight: {
+    borderRightWidth: 1,
+    borderRightColor: colors.gray_color2,
   },
   slimBorder: {
     borderWidth: 1,
@@ -341,13 +349,35 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: colors.opacity_white,
   },
-  boxShadow_sm: {
-    shadowColor: '#000',
+  boxShadowDark_sm: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+  },
+  boxShadowGray_sm: {
+    shadowColor: colors.gray_color2,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.8,
     shadowRadius: 2,  
     elevation: 3,
   },
+  avatar: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    borderWidth: 1,
+    borderColor: colors.white,
+    shadowColor: colors.gray_color2,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,  
+    elevation: 3,
+  }
 });
 
 export default styles;

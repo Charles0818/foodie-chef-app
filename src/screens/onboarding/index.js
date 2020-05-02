@@ -28,7 +28,7 @@ const OnboardScreen = ({ navigation }) => {
   console.log(selectedIndex);
 
   return (
-    <Screen style={[styles.paddingVertical_md]}>
+    <Screen style={[styles.paddingBottom_md]}>
       {/* <Section style={[{flex: 1}]}> */}
         <View style={[styles.alignItems_end, styles.paddingHorizontal_sm]}>
           <Button action={() => navigation.replace("LoginOptions")}
@@ -50,7 +50,7 @@ const OnboardScreen = ({ navigation }) => {
         </ScrollView>
         <View style={[styles.flexEnd]}>
           <View style={[onboardStyle.progressBar]}>
-            <Animated.View style={[onboardStyle.currentScreen, {width: indicatorWidth, transform: [{ translateX: selectedIndex }] }]} />
+            <Animated.View key={selectedIndex} style={[onboardStyle.currentScreen, {width: indicatorWidth, transform: [{ translateX: selectedIndex }] }]} />
           </View>
         </View>
       {/* </Section> */}
