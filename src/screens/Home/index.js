@@ -12,7 +12,12 @@ const { useSpinner } = Spinners;
 const { useDrawUpModal } = Modal;
 
 const Home = ({navigation}) => {
-  const { Spinner, setAnimating, animating } = useSpinner(true)
+  const { Spinner, setAnimating, animating } = useSpinner(true);
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      drawerLockMode: 'locked-closed',
+    })
+  })
   React.useEffect(() => {
     setAnimating(false)
   }, []);
@@ -21,7 +26,7 @@ const Home = ({navigation}) => {
     <Screen>
       {/* <StatusBar barStyle="light-content"/> */}
       <ScrollView>
-        <Header navigate={navigation.navigate} />
+        <Header navigation={navigation} />
         <ProfileStats />
         <NotificationToggle />
         <Tabs />
@@ -30,7 +35,7 @@ const Home = ({navigation}) => {
   )
 }
 
-const Header = ({navigate}) => {
+const Header = ({navigation}) => {
   const { image, pickImage, accessCamera } = FilePicker.ImageUpload();
 
   const ImageSelectOptions = () => {
@@ -67,11 +72,11 @@ const Header = ({navigate}) => {
         <Button style={[{flex: 1}]} action={openModal}>
           <ImageBackground source={image ? {uri: image} : require('../../assets/street-view.jpg')} style={{flex: 1}} resizeMethod="scale">
             <Section style={[styles.row, styles.justifyContent_between, styles.alignItems_center, styles.marginTop_md]}>
-              <Button style={[homeStyle.headerIcon]} action={() => console.log('Button clicked')}>
+              <Button style={[homeStyle.headerIcon]} action={() => navigation.openDrawer()}>
                 <FontAwesome5 name="bars" size={16} color={colors.color1} />
               </Button>
-              <View style={[styles.row]}>
-                <Button action={() => navigate("LoginOptions")} style={[homeStyle.headerIcon, styles.marginRight_md]}>
+              <View style={[styles.row, styles.alignItems_center]}>
+                <Button action={() => navigation.navigate("Home")} style={[homeStyle.headerIcon, styles.marginRight_md]}>
                   <FontAwesome5 name="search" size={16} color={colors.dark} />
                 </Button>
                 <Button style={[homeStyle.headerIcon]} action={() => console.log('Button clicked')}>
@@ -92,7 +97,7 @@ const ProfileStats = () => {
       <View style={[styles.bg_white, styles.border_r_5, styles.boxShadowDark_sm, styles.padding_sm]}>
         <View style={[styles.row, styles.marginBottom_sm]}>
           <View style={[styles.avatar, styles.marginRight_sm, {overflow: 'hidden', transform: [{translateY: -styles.avatar.height / 2}]} ]}>
-            <Image source={require('../../assets/cust-onboard-screen4-1_delivery.jpg')} style={{width: '100%', overflow: 'hidden', flex: 1 }} />
+            <Image source={require('../../assets/avatar.jpg')} style={{width: '100%', overflow: 'hidden', flex: 1 }} />
           </View>
           <View style={[styles.marginRight_md]}>
             <Text numberOfLines={1} style={[styles.font_md, styles.fontWeight_700]}>John Martins</Text>
@@ -142,9 +147,9 @@ const NotificationToggle = () => {
   return (
     <Section style={[styles.row, styles.justifyContent_between, styles.alignItems_center]}>
       <View style={[]}>
-        <Text numberOfLines={1} style={[styles.fontWeight_700, styles.font_lg,]}>Keep me informed</Text>
+        <Text numberOfLines={1} style={[styles.fontWeight_700, styles.font_lg,]}>Accepting request</Text>
         <Text numberOfLines={1} style={[styles.fontWeight_700, styles.color_gray, styles.font_sm,]}>
-         Get notified when this user logs a new foodprint
+         Active in accepting request on my cookbook
          </Text>
       </View>
       {ToggleButton}
@@ -158,16 +163,16 @@ const Recent = () => {
   )
 }
 
-const NearMe = () => {
+const UpcomingServices = () => {
   return (
     <CategorizeServices />
   )
 }
 
-const Calendar = () => {
+const HistoryRequests = () => {
   return (
     <View style={[styles.screen, styles.flexCenter]}>
-      <Text>Hello</Text>
+      <Text>History Requests</Text>
     </View>
   )
 }
@@ -178,31 +183,27 @@ const Tabs = () => {
       component: <Recent />
     },
     {
-      tabTitle: "Near Me",
-      component: <NearMe />
+      tabTitle: "Upcoming",
+      component: <UpcomingServices />
     },
     {
-      tabTitle: "Calendar",
-      component: <Calendar />
-    }
+      tabTitle: "History",
+      component: <HistoryRequests />
+    },
   ]
   const [activeIndex, setActiveIndex] = React.useState(0);
-  const slideWidth = React.useRef(0);
-  const getSlideWidth = (event) => {
-    const { width } = event.nativeEvent.layout;
-    slideWidth.current = Math.round(width);
-  }
+
   // const ActiveScreen = screens.find((_, index) => index === activeIndex);
   return (
     <Section>
-      <View style={[styles.row, styles.marginBottom_md, styles.border_r_10, styles.bg_gray, {height: 50, width: '100%'}]} onLayout={event => getSlideWidth(event)}>
+      <View style={[styles.row, styles.marginBottom_md, styles.border_r_35, styles.bg_gray, {height: 50, width: '100%'}]} >
         {screens.map((screen, index) => {
           const { tabTitle } = screen;
           const isActive = index === activeIndex
           return (
-            <View key={index} style={[styles.border_r_35, {flex: 1, width: slideWidth.current / screens.length }]}>
+            <View key={index} style={[ {flex: 1 }]}>
               <Button action={() => setActiveIndex(index)}
-                style={[styles.flexCenter, styles.border_r_35, isActive ? styles.bg_color1 : null, {flex: 1}]}>
+                style={[styles.flexCenter, styles.border_r_35, isActive ? styles.bg_color1 : null, {flex: 1, overflow: 'hidden'}]}>
                 <Text numberOfLines={1}
                   style={[styles.font_md, styles.fontWeight_700, isActive ? styles.color_white : styles.color_gray ]}>{tabTitle}</Text>
               </Button>
@@ -212,7 +213,7 @@ const Tabs = () => {
       </View>
       {screens.map((screen, index) => {
         const {component: Component} = screen;
-        return index === activeIndex && <View key={index}>{Component}</View>
+        return index === activeIndex && <View style={{flex: 1, height: 450}} key={index}>{Component}</View>
       })}
     </Section> 
   );

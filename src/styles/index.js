@@ -370,6 +370,7 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 35,
+    overflow: 'hidden',
     borderWidth: 1,
     borderColor: colors.white,
     shadowColor: colors.gray_color2,

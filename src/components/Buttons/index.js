@@ -4,22 +4,20 @@ import {
   UIManager, LayoutAnimation, TouchableOpacity, Platform
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { colors } from '../styles';
+import { colors, styles } from '../styles';
 export const Button = ({ activeOpacity, rippleColor, action, children, style }) => {
-  
+ 
   switch(Platform.OS) {
     case "ios": {
       return (
-        <TouchableOpacity activeOpacity={activeOpacity} onPress={action}>
-          <View style={style}>
+        <TouchableOpacity style={style}  activeOpacity={.8} onPress={action}>
             {children}
-          </View>
         </TouchableOpacity>
       )
     }
     case "android": {
       return (
-        <TouchableNativeFeedback background={TouchableNativeFeedback.Ripple(rippleColor, false)} onPress={action}>
+        <TouchableNativeFeedback delayPressIn={0} delayPressOut={0} background={TouchableNativeFeedback.Ripple(rippleColor, false)} onPress={action}>
           <View style={style}>
             {children}
           </View>
@@ -46,7 +44,7 @@ Button.propTypes =  {
 
 Button.defaultPropTypes = {
   rippleColor: "#a0a0a0",
-  activeOpacity: 0.6,
+  activeOpacity: 0.9,
   style: []
 }
 

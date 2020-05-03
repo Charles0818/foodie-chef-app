@@ -1,7 +1,11 @@
-import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import * as React from 'react';
+import { DrawerContentScrollView, DrawerItemList, DrawerItem, } from '@react-navigation/drawer';
+import { FontAwesome5, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { styles, colors } from '../styles';
+import { Button } from '../Buttons';
+import { useNavigation } from '@react-navigation/core';
 
 export const BottomBar = ({ state, descriptors, navigation }) => {
   React.useEffect(() => {
@@ -87,73 +91,103 @@ export const BottomBar = ({ state, descriptors, navigation }) => {
   );
 };
 
-export const TopTab = ({ state, descriptors, navigation, position }) => {
-  React.useEffect(() => {
-    const unsubscribe = navigation.addListener('tabPress', e => {
-      e.preventDefault();
-    });
-    return unsubscribe
-  }, [navigation]);
+export const  DrawerContent = (props) => {
   return (
-      <View style={[styles.border_r_10, styles.bg_gray, { flexDirection: 'row' }]}>
-        {state.routes.map((route, index) => {
-          const { options } = descriptors[route.key];
-          const label =
-            options.tabBarLabel !== undefined
-              ? options.tabBarLabel
-              : options.title !== undefined
-              ? options.title
-              : route.name;
-
-          const isFocused = state.index === index;
-
-          const onPress = () => {
-            const event = navigation.emit({
-              type: 'tabPress',
-              target: route.key,
-              canPreventDefault: true,
-            });
-
-            if (!isFocused && !event.defaultPrevented) {
-              navigation.navigate(route.name);
-            }
-          };
-
-          const onLongPress = () => {
-            navigation.emit({
-              type: 'tabLongPress',
-              target: route.key,
-            });
-          };
-
-          const inputRange = state.routes.map((_, i) => i);
-          const active = Animated.interpolate(position, {
-            inputRange,
-            outputRange: inputRange.map(i => (i === index ? {
-              backgroundColor: colors.color1,
-              color: colors.white
-            } : {
-              backgroundColor: 'transparent',
-              colors: colors.gray_color
-            })),
-          });
-
-          return (
-            <TouchableOpacity
-              accessibilityRole="button"
-              accessibilityStates={isFocused ? ['selected'] : []}
-              accessibilityLabel={options.tabBarAccessibilityLabel}
-              testID={options.tabBarTestID}
-              onPress={onPress}
-              onLongPress={onLongPress}
-              style={[styles.padding_md, { flex: 1, backgroundColor: active.backgroundColor }]}
-            >
-              <Animated.Text style={[styles.font_sm, styles.fontWeight_700, styles.uppercase, { color: active.color,  }]}>
-                {label}
-              </Animated.Text>
-            </TouchableOpacity>
-          );
-        })}
-      </View>
+    <DrawerContentScrollView {...props}>
+      <ProfileView />
+      <DrawerSection>
+        <Item navigateTo={"Home"}
+          iconLibary={MaterialCommunityIcons} icon="bell"
+          label="Notification"
+          iconViewColor={colors.color1}
+        />
+        <Item navigateTo={"Home"}
+          iconLibary={FontAwesome5} icon="credit-card"
+          label="Payment Method"
+          iconViewColor={"#00aff0"}
+        />
+        <Item navigateTo={"Home"}
+          iconLibary={FontAwesome5} icon="crown"
+          label="Reward Credits"
+          iconViewColor={"#5717de"}
+        />
+        <Item navigateTo={"Home"}
+          iconLibary={MaterialIcons} icon="dialpad"
+          label="My Promo code"
+          iconViewColor={"#f0b100"}
+        />
+      </DrawerSection>
+      <DrawerSection>
+        <Item navigateTo={"Home"}
+          iconLibary={MaterialIcons} icon="settings"
+          label="Settings"
+          iconViewColor={colors.dark}
+        />
+        <Item navigateTo={"Home"}
+          iconLibary={FontAwesome5} icon="user-plus"
+          label="Invite Friends"
+          iconViewColor={colors.google_green}
+        />
+        <Item navigateTo={"Home"}
+          iconLibary={MaterialCommunityIcons} icon="help-circle"
+          label="Help center"
+          iconViewColor={colors.google_yellow}
+        />
+        <Item navigateTo={"Home"}
+          iconLibary={FontAwesome5} icon="info-circle"
+          label="About us"
+          iconViewColor={colors.facebook}
+        />
+        <Item navigateTo={"Home"}
+          iconLibary={MaterialIcons} icon="feedback"
+          label="Feedback"
+          iconViewColor={colors.color1}
+        />
+      </DrawerSection>
+    </DrawerContentScrollView>
   );
+}
+
+const Item = ({iconLibary: IconLibrary, icon, label, iconViewColor, navigateTo}) => {
+  const navigation = useNavigation()
+  return (
+    <Button action={() => navigation.navigate(navigateTo)}>
+    <View style={[styles.row, styles.padding_md, styles.nowrap, { width: '100%', flex: 1 }, styles.alignItems_center, styles.justifyContent_between,]}>
+      <View style={[styles.row, styles.alignItems_center]}>
+        <View style={[styles.border_r_5, styles.marginRight_md, styles.flexCenter, { width: 30, height: 30, backgroundColor: iconViewColor }]}>
+          <IconLibrary  name={icon} style={[]} color={colors.white} size={16} />
+        </View>
+        <Text numberOfLines={1} style={[styles.font_md, styles.fontWeight_700]}>{label}</Text>
+      </View>
+      <FontAwesome5 name="greater-than" size={10} color={colors.gray_color} />
+    </View>
+    </Button>
+  )
+}
+const DrawerSection = ({children}) => {
+  return (
+    <View style={[styles.marginBottom_md, styles.slimBorderTop,]}>{children}</View>
+  )
+}
+const ProfileView = () => {
+  return (
+    <View style={[styles.flexCenter, styles.padding_md, {backgroundColor: '#f0f0f0', height: 150}]}>
+      <View style={[styles.row, styles.alignItems_center]}>
+        <View style={[styles.avatar, styles.marginRight_md]}>
+          <Image source={require('../../assets/avatar.jpg')}
+            style={[{width: '100%', flex: 1}]}/>
+        </View>
+        <View style={[styles.row, styles.alignItems_center]}>
+          <View style={[styles.marginRight_lg]}>
+            <Text numberOfLines={1} style={[styles.font_lg, styles.marginBottom_xsm, styles.capitalize, styles.fontWeight_700]}>cameroon cook</Text>
+            <View style={[styles.row, styles.border_r_5, styles.alignItems_center, styles.padding_sm, styles.bg_color1, { width: 100 }]}>
+              <FontAwesome5 name="crown" size={12} color={colors.white} style={[styles.marginRight_xsm]} />
+              <Text numberOfLines={1} style={[styles.font_xsm, styles.color_white, styles.capitalize]}>VIP member</Text>
+            </View>
+          </View>
+          <FontAwesome5 name="greater-than" size={8} color={colors.color_gray} />
+        </View>
+      </View>
+    </View>
+  )
 }

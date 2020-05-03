@@ -1,18 +1,23 @@
 import 'react-native-gesture-handler';
 import { enableScreens } from 'react-native-screens';
 import * as React from 'react';
+import { useWindowDimensions } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { Provider } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { Home, AuthScreens, OnboardScreen, SplashScreen } from './src/screens/index';
 import { NavigationBars } from './src/components/index';
 import { Store } from './src/helpers/index';
+import styles, { colors } from './src/styles';
 library.add(fab, fas);
+const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 enableScreens ();
@@ -47,14 +52,35 @@ const HomeTabScreen = () => {
     </Tab.Navigator>
   )
 }
+
+const DrawerNavigation = () => {
+  const dimensions = useWindowDimensions();
+  const isLargeScreen = dimensions.width >= 768
+  return (
+    <Drawer.Navigator
+      drawerContent={(props) => <NavigationBars.DrawerContent {...props} />}
+      drawerType={isLargeScreen ? 'permanent' : 'front'}
+      openByDefault={false}
+      initialRouteName="Home"
+      hideStatusBar={false}
+      minimumSwipeDistance={40}
+      overlayColor={colors.dark_opacity}
+      drawerStyle={isLargeScreen ? null : { width: '100%' }}
+      drawerContentOptions={{
+        activeBackgroundColor: colors.bg_gray
+      }}>
+      <Drawer.Screen name="Home" component={HomeTabScreen} />
+    {/* screens */}
+    </Drawer.Navigator>
+  )
+}
 export default function App() {
   return (
     <SafeAreaProvider>
       <Provider store={Store.store}>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="Onboard"
-              mode="modal" >
+            initialRouteName="Onboard" >
             <Stack.Screen
               name="SplashScreen"
               component={SplashScreen}
@@ -70,8 +96,8 @@ export default function App() {
               }}
             />
             <Stack.Screen
-              name="Home"
-              component={HomeTabScreen}
+              name="Drawer"
+              component={DrawerNavigation}
               options={{
                 headerShown: false,
               }}

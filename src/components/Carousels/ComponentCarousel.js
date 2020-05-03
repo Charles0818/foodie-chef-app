@@ -40,7 +40,6 @@ const ComponentCarousel = ({ slides, autoSlide, duration, bullet, dimensions: { 
       return () => clearInterval(interval);
     }
   }, [selectedIndex, setIndex, slides.length, width]);
-  console.log(width, height)
   return (
     <View style={{ width, height, ...styles.bg_white, ...styles.marginBottom_md }}>
       <ScrollView
