@@ -5,13 +5,13 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { colors, styles } from '../styles';
-export const Button = ({ activeOpacity, rippleColor, action, children, style }) => {
+export const Button = ({ activeOpacity = .8, rippleColor, action = () => console.log('button clicked'), children, style }) => {
  
   switch(Platform.OS) {
     case "ios": {
       return (
-        <TouchableOpacity style={style}  activeOpacity={.8} onPress={action}>
-            {children}
+        <TouchableOpacity style={style} delayPressIn={0} delayPressOut={0} activeOpacity={activeOpacity} onPress={action}>
+          {children}
         </TouchableOpacity>
       )
     }

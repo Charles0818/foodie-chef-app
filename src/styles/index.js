@@ -366,6 +366,13 @@ const styles = StyleSheet.create({
     shadowRadius: 2,  
     elevation: 3,
   },
+  boxShadow_md: {
+    shadowColor: colors.gray_color2,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,  
+    elevation: 5,
+  },
   avatar: {
     width: 70,
     height: 70,

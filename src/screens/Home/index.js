@@ -6,7 +6,7 @@ import { Screen, Section } from '../Wrapper';
 import { styles, colors } from '../styles';
 import { useNavigation } from '@react-navigation/core';
 
-const { SquareServiceCard } = Cards;
+const { SquareServiceCard, ListServiceCard } = Cards;
 const { ComponentCarousel } = Carousels;
 const { useSpinner } = Spinners;
 const { useDrawUpModal } = Modal;
@@ -159,21 +159,31 @@ const NotificationToggle = () => {
 
 const Recent = () => {
   return (
-    <CategorizeServices />
+   <CategorizeServices />
   )
 }
 
 const UpcomingServices = () => {
   return (
-    <CategorizeServices />
+    <Section>
+      <ListServiceCard />
+      <ListServiceCard />
+      <ListServiceCard />
+      <ListServiceCard />
+      <ListServiceCard />
+    </Section>
   )
 }
 
 const HistoryRequests = () => {
   return (
-    <View style={[styles.screen, styles.flexCenter]}>
-      <Text>History Requests</Text>
-    </View>
+    <Section>
+      <ListServiceCard />
+      <ListServiceCard />
+      <ListServiceCard />
+      <ListServiceCard />
+      <ListServiceCard />
+    </Section>
   )
 }
 const Tabs = () => {
@@ -213,7 +223,7 @@ const Tabs = () => {
       </View>
       {screens.map((screen, index) => {
         const {component: Component} = screen;
-        return index === activeIndex && <View style={{flex: 1, height: 450}} key={index}>{Component}</View>
+        return index === activeIndex && <ScrollView style={{flex: 1,}} key={index}>{Component}</ScrollView>
       })}
     </Section> 
   );

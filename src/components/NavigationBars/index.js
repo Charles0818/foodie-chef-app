@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DrawerContentScrollView, DrawerItemList, DrawerItem, } from '@react-navigation/drawer';
+import { DrawerContentScrollView, } from '@react-navigation/drawer';
 import { FontAwesome5, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -118,7 +118,7 @@ export const  DrawerContent = (props) => {
         />
       </DrawerSection>
       <DrawerSection>
-        <Item navigateTo={"Home"}
+        <Item navigateTo={"Settings"}
           iconLibary={MaterialIcons} icon="settings"
           label="Settings"
           iconViewColor={colors.dark}
@@ -152,15 +152,15 @@ const Item = ({iconLibary: IconLibrary, icon, label, iconViewColor, navigateTo})
   const navigation = useNavigation()
   return (
     <Button action={() => navigation.navigate(navigateTo)}>
-    <View style={[styles.row, styles.padding_md, styles.nowrap, { width: '100%', flex: 1 }, styles.alignItems_center, styles.justifyContent_between,]}>
-      <View style={[styles.row, styles.alignItems_center]}>
-        <View style={[styles.border_r_5, styles.marginRight_md, styles.flexCenter, { width: 30, height: 30, backgroundColor: iconViewColor }]}>
-          <IconLibrary  name={icon} style={[]} color={colors.white} size={16} />
+      <View style={[styles.row, styles.padding_md, styles.nowrap, { width: '100%', flex: 1 }, styles.alignItems_center, styles.justifyContent_between,]}>
+        <View style={[styles.row, styles.alignItems_center]}>
+          <View style={[styles.border_r_5, styles.marginRight_md, styles.flexCenter, { width: 30, height: 30, backgroundColor: iconViewColor }]}>
+            <IconLibrary  name={icon} style={[]} color={colors.white} size={16} />
+          </View>
+          <Text numberOfLines={1} style={[styles.font_md, styles.fontWeight_700]}>{label}</Text>
         </View>
-        <Text numberOfLines={1} style={[styles.font_md, styles.fontWeight_700]}>{label}</Text>
+        <FontAwesome5 name="greater-than" size={10} color={colors.gray_color} />
       </View>
-      <FontAwesome5 name="greater-than" size={10} color={colors.gray_color} />
-    </View>
     </Button>
   )
 }

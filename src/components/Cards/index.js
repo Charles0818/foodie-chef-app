@@ -1,2 +1,2 @@
-import SquareServiceCard from './Service';
-export { SquareServiceCard };
+import { SquareServiceCard, ListServiceCard } from './Service';
+export { SquareServiceCard, ListServiceCard };

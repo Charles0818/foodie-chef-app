@@ -12,7 +12,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { Home, AuthScreens, OnboardScreen, SplashScreen } from './src/screens/index';
+import { Home, AuthScreens, OnboardScreen, SettingsStackScreen, SplashScreen } from './src/screens/index';
 import { NavigationBars } from './src/components/index';
 import { Store } from './src/helpers/index';
 import styles, { colors } from './src/styles';
@@ -20,6 +20,7 @@ library.add(fab, fas);
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+
 enableScreens ();
 const HomeTabScreen = () => {
   return (
@@ -29,7 +30,7 @@ const HomeTabScreen = () => {
         name="MyCook"
         component={Home}
         options={{
-          tabBarLabel: 'My Cook Book',
+          tabBarLabel: 'Cook Book',
           icon: "store",
         }}
       />
@@ -39,6 +40,15 @@ const HomeTabScreen = () => {
         options={{
           tabBarLabel: 'Bookings',
           icon: "book"
+        }}
+      />
+      <Tab.Screen
+        name="Notification"
+        component={Home}
+        options={{
+          tabBarLabel: 'Updates',
+          icon: "bell",
+          badgeCount: 5,
         }}
       />
       <Tab.Screen
@@ -70,6 +80,7 @@ const DrawerNavigation = () => {
         activeBackgroundColor: colors.bg_gray
       }}>
       <Drawer.Screen name="Home" component={HomeTabScreen} />
+      <Drawer.Screen name="Settings" component={SettingsStackScreen} />
     {/* screens */}
     </Drawer.Navigator>
   )
@@ -80,7 +91,7 @@ export default function App() {
       <Provider store={Store.store}>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="Onboard" >
+            initialRouteName="Drawer" >
             <Stack.Screen
               name="SplashScreen"
               component={SplashScreen}
