@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Animated } from 'react-native';
+import { Animated, View } from 'react-native';
 
 export const ScaleToSize = ({style, children, ...rest}) => {
   const [x] = useState(new Animated.Value(0));
@@ -16,6 +16,8 @@ export const ScaleToSize = ({style, children, ...rest}) => {
     </Animated.View>
   );
 };
+
+{/* <View style={{transform: [{scaleY}]}} ></View> */}
 
 export const FadeIn = ({style, children, ...rest}) => {
   const [x] = useState(new Animated.Value(0));

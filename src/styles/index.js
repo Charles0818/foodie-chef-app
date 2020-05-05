@@ -337,6 +337,12 @@ const styles = StyleSheet.create({
     borderRightWidth: 1,
     borderRightColor: colors.gray_color2,
   },
+  slimDottedBorder: {
+    borderStyle: "dashed",
+    borderWidth: 1,
+    borderRadius: 1,
+    borderColor: colors.opacity_white
+  },
   slimBorder: {
     borderWidth: 1,
     borderColor: colors.opacity_white,
@@ -378,7 +384,7 @@ const styles = StyleSheet.create({
     height: 70,
     borderRadius: 35,
     overflow: 'hidden',
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: colors.white,
     shadowColor: colors.gray_color2,
     shadowOffset: { width: 0, height: 1 },

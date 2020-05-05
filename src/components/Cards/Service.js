@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, ImageBackground, Image, Dimensions, ActivityIndicator, TouchableOpacity, StyleSheet } from 'react-native';
+import { StackActions, CommonActions } from '@react-navigation/native';
 import { FontAwesome, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -58,10 +59,22 @@ export const SquareServiceCard = (props) => {
   )
 }
 
-export const ListServiceCard = ()=> {
+export const ListServiceCard = ({navigation})=> {
+  
+  // const action = () => navigation.dispatch(state => {
+  //   // Remove the home route from the stack
+  //   const routes = state.routes.find(r => r.name === 'ServiceRequest');
+  //   console.log('r', state.routes)
+  
+  //   // return CommonActions.reset({
+  //   //   ...state,
+  //   //   routes,
+  //   //   index: routes.length - 1,
+  //   // });
+  // })
   return (
     <FadeIn style={[cardStyle.container, styles.marginBottom_md, styles.boxShadow_md]}>
-    <Button style={[styles.padding_md]} activeOpacity={.6} >
+    <Button style={[styles.padding_md]} activeOpacity={.6} action={() => console.log('action fired')}>
       <View style={[styles.row]}>
         <View style={[styles.border_r_5, styles.overflow_h, styles.marginRight_sm, {width: 100, height: 100}]}>
           <Image source={{uri: 'https://res.cloudinary.com/dx5lp5drd/image/upload/v1586035953/igbo-abacha-ncha_oeiamp.jpg'}}

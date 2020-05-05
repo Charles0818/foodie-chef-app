@@ -164,25 +164,27 @@ const Recent = () => {
 }
 
 const UpcomingServices = () => {
+  const navigation = useNavigation()
   return (
     <Section>
-      <ListServiceCard />
-      <ListServiceCard />
-      <ListServiceCard />
-      <ListServiceCard />
-      <ListServiceCard />
+      <ListServiceCard navigation={navigation} />
+      <ListServiceCard navigation={navigation} />
+      <ListServiceCard navigation={navigation} />
+      <ListServiceCard navigation={navigation} />
+      <ListServiceCard navigation={navigation} />
     </Section>
   )
 }
 
 const HistoryRequests = () => {
+  const navigation = useNavigation()
   return (
     <Section>
-      <ListServiceCard />
-      <ListServiceCard />
-      <ListServiceCard />
-      <ListServiceCard />
-      <ListServiceCard />
+      <ListServiceCard navigation={navigation} />
+      <ListServiceCard navigation={navigation} />
+      <ListServiceCard navigation={navigation} />
+      <ListServiceCard navigation={navigation} />
+      <ListServiceCard navigation={navigation} />
     </Section>
   )
 }

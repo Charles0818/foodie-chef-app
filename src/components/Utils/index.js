@@ -1,2 +1,3 @@
 import *  as service from './service';
-export { service }
+import * as formatting from './formatting';
+export { service, formatting }

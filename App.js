@@ -12,7 +12,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { Home, AuthScreens, OnboardScreen, SettingsStackScreen, SplashScreen } from './src/screens/index';
+import { Home, AuthScreens, OnboardScreen, SettingsStackScreen, ServiceRequest } from './src/screens/index';
 import { NavigationBars } from './src/components/index';
 import { Store } from './src/helpers/index';
 import styles, { colors } from './src/styles';
@@ -59,6 +59,7 @@ const HomeTabScreen = () => {
           icon: "dollar-sign"
         }}
       />
+     
     </Tab.Navigator>
   )
 }
@@ -81,6 +82,7 @@ const DrawerNavigation = () => {
       }}>
       <Drawer.Screen name="Home" component={HomeTabScreen} />
       <Drawer.Screen name="Settings" component={SettingsStackScreen} />
+      
     {/* screens */}
     </Drawer.Navigator>
   )
@@ -91,10 +93,10 @@ export default function App() {
       <Provider store={Store.store}>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="Drawer" >
+            initialRouteName="Onboard" >
             <Stack.Screen
-              name="SplashScreen"
-              component={SplashScreen}
+              name="ServiceReqest"
+              component={ServiceRequest}
               options={{
                 headerShown: false,
               }}

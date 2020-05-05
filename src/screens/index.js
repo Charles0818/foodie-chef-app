@@ -3,4 +3,5 @@ import Home from './Home';
 import OnboardScreen from './onboarding';
 import SplashScreen from './SplashScreen';
 import SettingsStackScreen from './Settings';
-export { AuthScreens, Home, OnboardScreen, SettingsStackScreen, SplashScreen };
+import ServiceRequest from './ServiceRequest';
+export { AuthScreens, Home, OnboardScreen, SettingsStackScreen, SplashScreen, ServiceRequest };
