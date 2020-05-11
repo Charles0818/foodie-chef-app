@@ -22,7 +22,18 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config": {
+        "googleMapsApiKey": "AIzaSyBYIFaxOv30mg4BGTGqupfozClUNaLOTkg"
+      }
+    },
+    "android": {
+      "package": "com.cuisingo.mobile_chef",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAOJL3z7h8HO952_hvr0D3dKBJYZyG_K9I"
+        }
+      }
     }
   }
 }

@@ -1,3 +1,3 @@
-import { FormInput, FormInput2 } from './input';
+import { FormInput, FormInput2, ChatFormInput, useCheckBox, usePicker } from './input';
 import { useFileInput, useFormInput } from './validation';
-export { FormInput, FormInput2, useFileInput, useFormInput }
+export { FormInput, FormInput2, ChatFormInput, useFileInput, useFormInput, useCheckBox, usePicker }

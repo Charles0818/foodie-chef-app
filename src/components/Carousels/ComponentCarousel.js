@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { StyleSheet, View, ScrollView, Dimensions } from 'react-native';
+import { StyleSheet, View, Animated, ScrollView, Dimensions } from 'react-native';
 import PropTypes from  'prop-types';
 import { styles } from '../styles';
+import { colors } from '../../styles';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
@@ -13,14 +14,15 @@ const useComponentCarousel = () => {
     //get current position of scrollView
     const contentOffset = event.nativeEvent.contentOffset.x;
 
-    const selectedIndex = Math.floor(contentOffset / viewSize);
+    const selectedIndex = Math.round(contentOffset / viewSize);
     setIndex(selectedIndex);
   };
   return { updateIndex, index, setIndex };
 };
 
-const ComponentCarousel = ({ slides, autoSlide, duration, bullet, dimensions: { width, height } }) => {
+const ComponentCarousel = ({ slides, autoSlide, duration, bullet, pagingEnabled, dimensions: { width, height } }) => {
   const { updateIndex, index: selectedIndex, setIndex } = useComponentCarousel();
+  console.log('index', selectedIndex)
   const scrollRef = useRef();
   const slideWidth = useRef();
   const getSlideWidth = (event) => {
@@ -41,13 +43,15 @@ const ComponentCarousel = ({ slides, autoSlide, duration, bullet, dimensions: { 
     }
   }, [selectedIndex, setIndex, slides.length, width]);
   return (
-    <View style={{ width, height, ...styles.bg_white, ...styles.marginBottom_md }}>
+    <View style={[styles.flexCenter, { width, height, ...styles.bg_white, ...styles.marginBottom_md }]}>
       <ScrollView
         horizontal
         // onMomentumScrollEnd={updateIndex}
         showsHorizontalScrollIndicator={false}
         ref={scrollRef}
-        style={CarouselStyles.slider}>
+        style={{width}}
+        pagingEnabled={pagingEnabled}
+        onScroll={updateIndex}>
         {slides.map((Slide, index) => (
           <View key={index} style={[CarouselStyles.slide, styles.alignItems_center ]} onLayout={event => getSlideWidth(event)}>
             {Slide}
@@ -56,11 +60,11 @@ const ComponentCarousel = ({ slides, autoSlide, duration, bullet, dimensions: { 
       </ScrollView>
       <View style={CarouselStyles.circleDiv}>
         {bullet ? slides.map((_, index) => (
-          <View
+          <Animated.View
             key={index}
             style={[
               CarouselStyles.whiteCircle,
-              index === selectedIndex ? styles.bg_color1 : styles.bg_white,
+              {backgroundColor: index === selectedIndex ? colors.color1 : colors.white}
             ]}
           />
         )) : null}
@@ -76,6 +80,7 @@ ComponentCarousel.propTypes = {
   slideWidth: PropTypes.number,
   autoSlide: PropTypes.bool,
   cardAlign: PropTypes.bool,
+  pagingEnabled: PropTypes.bool,
 }
 ComponentCarousel.defaultProps = {
   duration: 3500,
@@ -84,6 +89,7 @@ ComponentCarousel.defaultProps = {
   slideWidth: 100,
   autoSlide: true,
   cardAlign: false,
+  pagingEnabled: false
 }
 
 const CarouselStyles = StyleSheet.create({

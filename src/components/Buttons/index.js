@@ -5,20 +5,31 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { colors, styles } from '../styles';
-export const Button = ({ activeOpacity = .8, rippleColor, action = () => console.log('button clicked'), children, style }) => {
+export const Button = ({ activeOpacity = .8, rippleColor, buttonProps = {} , action = () => console.log('button clicked'), children, style }) => {
  
   switch(Platform.OS) {
     case "ios": {
       return (
-        <TouchableOpacity style={style} delayPressIn={0} delayPressOut={0} activeOpacity={activeOpacity} onPress={action}>
+        <TouchableOpacity
+          style={style}
+          delayPressIn={0}
+          delayPressOut={0}
+          activeOpacity={activeOpacity}
+          onPress={action}
+          {...buttonProps} >
           {children}
         </TouchableOpacity>
       )
     }
     case "android": {
       return (
-        <TouchableNativeFeedback delayPressIn={0} delayPressOut={0} background={TouchableNativeFeedback.Ripple(rippleColor, false)} onPress={action}>
-          <View style={style}>
+        <TouchableNativeFeedback
+          delayPressIn={0}
+          delayPressOut={0}
+          background={TouchableNativeFeedback.Ripple(rippleColor, false)}
+          onPress={action}
+          {...buttonProps} >
+          <View style={[style, {overflow: 'hidden'}]}>
             {children}
           </View>
         </TouchableNativeFeedback>
@@ -26,7 +37,7 @@ export const Button = ({ activeOpacity = .8, rippleColor, action = () => console
     }
     default:
     return (
-      <TouchableOpacity activeOpacity={activeOpacity} onPress={action}>
+      <TouchableOpacity {...buttonProps} activeOpacity={activeOpacity} onPress={action}>
         <View>
           {Children}
         </View>
@@ -45,7 +56,8 @@ Button.propTypes =  {
 Button.defaultPropTypes = {
   rippleColor: "#a0a0a0",
   activeOpacity: 0.9,
-  style: []
+  style: [],
+  action: () => console.log('action fired')
 }
 
 const SwitchButton = ({isActive, setIsActive}) => {

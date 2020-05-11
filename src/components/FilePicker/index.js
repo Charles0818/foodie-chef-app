@@ -3,12 +3,24 @@ import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 
-export const ImageUpload  = () => {
+export const usePermission  = (type = 'image') => {
   const [image, setImage] = React.useState(null);
+  const detectPermission = React.useCallback((type) => {
+    switch(type) {
+      case 'image':
+        return Permissions.CAMERA, Permissions.CAMERA_ROLL
+      case 'recording':
+        return Permissions.AUDIO_RECORDING
+      case 'location':
+        return Permissions.LOCATION
+      default:
+        return Permissions.CAMERA, Permissions.CAMERA_ROLL
+    }
+  }, [type])
   React.useEffect(() => {
     const getPermissionAsync = async () => {
       if (Constants.platform.ios) {
-        const { status } = await Permissions.askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
+        const { status } = await Permissions.askAsync(detectPermission(type));
         if (status !== 'granted') {
           alert('Sorry, we need camera roll permissions to make this work!');
         }
@@ -16,11 +28,11 @@ export const ImageUpload  = () => {
     };
     getPermissionAsync();
   }, []);
-  const pickImage = async () => {
+  const pickImage = async (type = 'Images') => {
     try {
       let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: false,
+        mediaTypes: ImagePicker.MediaTypeOptions[type],
+        allowsEditing: true,
         aspect: [4, 3],
         quality: 1,
       });
@@ -32,11 +44,11 @@ export const ImageUpload  = () => {
       console.log(E);
     }
   };
-  const accessCamera = async () => {
+  const accessCamera = async (type = 'Images') => {
     try {
       let result = await ImagePicker.launchCameraAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: false,
+        mediaTypes: ImagePicker.MediaTypeOptions[type],
+        allowsEditing: true,
         aspect: [4, 3],
         quality: 1,
       });
@@ -48,17 +60,5 @@ export const ImageUpload  = () => {
       console.log(E);
     }
   };
-  return { pickImage, image, accessCamera }
+  return { pickImage, image, setImage, accessCamera }
 }
-
-
-  // render() {
-  //   let { image } = this.state;
-
-  //   return (
-  //     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-  //       <Button title="Pick an image from camera roll" onPress={this._pickImage} />
-  //       {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-  //     </View>
-  //   );
-  // }

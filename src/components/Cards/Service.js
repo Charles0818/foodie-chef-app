@@ -74,7 +74,7 @@ export const ListServiceCard = ({navigation})=> {
   // })
   return (
     <FadeIn style={[cardStyle.container, styles.marginBottom_md, styles.boxShadow_md]}>
-    <Button style={[styles.padding_md]} activeOpacity={.6} action={() => console.log('action fired')}>
+    <Button style={[styles.padding_md]} activeOpacity={.6} action={() => navigation.navigate('ServiceRequest')}>
       <View style={[styles.row]}>
         <View style={[styles.border_r_5, styles.overflow_h, styles.marginRight_sm, {width: 100, height: 100}]}>
           <Image source={{uri: 'https://res.cloudinary.com/dx5lp5drd/image/upload/v1586035953/igbo-abacha-ncha_oeiamp.jpg'}}

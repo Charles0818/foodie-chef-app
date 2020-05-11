@@ -5,14 +5,18 @@ import { useWindowDimensions } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { Provider } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-
-import { fab } from '@fortawesome/free-brands-svg-icons'
+import { Ionicons, FontAwesome5, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { fab, faFontAwesome } from '@fortawesome/free-brands-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { Home, AuthScreens, OnboardScreen, SettingsStackScreen, ServiceRequest } from './src/screens/index';
+import {
+  Home, AuthScreens, OnboardScreen, Earnings,
+  SettingsStackScreen, ServiceRequest, Chat,
+  Chats, IncomingRequest, Bookings
+} from './src/screens/index';
 import { NavigationBars } from './src/components/index';
 import { Store } from './src/helpers/index';
 import styles, { colors } from './src/styles';
@@ -30,16 +34,35 @@ const HomeTabScreen = () => {
         name="MyCook"
         component={Home}
         options={{
-          tabBarLabel: 'Cook Book',
+          tabBarLabel: 'CookBook',
           icon: "store",
         }}
       />
       <Tab.Screen
         name="Bookings"
-        component={Home}
+        component={Bookings}
         options={{
           tabBarLabel: 'Bookings',
           icon: "book"
+        }}
+      />
+      <Tab.Screen
+        name="Chats"
+        component={Chats}
+        options={{
+          tabBarLabel: 'Chats',
+          IconLibrary: Ionicons,
+          icon: "ios-chatbubbles",
+          badgeCount: 102,
+        }}
+      />
+      <Tab.Screen
+        name="wallet"
+        component={Chats}
+        options={{
+          tabBarLabel: 'Wallet',
+          IconLibrary: FontAwesome5,
+          icon: "wallet",
         }}
       />
       <Tab.Screen
@@ -51,15 +74,6 @@ const HomeTabScreen = () => {
           badgeCount: 5,
         }}
       />
-      <Tab.Screen
-        name="Earnings"
-        component={Home}
-        options={{
-          tabBarLabel: 'Earnings',
-          icon: "dollar-sign"
-        }}
-      />
-     
     </Tab.Navigator>
   )
 }
@@ -82,6 +96,7 @@ const DrawerNavigation = () => {
       }}>
       <Drawer.Screen name="Home" component={HomeTabScreen} />
       <Drawer.Screen name="Settings" component={SettingsStackScreen} />
+      <Drawer.Screen name="Earnings" component={Earnings} />
       
     {/* screens */}
     </Drawer.Navigator>
@@ -93,13 +108,26 @@ export default function App() {
       <Provider store={Store.store}>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="Onboard" >
+            initialRouteName="Drawer" screenOptions={{
+              cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+            }}>
             <Stack.Screen
-              name="ServiceReqest"
+              name="ServiceRequest"
               component={ServiceRequest}
               options={{
                 headerShown: false,
               }}
+            />
+            <Stack.Screen
+              name="IncomingRequest"
+              component={IncomingRequest}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Chat"
+              component={Chat}
             />
             <Stack.Screen
               name="Onboard"

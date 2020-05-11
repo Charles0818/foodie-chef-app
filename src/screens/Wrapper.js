@@ -11,9 +11,9 @@ export const Screen = ({children, style}) => {
   )
 }
 
-export const Section = ({children, style}) => {
+export const Section = ({children, style, ...rest}) => {
   return (
-    <View style={[styles.paddingHorizontal_sm, styles.marginBottom_md, style ? style : null]}>{children}</View>
+    <View {...rest} style={[styles.paddingHorizontal_sm, styles.marginBottom_md, style ? style : null]}>{children}</View>
   )
 };
 

@@ -16,10 +16,10 @@ export const BottomBar = ({ state, descriptors, navigation }) => {
     return unsubscribe;
   }, [navigation]);
   return (
-    <View style={[styles.row, styles.bg_white, styles.slimBorderTop, styles.padding_sm]}>
+    <View style={[styles.row, styles.nowrap, styles.bg_white, styles.slimBorderTop, styles.padding_sm]}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
-        const { icon, badgeCount } = options;
+        const { icon, badgeCount, IconLibrary = FontAwesome5 } = options;
         const label =
           options.tabBarLabel !== undefined
             ? options.tabBarLabel
@@ -60,29 +60,29 @@ export const BottomBar = ({ state, descriptors, navigation }) => {
           >
             <View style={[styles.alignItems_center, styles.padding_sm, styles.marginRight_sm, styles.nowrap]}>
               <View style={{...styles.marginBottom_sm}}>
-                <FontAwesomeIcon icon={icon} style={{...styles.font_md, color: isFocused ? colors.color1 : colors.color_dark}}/>
+                <IconLibrary size={16} name={icon} color={isFocused ? colors.color1 : colors.color_dark} />
                 {badgeCount > 0 && (
                   <View
                     style={{
                       // On React Native < 0.57 overflow outside of parent will not work on Android, see https://git.io/fhLJ8
                       position: 'absolute',
-                      right: -6,
+                      right: -16,
                       top: -3,
                       backgroundColor: 'red',
-                      borderRadius: 6,
-                      width: 12,
-                      height: 12,
+                      borderRadius: 10,
+                      width: 20,
+                      height: 20,
                       justifyContent: 'center',
                       alignItems: 'center',
                     }}
                   >
-                    <Text style={{ color: 'white', fontSize: 10, fontWeight: 'bold' }}>
-                      {badgeCount}
+                    <Text numberOfLines={1} style={{ color: 'white', fontSize: 10, fontWeight: 'bold' }}>
+                      {badgeCount > 99 ? '99+' : badgeCount}
                     </Text>
                   </View>
                 )}
               </View>
-              <Text style={[styles.font_xsm, isFocused ? styles.color1 : styles.color_dark ]}>{label}</Text>
+              <Text numberOfLines={1} style={[styles.font_xsm, isFocused ? styles.color1 : styles.color_dark ]}>{label}</Text>
             </View>
           </TouchableOpacity>
         );
@@ -188,6 +188,18 @@ const ProfileView = () => {
           <FontAwesome5 name="greater-than" size={8} color={colors.color_gray} />
         </View>
       </View>
+    </View>
+  )
+}
+
+export const DrawerBar = () => {
+  const { openDrawer } = useNavigation();
+  return (
+    <View style={[styles.marginRight_md, {borderRadius: 15}]}>
+      <Button style={[styles.flexCenter, {width: 30, height: 30, borderRadius: 15}]}
+        action={openDrawer}>
+        <FontAwesome5 name="bars" size={16} />
+      </Button>
     </View>
   )
 }

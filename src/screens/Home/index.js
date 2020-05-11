@@ -19,7 +19,8 @@ const Home = ({navigation}) => {
     })
   })
   React.useEffect(() => {
-    setAnimating(false)
+    const timeout = setTimeout(() => setAnimating(false), 500)
+    return ()=> clearTimeout(timeout);
   }, []);
   if(animating) return Spinner;
   return (
@@ -36,27 +37,27 @@ const Home = ({navigation}) => {
 }
 
 const Header = ({navigation}) => {
-  const { image, pickImage, accessCamera } = FilePicker.ImageUpload();
-
-  const ImageSelectOptions = () => {
+  const { image, pickImage, accessCamera } = FilePicker.usePermission();
+  const { Modal, openModal, closeModal } = useDrawUpModal();
+  const ImageSelectOptions = ({closeModal}) => {
     return (
-      <View style={[styles.row]}>
+      <View style={[styles.row, styles.padding_md]}>
         <View style={[styles.marginRight_lg]}>
           <Button action={() => {
              pickImage();
-             closeModal
+             closeModal()
              }}
-            style={[styles.alignItems_center]}>
+            style={[styles.alignItems_center, styles.padding_md]}>
             <MaterialIcons name="photo" color={colors.color1} size={30} style={[styles.marginBottom_sm]} />
             <Text numberOfLines={1} style={[styles.font_md, styles.fontWeight_700]}>Gallery</Text>
           </Button>
         </View>
-        <View>
+        <View style={[styles.border_r_5]}>
           <Button action={() => {
               accessCamera();
-              closeModal
+              closeModal()
             }}
-            style={[styles.alignItems_center]}>
+            style={[styles.alignItems_center, styles.padding_md]}>
             <FontAwesome5 name="camera-retro" color={colors.color1} size={30} style={[styles.marginBottom_sm]} />
             <Text numberOfLines={1} style={[styles.font_md, styles.fontWeight_700]}>Camera</Text>
           </Button>
@@ -65,26 +66,32 @@ const Header = ({navigation}) => {
     )
   }
 
-  const { Modal, openModal, closeModal } = useDrawUpModal(<ImageSelectOptions />);
-
   return (
       <View style={{width: Dimensions.get('window').width, height: 300}}>
         <Button style={[{flex: 1}]} action={openModal}>
           <ImageBackground source={image ? {uri: image} : require('../../assets/street-view.jpg')} style={{flex: 1}} resizeMethod="scale">
             <Section style={[styles.row, styles.justifyContent_between, styles.alignItems_center, styles.marginTop_md]}>
-              <Button style={[homeStyle.headerIcon]} action={() => navigation.openDrawer()}>
-                <FontAwesome5 name="bars" size={16} color={colors.color1} />
-              </Button>
-              <View style={[styles.row, styles.alignItems_center]}>
-                <Button action={() => navigation.navigate("Home")} style={[homeStyle.headerIcon, styles.marginRight_md]}>
-                  <FontAwesome5 name="search" size={16} color={colors.dark} />
-                </Button>
-                <Button style={[homeStyle.headerIcon]} action={() => console.log('Button clicked')}>
-                  <FontAwesome5 name="share-alt" size={16} color={colors.dark} />
+              <View style={[homeStyle.headerIcon, styles.marginRight_md, styles.overflow_h]}>
+                <Button style={[styles.flexCenter, {flex: 1}]} action={() => navigation.openDrawer()}>
+                  <FontAwesome5 name="bars" size={16} color={colors.color1} />
                 </Button>
               </View>
+              <View style={[styles.row, styles.alignItems_center]}>
+                <View style={[homeStyle.headerIcon, styles.marginRight_md, styles.overflow_h]}>
+                  <Button action={() => navigation.navigate("Home")} style={[styles.flexCenter, {flex: 1}]}>
+                    <FontAwesome5 name="search" size={16} color={colors.dark} />
+                  </Button>
+                </View>
+                <View style={[homeStyle.headerIcon, styles.marginRight_md, styles.overflow_h]}>
+                  <Button style={[styles.flexCenter, {flex: 1}]} action={() => console.log('Button clicked')}>
+                    <FontAwesome5 name="share-alt" size={16} color={colors.dark} />
+                  </Button>
+                </View>
+              </View>
             </Section>
-            {Modal}
+            <Modal closeOnBackdropPress={true}>
+              <ImageSelectOptions closeModal={closeModal} />
+            </Modal>
           </ImageBackground>
         </Button>
       </View>
@@ -208,14 +215,14 @@ const Tabs = () => {
   // const ActiveScreen = screens.find((_, index) => index === activeIndex);
   return (
     <Section>
-      <View style={[styles.row, styles.marginBottom_md, styles.border_r_35, styles.bg_gray, {height: 50, width: '100%'}]} >
+      <View style={[styles.row, styles.overflow_h, styles.marginBottom_md, styles.border_r_35, styles.bg_gray, {height: 50, width: '100%'}]} >
         {screens.map((screen, index) => {
           const { tabTitle } = screen;
           const isActive = index === activeIndex
           return (
-            <View key={index} style={[ {flex: 1 }]}>
+            <View key={index} style={[styles.border_r_35, styles.overflow_h, {flex: 1 }]}>
               <Button action={() => setActiveIndex(index)}
-                style={[styles.flexCenter, styles.border_r_35, isActive ? styles.bg_color1 : null, {flex: 1, overflow: 'hidden'}]}>
+                style={[styles.flexCenter, styles.border_r_35, isActive ? styles.bg_color1 : null, {flex: 1}]}>
                 <Text numberOfLines={1}
                   style={[styles.font_md, styles.fontWeight_700, isActive ? styles.color_white : styles.color_gray ]}>{tabTitle}</Text>
               </Button>
@@ -264,7 +271,6 @@ const homeStyle = StyleSheet.create({
     borderRadius: 20,
     ...styles.bg_white,
     ...styles.boxShadowDark_sm,
-    ...styles.flexCenter,
   }
 })
 export default Home;

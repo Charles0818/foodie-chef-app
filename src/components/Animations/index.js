@@ -19,15 +19,15 @@ export const ScaleToSize = ({style, children, ...rest}) => {
 
 {/* <View style={{transform: [{scaleY}]}} ></View> */}
 
-export const FadeIn = ({style, children, ...rest}) => {
+export const FadeIn = ({style, children, shouldAnimate = false, ...rest}) => {
   const [x] = useState(new Animated.Value(0));
+  const [animate, setAnimate] = useState(shouldAnimate);
   useEffect(() => {
     Animated.timing(x, {
       toValue: 1,
-      duration: 500,
       useNativeDriver: true,
     }).start();
-  }, [x]);
+  }, [x, shouldAnimate]);
   return (
     <Animated.View style={[...style, {transform: [{ scale: x }], opacity: x} ]} {...rest} >
       {children}

@@ -8,10 +8,14 @@ export const colors = {
   white: '#fff',
   white2: '#fcfbfa',
   danger: '#df0202',
+  danger_opacity: '#df02024f',
+  green: '#22dd09',
   color1: '#FC1E19',
   color1_opacity: 'rgba(252, 29, 25, 0.164)',
   color2: '#FBB288',
   color2_opacity: 'rgba(214, 57, 9, 0.801)',
+  color3: '#670305',
+  color3_opacity: '#67030528',
   facebook: 'rgb(59, 89, 152)',
   facebook_opacity: 'rgba(59, 89, 152, .3)',
   google_red: 'rgb(219, 68, 55)',
@@ -262,6 +266,9 @@ const styles = StyleSheet.create({
   color2: {
     color: colors.color2,
   },
+  color3: {
+    color: colors.color3,
+  },
   color_gray: {
     color: colors.gray_color,
   },
@@ -280,6 +287,9 @@ const styles = StyleSheet.create({
   bg_white2: {
     backgroundColor: colors.white2,
   },
+  bg_green: {
+    backgroundColor: colors.green,
+  },
   bg_whiteOpacity: {
     backgroundColor: colors.opacity_white,
   },
@@ -295,17 +305,14 @@ const styles = StyleSheet.create({
   bg_color2: {
     backgroundColor: colors.color2,
   },
+  bg_color3: {
+    backgroundColor: colors.color3,
+  },
   bg_gray: {
     backgroundColor: colors.gray_color2,
   },
   bg_danger: {
     backgroundColor: colors.danger
-  },
-  trans_btn_danger: {
-    borderColor: colors.danger,
-    borderWidth: 1,
-    backgroundColor: 'transparent',
-    color: colors.danger,
   },
   overflow_h: {
     overflow: 'hidden',
@@ -337,9 +344,19 @@ const styles = StyleSheet.create({
     borderRightWidth: 1,
     borderRightColor: colors.gray_color2,
   },
+  borderPoint_right: {
+    borderTopRightRadius: 25,
+    borderTopLeftRadius: 25,
+    borderBottomLeftRadius: 25,
+  },
+  borderPoint_left: {
+    borderTopRightRadius: 25,
+    borderTopLeftRadius: 25,
+    borderBottomRightRadius: 25,
+  },
   slimDottedBorder: {
     borderStyle: "dashed",
-    borderWidth: 1,
+    borderBottomWidth: 1,
     borderRadius: 1,
     borderColor: colors.opacity_white
   },
@@ -391,7 +408,19 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,  
     elevation: 3,
-  }
+  },
+  avatar_md: {
+    width: 45,
+    height: 45,
+    borderRadius: 45 / 2,
+    overflow: 'hidden',
+  },
+  avatar_sm: {
+    width: 35,
+    height: 35,
+    borderRadius: 35 / 2,
+  },
+
 });
 
 export default styles;
