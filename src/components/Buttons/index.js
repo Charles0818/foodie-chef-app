@@ -29,7 +29,7 @@ export const Button = ({ activeOpacity = .8, rippleColor, buttonProps = {} , act
           background={TouchableNativeFeedback.Ripple(rippleColor, false)}
           onPress={action}
           {...buttonProps} >
-          <View style={[style, {overflow: 'hidden'}]}>
+          <View style={[style]}>
             {children}
           </View>
         </TouchableNativeFeedback>

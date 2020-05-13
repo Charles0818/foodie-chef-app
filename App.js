@@ -9,32 +9,41 @@ import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Ionicons, FontAwesome5, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { fab, faFontAwesome } from '@fortawesome/free-brands-svg-icons'
+import { fab } from '@fortawesome/free-brands-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
-  Home, AuthScreens, OnboardScreen, Earnings,
+  Home, AuthStack, OnboardScreen, Earnings,
   SettingsStackScreen, ServiceRequest, Chat,
-  Chats, IncomingRequest, Bookings
+  Chats, IncomingRequest, Bookings, EarningsStackScreen,
+  Invite
 } from './src/screens/index';
 import { NavigationBars } from './src/components/index';
-import { Store } from './src/helpers/index';
+import { store, actions } from './src/helpers/index';
 import styles, { colors } from './src/styles';
 library.add(fab, fas);
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-
+const { authActions: { getFirstTimeKey, retrieveToken } } = actions;
 enableScreens ();
 const HomeTabScreen = () => {
   return (
     <Tab.Navigator initialRouteName="MyCook"
       tabBar={props => <NavigationBars.BottomBar {...props} />} >
       <Tab.Screen
-        name="MyCook"
+        name="Home"
         component={Home}
         options={{
-          tabBarLabel: 'CookBook',
+          tabBarLabel: 'Home',
+          icon: "home",
+        }}
+      />
+       <Tab.Screen
+        name="CookBook"
+        component={Home}
+        options={{
+          tabBarLabel: 'Cook Book',
           icon: "store",
         }}
       />
@@ -46,7 +55,7 @@ const HomeTabScreen = () => {
           icon: "book"
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Chats"
         component={Chats}
         options={{
@@ -55,23 +64,14 @@ const HomeTabScreen = () => {
           icon: "ios-chatbubbles",
           badgeCount: 102,
         }}
-      />
+      /> */}
       <Tab.Screen
-        name="wallet"
-        component={Chats}
+        name="Earnings"
+        component={EarningsStackScreen}
         options={{
           tabBarLabel: 'Wallet',
           IconLibrary: FontAwesome5,
           icon: "wallet",
-        }}
-      />
-      <Tab.Screen
-        name="Notification"
-        component={Home}
-        options={{
-          tabBarLabel: 'Updates',
-          icon: "bell",
-          badgeCount: 5,
         }}
       />
     </Tab.Navigator>
@@ -97,18 +97,33 @@ const DrawerNavigation = () => {
       <Drawer.Screen name="Home" component={HomeTabScreen} />
       <Drawer.Screen name="Settings" component={SettingsStackScreen} />
       <Drawer.Screen name="Earnings" component={Earnings} />
-      
+      <Drawer.Screen name="Invite" component={Invite} />
     {/* screens */}
     </Drawer.Navigator>
   )
 }
-export default function App() {
+
+const App = () => {
+  const [state, setState] = React.useState({
+    isFirstTime: null, token: null, isLoading: true
+  })
+  React.useEffect(() => {
+    const getDataFromStorage  = async () => {
+      const isFirstTime = await getFirstTimeKey();
+      const token = await retrieveToken();
+      setState({isFirstTime, token, isLoading: false})
+    }
+    getDataFromStorage()
+  }, [])
+  const { isFirstTime, token, isLoading } = state;
+  const initialRouteName = isFirstTime ? "Onboard" : token ? 'Drawer' : 'Auth';
+  if(isLoading) return null;
   return (
     <SafeAreaProvider>
-      <Provider store={Store.store}>
+      <Provider store={store}>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="Drawer" screenOptions={{
+            initialRouteName={initialRouteName} screenOptions={{
               cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
             }}>
             <Stack.Screen
@@ -130,6 +145,11 @@ export default function App() {
               component={Chat}
             />
             <Stack.Screen
+              name="Notifications"
+              component={Home}
+             
+            />
+            <Stack.Screen
               name="Onboard"
               component={OnboardScreen}
               options={{
@@ -143,30 +163,9 @@ export default function App() {
                 headerShown: false,
               }}
             />
-            <Stack.Screen
-              name="LoginOptions"
-              component={AuthScreens.LoginOptions}
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="Login"
-              component={AuthScreens.Login}
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="SignUp"
-              component={AuthScreens.SignUp}
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="ConfirmEmail"
-              component={AuthScreens.ConfirmEmail}
+             <Stack.Screen
+              name="Auth"
+              component={AuthStack}
               options={{
                 headerShown: false,
               }}
@@ -177,3 +176,5 @@ export default function App() {
     </SafeAreaProvider>
   );
 }
+
+export default App;

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { DrawerContentScrollView, } from '@react-navigation/drawer';
 import { FontAwesome5, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { styles, colors } from '../styles';
 import { Button } from '../Buttons';
 import { useNavigation } from '@react-navigation/core';
@@ -123,7 +122,7 @@ export const  DrawerContent = (props) => {
           label="Settings"
           iconViewColor={colors.dark}
         />
-        <Item navigateTo={"Home"}
+        <Item navigateTo={"Invite"}
           iconLibary={FontAwesome5} icon="user-plus"
           label="Invite Friends"
           iconViewColor={colors.google_green}

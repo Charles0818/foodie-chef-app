@@ -1,3 +1,4 @@
 import * as authActions from './auth';
 import * as serviceActions from './service';
-export { authActions, serviceActions };
+import * as settingsActions from './settings';
+export { authActions, serviceActions, settingsActions };

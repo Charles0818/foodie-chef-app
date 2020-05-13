@@ -33,7 +33,13 @@
         "googleMaps": {
           "apiKey": "AIzaSyAOJL3z7h8HO952_hvr0D3dKBJYZyG_K9I"
         }
-      }
+      },
+      "permissions": [
+        "ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION",
+        "CAMERA",
+        "RECORD_AUDIO",
+        "READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE"
+      ]
     }
   }
 }

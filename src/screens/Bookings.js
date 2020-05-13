@@ -1,17 +1,22 @@
 import React, { memo } from 'react';
-import { View, Text, FlatList, Image, ImageBackground, ScrollView, Dimensions, StyleSheet, Animated } from 'react-native';
-import { FontAwesome5, MaterialIcons, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
+import { View, Text, FlatList, Dimensions } from 'react-native';
 import { Screen, Section } from './Wrapper';
 import { styles, colors } from './styles';
-import { Button, Utils, Modal, Carousels, Form, Map} from '../components';
+import { Button, Utils, Cards} from '../components';
 
-const { dataConstants: { bookingStatus }, formatting: { quantifier } } = Utils;
+const { dataConstants: { bookingStatus }, formatting: { quantifier }, NavigationIcons: {  NotificationBell } } = Utils;
+const { BookingCard } = Cards;
 const bookings = [
   {
     name: 'Charles Willson',
     isNew: true,
     status: 'Pending',
-    date: '11:15 PM',
+    duration: {
+      start: '11:15 PM',
+      end: '1:45 PM',
+    },
+    subtotal: 1120.00,
+    address: '23, Queen Street, NSW, Asian, Thai',
     items: [
       {
         name: 'Poccossa',
@@ -27,7 +32,12 @@ const bookings = [
     name: 'Baby Dee',
     isNew: true,
     status: 'Pending',
-    date: '10:45 AM',
+    duration: {
+      start: '10:45 AM',
+      end: '1:45 PM',
+    },
+    subtotal: 1120.00,
+    address: '23, Queen Street, NSW, Asian, Thai',
     items: [
       {
         name: 'Poccossa',
@@ -43,10 +53,15 @@ const bookings = [
     name: 'Charles Willson',
     isNew: false,
     status: 'Delivered',
-    date: 'Mon',
+    duration: {
+      start: 'Mon',
+      end: '1:45 PM',
+    },
+    subtotal: 1120.00,
+    address: '88, Dawnson Street, Hillsong Th., Asian, Thai',
     items: [
       {
-        name: 'Poccossa',
+        name: 'Chips',
         qty: 4,
       },
       {
@@ -59,7 +74,12 @@ const bookings = [
     name: 'Hiliary Clington',
     isNew: false,
     status: 'Progress',
-    date: 'Mon',
+    duration: {
+      start: 'Mon',
+      end: '1:45 PM',
+    },
+    subtotal: 1120.00,
+    address: '23, Queen Street, NSW, Asian, Thai',
     items: [
       {
         name: 'Poccossa',
@@ -75,7 +95,12 @@ const bookings = [
     name: 'Chucks Obinna',
     isNew: false,
     status: 'Progress',
-    date: 'Mon',
+    duration: {
+      start: 'Mon',
+      end: '1:45 PM',
+    },
+    subtotal: 1120.00,
+    address: '23, Queen Street, NSW, Asian, Thai',
     items: [
       {
         name: 'Poccossa',
@@ -91,7 +116,12 @@ const bookings = [
     name: 'Charles Willson',
     isNew: false,
     status: 'Pending',
-    date: 'June 12',
+    duration: {
+      start: 'June 12',
+      end: '1:45 PM',
+    },
+    subtotal: 1120.00,
+    address: '23, Queen Street, NSW, Asian, Thai',
     items: [
       {
         name: 'Poccossa',
@@ -107,7 +137,12 @@ const bookings = [
     name: 'Iyobosa Evbayowieru',
     isNew: false,
     status: 'Cancelled',
-    date: 'June 12',
+    duration: {
+      start: 'June 12',
+      end: '1:45 PM',
+    },
+    subtotal: 1120.00,
+    address: '23, Queen Street, NSW, Asian, Thai',
     items: [
       {
         name: 'Poccossa',
@@ -123,8 +158,15 @@ const bookings = [
 
 const Header = () => {
   return (
-    <View style={[styles.alignItems_center, styles.justifyContent_end, styles.paddingBottom_sm, styles.bg_white, styles.boxShadow_sm, styles.slimBorderBottom, {height: 80}]}>
-      <Text numberOfLines={1} style={[styles.font_lg, styles.fontWeight_700]}>Bookings</Text>
+    <View style={[styles.bg_color1, styles.justifyContent_end, styles.paddingBottom_sm, styles.bg_white, styles.boxShadow_sm, styles.slimBorderBottom, {height: 80, width: Dimensions.get('window').width}]}>
+      <View style={[styles.row, styles.alignItems_center, styles.justifyContent_between, ]}>
+        <View style={[{flex: 3.5}]}>
+          <Text numberOfLines={1} style={[styles.font_lg, styles.text_center, styles.fontWeight_700]}>Bookings</Text>
+        </View>
+        <View style={[{flex: .5}]}>
+          <NotificationBell />
+        </View>
+      </View>
     </View>
   )
 }
@@ -143,10 +185,11 @@ const Bookings = ({ navigation }) => {
           ))}
         </View>
       )}
-        renderItem={({ item, index, separators }) => <Booking key={index} push={navigation.push} booking={item} />}
+        renderItem={({ item, index, separators }) => <BookingCard key={index} booking={item} />}
         keyExtractor={(item, index) => index.toString()}
         showsVerticalScrollIndicator={false}
         initialNumToRender={30}
+        contentContainerStyle={[styles.flexCenter, {width: Dimensions.get('window').width}]}
       />
     </Screen>
   )

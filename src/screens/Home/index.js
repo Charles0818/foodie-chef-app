@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesome5, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { View, Text, ScrollView, Dimensions, ImageBackground, Image, StatusBar, StyleSheet } from 'react-native';
-import { Cards, Carousels, Button, useToggleButton, Modal, FilePicker, Spinners } from '../../components';
+import { Cards, Carousels, Button, useToggleButton, Modal, FilePicker, Spinners, Utils } from '../../components';
 import { Screen, Section } from '../Wrapper';
 import { styles, colors } from '../styles';
 import { useNavigation } from '@react-navigation/core';
@@ -10,6 +10,7 @@ const { SquareServiceCard, ListServiceCard } = Cards;
 const { ComponentCarousel } = Carousels;
 const { useSpinner } = Spinners;
 const { useDrawUpModal } = Modal;
+const { NavigationIcons: { NotificationBell } } = Utils;
 
 const Home = ({navigation}) => {
   const { Spinner, setAnimating, animating } = useSpinner(true);
@@ -87,6 +88,10 @@ const Header = ({navigation}) => {
                     <FontAwesome5 name="share-alt" size={16} color={colors.dark} />
                   </Button>
                 </View>
+                <View style={[homeStyle.headerIcon]}>
+                  <NotificationBell />
+                </View>
+                
               </View>
             </Section>
             <Modal closeOnBackdropPress={true}>

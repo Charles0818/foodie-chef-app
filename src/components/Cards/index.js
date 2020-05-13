@@ -1,2 +1,3 @@
 import { SquareServiceCard, ListServiceCard } from './Service';
-export { SquareServiceCard, ListServiceCard };
+import BookingCard from './Booking';
+export { SquareServiceCard, ListServiceCard, BookingCard };

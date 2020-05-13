@@ -4,7 +4,6 @@ import { FontAwesome5, MaterialIcons, MaterialCommunityIcons, Ionicons } from '@
 import { Screen, Section } from './Wrapper';
 import { styles, colors } from './styles';
 import { Button, Utils, Modal, Carousels} from '../components'
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 const notifications = [
   {

@@ -1,4 +1,4 @@
-import * as AuthScreens from './Auth';
+import AuthStack from './Auth';
 import Home from './Home';
 import OnboardScreen from './onboarding';
 import SplashScreen from './SplashScreen';
@@ -8,8 +8,10 @@ import { Chat, Chats } from './Chat';
 import Earnings from './Earnings';
 import IncomingRequest from './IncomingRequest';
 import Bookings from './Bookings';
+import EarningsStackScreen from './Earnings';
+import Invite from './Invite';
 export {
-    AuthScreens, Home, OnboardScreen, SettingsStackScreen,
-    SplashScreen, ServiceRequest, Chat, Chats,
-    Earnings, IncomingRequest, Bookings
+  AuthStack, Home, OnboardScreen, SettingsStackScreen,
+  SplashScreen, ServiceRequest, Chat, Chats, Invite,
+  Earnings, IncomingRequest, Bookings, EarningsStackScreen
 };

@@ -34,7 +34,7 @@ const LoginOptions = ({ navigation }) => {
                 text="Continue with Email"
                 color={colors.google_yellow}
                 transparency={colors.google_yellow_opacity}
-                action={() => console.log('action')}
+                action={() => navigation.navigate("Login")}
               />
               <SocialMediaButton icon={["fas", "phone"]}
                 text="Continue with Phone Number"

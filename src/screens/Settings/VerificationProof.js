@@ -19,8 +19,8 @@ const DocumentInstruction = ({title, instruction}) => {
 }
 const VerificationProof = ({navigation, route: { params }}) => {
   const { document } = params;
-  const { accessCamera: captureBackView, image: backView, setImage: setFrontView } = usePermission('image');
-  const { accessCamera: captureFrontView, image: frontView, setImage: setBackView } = usePermission('image');
+  const { accessCamera: captureBackView, image: backView, setImage: setFrontView } = usePermission('camera');
+  const { accessCamera: captureFrontView, image: frontView, setImage: setBackView } = usePermission('camera');
   const { title, instruction} = availableDocuments.find(el => el.title === document)
   const uploadedDocuments = [
     {

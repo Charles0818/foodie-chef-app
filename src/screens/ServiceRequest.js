@@ -1,9 +1,11 @@
 import React from 'react';
 import { View, Text, Image, ImageBackground, ScrollView, Dimensions, StyleSheet, Animated } from 'react-native';
 import { FontAwesome5, MaterialIcons, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
+import { Linking } from 'expo';
 import { Screen, Section } from './Wrapper';
 import { styles, colors } from './styles';
 import { Button, Utils, Modal, Carousels, Map, Animations} from '../components';
+import { useNavigation } from '@react-navigation/core';
 
 const { formatting: { quantifier } } = Utils;
 const { useResizableDrawUpModal } = Modal;
@@ -99,16 +101,18 @@ const Detail = (props) => {
 }
 
 const Actions =() => {
+  const { navigate } = useNavigation()
   return (
     <View style={[styles.marginBottom_md, styles.slimBorderBottom]}>
       <View style={[styles.row, styles.alignItems_center, styles.marginBottom_md]}>
         <View style={[styles.border_r_35, styles.marginRight_sm, styles.overflow_h, {flex: 1}]}>
-          <Button style={[styles.border_r_35, styles.flexCenter, styles.slimBorder, styles.padding_md,]}>
+          <Button action={() => navigate('Chat',  { chatId: 1, username: 'Julius', lastSeen: '11:53 PM', isActive: false })}
+            style={[styles.border_r_35, styles.flexCenter, styles.slimBorder, styles.padding_md,]}>
             <Ionicons name="ios-chatbubbles" size={20} color={colors.gray_color} />
           </Button>
         </View>
         <View style={[styles.border_r_35, styles.marginRight_sm, styles.overflow_h, {flex: 1}]}>
-          <Button style={[styles.border_r_35, styles.flexCenter, styles.slimBorder, styles.padding_md,  {backgroundColor: colors.google_green}]}>
+          <Button action={() => Linking.openURL('tel:+123456789')} style={[styles.border_r_35, styles.flexCenter, styles.slimBorder, styles.padding_md,  {backgroundColor: colors.google_green}]}>
             <Ionicons name="ios-call" size={20} color={colors.white} />
           </Button>
         </View>
@@ -162,7 +166,7 @@ const OrderDetails = (details) => {
   )
 }
 
-const getImage = () => require('../assets/cust-onboard-screen4-1_delivery.jpg')
+const getImage = () => 'https://res.cloudinary.com/dx5lp5drd/image/upload/v1586035953/igbo-abacha-ncha_oeiamp.jpg'
 const ImageSlider = ({images}) => {
   const slides = images.map(image => (
     <View style={[serviceStyle.imageSlider]} >

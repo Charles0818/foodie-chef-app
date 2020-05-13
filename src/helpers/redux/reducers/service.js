@@ -14,3 +14,9 @@ export const serviceReducer = (prevState = [], { type, payload }) => {
       return prevState;
   }
 }
+
+export const serviceRequests = (prevState = [], { type, payload }) => {
+  switch(type) {
+    
+  }
+}

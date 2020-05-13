@@ -1,16 +1,12 @@
 import React from 'react';
-import { View, Text, ImageBackground, Image, Dimensions, ActivityIndicator, TouchableOpacity, StyleSheet } from 'react-native';
-import { StackActions, CommonActions } from '@react-navigation/native';
+import { View, Text, ImageBackground, Image, Dimensions, ActivityIndicator, StyleSheet } from 'react-native';
 import { FontAwesome, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { helpers } from '../helpers';
 import { styles } from '../styles';
 import { ScaleToSize, FadeIn } from '../Animations/index';
 import { service } from '../Utils';
 import { Button } from '../Buttons';
 import { colors } from '../../styles';
-const { DisplayRating, FreeDeliveryBadge } = service;
+const { DisplayRating } = service;
 export const SquareServiceCard = (props) => {
   const { service, navigation } = props;
   // const { id, name, price, thumbnail } = service;

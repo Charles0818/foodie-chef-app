@@ -4,7 +4,9 @@ import { Screen, Section } from '../Wrapper';
 import { styles } from '../styles';
 import { Button } from '../../components';
 import { select } from 'redux-saga/effects';
+import { actions } from '../../helpers';
 
+const { authActions: { storeFirstTimeKey } } = actions;
 const progressBarWidth = 100;
 
 const useOnboardScreen = (indicatorWidth) => {
@@ -22,16 +24,19 @@ const useOnboardScreen = (indicatorWidth) => {
 };
 
 const OnboardScreen = ({ navigation }) => {
-  const slides = onboardSlides({ navigation });
+  const slides = onboardSlides({ action });
   const indicatorWidth = progressBarWidth / slides.length
   const { updateIndex, index: selectedIndex, setIndex } = useOnboardScreen(indicatorWidth);
   console.log(selectedIndex);
-
+  const action = () => {
+    storeFirstTimeKey();
+    navigation.replace("Auth", {screen: "LoginOptions"})
+  }
   return (
     <Screen style={[styles.paddingBottom_md]}>
       {/* <Section style={[{flex: 1}]}> */}
         <View style={[styles.alignItems_end, styles.paddingHorizontal_sm]}>
-          <Button action={() => navigation.replace("LoginOptions")}
+          <Button action={action}
             style={[styles.marginBottom_md]}>
             <Text style={[styles.color1, styles.fontWeight_700, styles.font_md]}>Skip >></Text>
           </Button>
@@ -70,7 +75,7 @@ const Slide = ({svg, title, text}) => {
     </View>
   )
 }
-const onboardSlides = ({ navigation }) => {
+const onboardSlides = ({ action }) => {
   const slides = [
     <Slide svg={require('../../assets/customer-onboarding-1_discover.jpg')}
       title="Discover place near you"
@@ -86,7 +91,7 @@ const onboardSlides = ({ navigation }) => {
         text="We make food ordering fast, simple and free - no matter if you order online or cash"
       />
       <View style={[styles.marginTop_md]}>
-        <Button action={() => navigation.replace("LoginOptions")}
+        <Button action={action}
           style={[styles.bg_color1, styles.border_r_5, styles.flexCenter, styles.marginBottom_md, {width: 250, height: 50}]}>
           <Text numberOfLines={1} style={[styles.color_white, styles.text_center, styles.fontWeight_700, styles.font_sm]}>Get Started</Text>
         </Button>
