@@ -166,7 +166,7 @@ const OrderDetails = (details) => {
   )
 }
 
-const getImage = () => 'https://res.cloudinary.com/dx5lp5drd/image/upload/v1586035953/igbo-abacha-ncha_oeiamp.jpg'
+const getImage = () => ({uri: 'https://res.cloudinary.com/dx5lp5drd/image/upload/v1586035953/igbo-abacha-ncha_oeiamp.jpg'})
 const ImageSlider = ({images}) => {
   const slides = images.map(image => (
     <View style={[serviceStyle.imageSlider]} >

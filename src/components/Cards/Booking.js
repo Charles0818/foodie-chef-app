@@ -6,14 +6,16 @@ import { FadeIn } from '../Animations/index';
 import { Button } from '../Buttons';
 import { colors } from '../../styles';
 import { dataConstants } from '../Utils';
+import { useNavigation } from '@react-navigation/core';
 
 const { bookingStatus } = dataConstants;
 export default BookingCard = ({booking})=> {
+  const { navigate } = useNavigation();
   let { items, duration, isNew, status, subtotal, address } = booking;
   status = bookingStatus.find(el => el.name === status);
   return (
     <FadeIn style={[cardStyle.container, styles.marginBottom_md, styles.boxShadow_md]}>
-      <Button style={[styles.padding_md]} activeOpacity={.6} action={() => navigation.navigate('ServiceRequest')}>
+      <Button style={[styles.padding_md]} activeOpacity={.6} action={() => navigate('ServiceRequest')}>
         <View style={[styles.row, styles.justifyContent_between]}>
           <View style={[styles.border_r_5, styles.marginRight_sm, {width: 100, height: 100}]}>
             <ImageBackground source={{uri: 'https://res.cloudinary.com/dx5lp5drd/image/upload/v1586035953/igbo-abacha-ncha_oeiamp.jpg'}}

@@ -4,11 +4,12 @@ import { FontAwesome5, MaterialIcons, MaterialCommunityIcons, Ionicons } from '@
 import io from 'socket.io-client';
 import { Screen, Section } from '../Wrapper';
 import { styles, colors } from '../styles';
-import { Button, Utils, Form, Modal, Animations, Spinners } from '../../components';
+import { Button, Utils, Form, Modal, Animations, Spinners, FilePicker } from '../../components';
 
-const { chat: { OnlineIndicator }, formatting: { timeFormat_12hr } } = Utils;
+const { chat: { OnlineIndicator }, formatting: { dateTimeFormat_12hr, durationTimeFormat } } = Utils;
 const { ChatFormInput, useFormInput } = Form;
 const { useSpinner } = Spinners;
+const { AudioRecording } = FilePicker;
 const ENDPOINT = 'localhost:8080';
 
 const messageStructure = {
@@ -174,7 +175,7 @@ const SenderChat = ({message, timestamp}) => {
         <Animations.FadeIn style={[styles.borderPoint_right, styles.bg_color1, styles.padding_md, styles.marginBottom_xsm]}>
           <Text style={[styles.color_white, styles.font_md, {fontWeight: '600'}]}>{message}</Text>
         </Animations.FadeIn>
-        <Time time={timeFormat_12hr(new Date(timestamp))} />
+        <Time time={dateTimeFormat_12hr(new Date(timestamp))} />
       </View>
     </View>
   )
@@ -192,7 +193,7 @@ const ReceiverChat = ({message, timestamp}) => {
         <Animations.FadeIn style={[styles.borderPoint_left, styles.bg_gray, styles.padding_md]}>
           <Text style={[styles.font_md, {fontWeight: '600'}]}>{message}</Text>
         </Animations.FadeIn>
-        <Time time={timeFormat_12hr(new Date(timestamp))} />
+        <Time time={dateTimeFormat_12hr(new Date(timestamp))} />
       </View>
     </View>
   )
@@ -222,7 +223,10 @@ const Time = ({time}) => {
 
 const ComposeMessage = ({setMessages}) => {
   const { input: message, handleUserInput: setMessage } = useFormInput('Message');
-  const sendMessage = async () => {
+  const { startRecording, stopRecording, recordingStatus } = AudioRecording();
+  const { isDoneRecording, isRecording, durationMillis  } = recordingStatus;
+  console.log(recordingStatus);
+  const sendMessage = async (type = 'text', message) => {
     const newMessage = {
       user: 'Charles',
       message,
@@ -234,6 +238,15 @@ const ComposeMessage = ({setMessages}) => {
   }
   return (
     <Section style={[styles.row, styles.alignItems_end, styles.justifyContent_between]}>
+    {isRecording ? (
+      <View style={[styles.row, styles.alignItems_center]}>
+        <Button action={stopRecording} style={[chatStyle.composeButton, styles.marginRight_md]}>
+          <FontAwesome5 name="times" size={25} />
+        </Button>
+        <Text style={[styles.font_md, {marginBottom: 5}]}>{durationTimeFormat(durationMillis/ 1000)}</Text>
+      </View>
+    ) : (
+      <>
       <View style={[styles.marginRight_xsm,]}>
         <Button style={[chatStyle.composeButton]} action={() => console.log('button clicked')}>
           <FontAwesome5 name="plus" size={20} color={colors.color1} />
@@ -245,22 +258,33 @@ const ComposeMessage = ({setMessages}) => {
         </Button>
       </View>
       <ChatFormInput onChange={setMessage} value={message} />
-      {message.length > 0 ? (
+      </>
+    )}
+      {message.length > 0 || isRecording ? (
        <Animations.FadeIn style={[styles.marginRight_xsm]}>
-          <Button buttonProps={{disabled: !message.length > 0}} action={sendMessage}
+          <Button
+            buttonProps={{disabled: !message.length > 0 || isRecording}}
+            action={() => isRecording ? stopRecording() : sendMessage('text', message)}
             style={[chatStyle.composeButton]}>
             <MaterialIcons name="send" size={30} color={colors.color1} />
           </Button>
         </Animations.FadeIn>
-      ) : (
+      ) :  (
         <Animations.FadeIn style={[styles.marginRight_xsm]}>
-          <Button style={[chatStyle.composeButton]} action={() => console.log('button clicked')}>
+          <Button style={[chatStyle.composeButton]} action={startRecording}>
             <FontAwesome5 name="microphone" size={30} color={colors.gray_color} />
           </Button>
         </Animations.FadeIn>
       )}
-      
     </Section>
+  )
+}
+
+const RecordingProgress = () => {
+  return (
+    <View style={[]}>
+
+    </View>
   )
 }
 

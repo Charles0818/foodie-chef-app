@@ -7,7 +7,7 @@ import { Button, Utils, Modal, Carousels, Form, Map} from '../components'
 import { OpenModalButton } from './ServiceRequest';
 import { useNavigation } from '@react-navigation/core';
 const { useDrawUpModal, useCenterModal } = Modal;
-const { formatting: { timeFormat_12hr, quantifier }, dataConstants: { declineRequestReasons } } = Utils;
+const { formatting: { dateTimeFormat_12hr, quantifier }, dataConstants: { declineRequestReasons } } = Utils;
 const { useCheckBox } = Form;
 const { useMap } = Map
 const IncomingRequest = () => {
@@ -58,7 +58,7 @@ const RequestDetails = ({declineRequest, closeModal}) => {
       </View>
       <View style={[styles.paddingBottom_sm, styles.slimBorderBottom]}>
         <View style={[styles.row, styles.justifyContent_between, styles.alignItems_center]}>
-          <Text numberOfLines={1} style={[styles.font_xsm, styles.color_gray, styles.fontWeight_700]}>Deliver by {timeFormat_12hr()}</Text>
+          <Text numberOfLines={1} style={[styles.font_xsm, styles.color_gray, styles.fontWeight_700]}>Deliver by {dateTimeFormat_12hr()}</Text>
           <Text numberOfLines={1} style={[styles.font_xsm, styles.color_gray, styles.fontWeight_700]}>{quantifier(4, 'item')}</Text>
         </View>
         <View style={[styles.row, styles.justifyContent_between, styles.alignItems_center]}>
