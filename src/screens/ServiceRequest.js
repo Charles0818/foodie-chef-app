@@ -7,7 +7,7 @@ import { styles, colors } from './styles';
 import { Button, Utils, Modal, Carousels, Map, Animations} from '../components';
 import { useNavigation } from '@react-navigation/core';
 
-const { formatting: { quantifier } } = Utils;
+const { formatting: { quantifier }, NavigationIcons: { GoBackButton } } = Utils;
 const { useResizableDrawUpModal } = Modal;
 const { ComponentCarousel } = Carousels;
 const { useMap } = Map;
@@ -128,7 +128,7 @@ const Actions =() => {
 
 const OrderDetails = (details) => {
   return (
-    <ScrollView style={{maxHeight: 300,}} showsVerticalScrollIndicator={false} >
+    <ScrollView style={{height: 300}} showsVerticalScrollIndicator={false} >
       <View style={[styles.slimBorderBottom, styles.paddingVertical_sm]}>
         <Text numberOfLines={1} style={[styles.fontWeight_700, styles.font_md, styles.marginBottom_xsm]}>Deliver To:</Text>
         <Text style={[styles.fontWeight_700, styles.color_gray, styles.font_sm]}>02113, 71, Charter str. Boston, MA, USA</Text>
@@ -137,7 +137,7 @@ const OrderDetails = (details) => {
         <Text numberOfLines={1} style={[styles.fontWeight_700, styles.font_md, styles.marginBottom_xsm]}>Upon Arrival:</Text>
         <Text style={[styles.fontWeight_700, styles.color_gray, styles.font_sm]}>Go to fifth floor Apt #5r</Text>
       </View>
-      <View style={[]}>
+      <View style={[{flex: 1, paddingBottom: 20}]}>
         <Text numberOfLines={1} style={[styles.fontWeight_700, styles.font_md, styles.marginBottom_xsm]}>Order Details:</Text>
         <View style={[styles.row, styles.alignItems_center, styles.justifyContent_between, styles.marginBottom_md]}>
           <Text style={[styles.fontWeight_700, styles.font_sm]}>{quantifier(4, 'item')}</Text>
@@ -147,6 +147,18 @@ const OrderDetails = (details) => {
           </View>
         </View>
         <View style={[styles.marginBottom_sm]}>
+          <Item qty={1} item="Chocomocco" />
+          <Item qty={2} item="Pastery Salad" />
+          <Item qty={1} item="FooDoor Fries" />
+          <Item qty={1} item="Chocomocco" />
+          <Item qty={2} item="Pastery Salad" />
+          <Item qty={1} item="FooDoor Fries" />
+          <Item qty={1} item="Chocomocco" />
+          <Item qty={2} item="Pastery Salad" />
+          <Item qty={1} item="FooDoor Fries" />
+          <Item qty={1} item="Chocomocco" />
+          <Item qty={2} item="Pastery Salad" />
+          <Item qty={1} item="FooDoor Fries" />
           <Item qty={1} item="Chocomocco" />
           <Item qty={2} item="Pastery Salad" />
           <Item qty={1} item="FooDoor Fries" />

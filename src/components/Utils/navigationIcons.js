@@ -35,3 +35,12 @@ export const NotificationBell = ({content = 'dark' }) => {
     </Button>
   )
 }
+
+export const GoBackButton = ({content = 'dark'}) => {
+  const { goBack } = useNavigation()
+  return (
+    <Button action={goBack} style={[styles.flexCenter, {width: 40, height: 40, borderRadius: 25}]}>
+      <FontAwesome5 name="arrow-left" size={25} color={content === 'light' ? colors.white : colors.dark} />
+    </Button>
+  )
+}

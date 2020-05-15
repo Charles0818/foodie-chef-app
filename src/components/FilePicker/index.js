@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
-import { Audio } from 'expo-av';
+import { Audio, Video } from 'expo-av';
 export const usePermission  = (type = 'camera') => {
   const [image, setImage] = React.useState(null);
   const detectPermission = React.useCallback((type) => {
@@ -62,19 +62,20 @@ export const usePermission  = (type = 'camera') => {
 }
 
 export const AudioRecording = () => {
-  const [recordingStatus, setRecordingStatus] = React.useState({
-    canRecord: false, isDoneRecording: false, isRecording: false, durationMillis: 0, URI: '', sound: null
-  });
+  const initialState = {
+    canRecord: false, isDoneRecording: false,
+    isRecording: false, durationMillis: 0, URI: '', sound: null
+  }
+  const [recordingStatus, setRecordingStatus] = React.useState(initialState);
   const [recording, setRecording] = React.useState(null);
-    const getPermissionAsync = async () => {
-      const { status } = await Permissions.askAsync(Permissions.AUDIO_RECORDING);
-      if (status !== 'granted') {
-        alert(`Sorry, we need recording permissions to make this work!`);
-      }
-    };
+    
     
   const startRecording = async () => {
-    getPermissionAsync();
+    const { status } = await Permissions.askAsync(Permissions.AUDIO_RECORDING);
+    if (status !== 'granted') {
+      alert(`Sorry, we need recording permissions to make this work!`);
+      return;
+    }
     const recording = new Audio.Recording();
     setRecording(recording);
     try {
@@ -86,29 +87,60 @@ export const AudioRecording = () => {
     } catch (error) {
       // An error occurred!
       console.log(error);
+      if(recordingStatus.isRecording) cancelRecording()
       alert(`An error occured while trying to intitiate recording. Kindly try again, ${error}`);
     }
   }
-  const stopRecording = async () => {
+  const cancelRecording = async () => {
     try {
-      const status = await recording.stopAndUnloadAsync();
-      const URI = await recording.getURI()
-      const { sound, status: playbackStatus } = await recording.createNewLoadedSoundAsync(
-        {
-          progressUpdateIntervalMillis: 500,
-          positionMillis: 0,
-          shouldPlay: false,
-          rate: 1.0,
-          shouldCorrectPitch: false,
-          volume: 1.0,
-          isMuted: false,
-          isLooping: false,
-        },
-      );
-      setRecordingStatus({...status, URI, sound});
+      await recording.stopAndUnloadAsync();
+      setRecordingStatus(initialState)
     } catch (error) {
       console.log(error)
     }
   }
-  return { startRecording, recordingStatus, stopRecording }
+  const doneRecording = async () => {
+    try {
+      const status = await recording.stopAndUnloadAsync();
+      const URI = await recording.getURI();
+      setRecordingStatus({...status, URI});
+      return URI;
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  return { startRecording, recordingStatus, cancelRecording, doneRecording }
+}
+
+export const PlayAudio = async (assetPath) => {
+  const [audioStatus, setAudioStatus] = React.useState({});
+  const [audio] = React.useState(async () => {
+    try {
+      const { sound: audio, status } = await Audio.Sound.createAsync(
+        assetPath,
+        {
+          shouldPlay: false,
+          volume: 1.0,
+          isBuffering: true
+        },
+        status => setAudioStatus(status), true
+      );
+      audio.setProgressUpdateIntervalAsync(1000)
+      return audio
+    } catch (error) {
+      console.log(error);
+      alert(`Could not load the audio file you're requesting, ${error}`)
+    }
+  })
+  Reat.useState(() => {
+    return () => audio.unloadAsync()
+  })
+  const setPosition = async (millis) => {
+    await audio.setPositionAsync(millis)
+  }
+  const playPause = async (action) => {
+    const status = await audioStatus.isPlaying ? audio.pauseAsync() : audio.playAsync()
+    setAudioStatus(status);
+  }
+  return { setPosition, playPause, audioStatus };
 }

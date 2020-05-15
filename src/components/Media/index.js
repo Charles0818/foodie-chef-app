@@ -1,2 +1,2 @@
-import { ProgressBar } from './MediaMessages';
-export { ProgressBar }
+import { ProgressBar, AudioMessage } from './MediaMessages';
+export { ProgressBar, AudioMessage }

@@ -1,6 +1,6 @@
 import React from 'react';
-import { View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { View, SafeAreaView } from 'react-native';
+// import { SafeAreaView } from 'react-native-safe-area-context';
 import PropTypes from 'prop-types'
 import { styles } from './styles';
 export const Screen = ({children, style}) => {

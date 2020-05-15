@@ -130,7 +130,7 @@ const App = () => {
               name="ServiceRequest"
               component={ServiceRequest}
               options={{
-                headerShown: false,
+                headerTitle: 'Details',
               }}
             />
             <Stack.Screen
@@ -138,6 +138,7 @@ const App = () => {
               component={IncomingRequest}
               options={{
                 headerShown: false,
+                
               }}
             />
             <Stack.Screen

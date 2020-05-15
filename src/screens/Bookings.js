@@ -172,7 +172,7 @@ const Header = () => {
 }
 const Bookings = ({ navigation }) => {
   return (
-    <Screen style={[styles.paddingTop_sm, styles.paddingHorizontal_sm, styles.paddingBottom_sm, styles.bg_white]}>
+    <Screen style={[styles.paddingTop_sm,  styles.paddingBottom_sm, styles.bg_white]}>
       <Header />
       <FlatList
         data={bookings}

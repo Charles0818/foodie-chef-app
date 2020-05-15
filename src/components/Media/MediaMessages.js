@@ -1,39 +1,42 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import Slider from '@react-native-community/slider';
-import { styles } from '../styles';
-
+import { styles, colors } from '../styles';
+import { formatting } from '../Utils';
+import { PlayAudio } from '../FilePicker';
+import { Button } from '../Buttons';
+const { durationTimeFormat } = formatting;
 
 export const Video = () => {
-  <View></View>
+  <View>
+
+  </View>
 }
 
-export const timeFormat = (num) => {
-  const hours = Math.floor(num / 3600);
-  const minutes = Math.floor(num / 60) % 60;
-  const seconds = Math.floor(num - minutes * 60);
-  if(hours < 1) return `${slice(minutes)}:${slice(seconds)}`
-  return `${slice(hours)}:${slice(minutes)}:${slice(seconds)}`
+export const AudioMessage = ({asset}) => {
+  const { setPosition, playPause } = PlayAudio(asset);
+  return (
+    <View style={[styles.row, styles.alignItems_center]}>
+      <Button style={[styles.marginRight_sm]} action={playPause}>
+        <FontAwesome5 name={"pause"} size={25} color={colors.gray_color}/>
+      </Button>
+      <ProgressBar duration={3000} onUpdateProgress={setPosition} />
+    </View>
+  )
 }
 
-export const ProgressBar = (trackLength) => {
+export const ProgressBar = ({duration, onUpdateProgress}) => {
+
   const trackLength = React.useRef(trackLength);
   const [progress, setProgress] = React.useState({
     timeElapsed: "0:00",
     timeRemaining: `${trackLength}`
   })
   const formatProgress = (seconds) => {
-    const slice = (part) => (`000${part}`).slice(-2);
-    const timeFormat = (num) => {
-      const hours = Math.floor(num / 3600);
-      const minutes = Math.floor(num / 60) % 60;
-      const seconds = Math.floor(num - minutes * 60);
-      if(hours < 1) return `${slice(minutes)}:${slice(seconds)}`
-      return `${slice(hours)}:${slice(minutes)}:${slice(seconds)}`
-    }
-    const timeElapsed = timeFormat(seconds);
-    const timeRemaining = timeFormat((trackLength.current - seconds));
+    const timeElapsed = durationTimeFormat(seconds);
+    const timeRemaining = durationTimeFormat((trackLength.current - seconds));
     setProgress({timeElapsed, timeRemaining})
+    if(onUpdateProgress) onUpdateProgress(seconds * 1000)
   }
   return (
     <Section style={[styles.row, styles.alignItems_center, styles.justifyContent_between]}>

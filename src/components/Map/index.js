@@ -65,8 +65,8 @@ const Map = ({ positions }) => {
   console.log('positions', positions)
   return (
     <MapView
-    ref={ref => zoom.current = ref}
-    fitToElements={true}
+      ref={ref => zoom.current = ref}
+      fitToElements={true}
       provider={PROVIDER_GOOGLE}
       showsUserLocation
       style={{flex: 1}}

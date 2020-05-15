@@ -33,34 +33,29 @@ const DrawUpModal = ({children: Children, close, backdropOpacity, closeOnBackdro
 const ResizableDrawUpModal = ({children: Children, close, isVisible, height, expandModal, collapseModal}) => {
   console.log('height', height);
   const config = {
-    velocityThreshold: 0.3,
+    velocityThreshold: 0.6,
     directionalOffsetThreshold: 80,
     
   };
   return isVisible && (
     <GestureRecognizer
-          config={config}
-          onSwipeUp={expandModal}
-          onSwipeDown={collapseModal}>
-        <View isVisible={isVisible}
-          style={[{ flex: 1, position: 'absolute', bottom: 0}]}
-          backdropOpacity={0.1}
-          onBackButtonPress={close}
-        >
-        
+      config={config}
+      onSwipeUp={expandModal}
+      onSwipeDown={collapseModal}>
+      <View isVisible={isVisible}
+        style={[{ flex: 1, position: 'absolute', bottom: 0}]}
+        backdropOpacity={0.1}
+        onBackButtonPress={close}>
+      
         <Animated.View
           style={[
             styles.borderTop_r_35, {flex:1, backgroundColor: 'white', width: '100%',
             maxHeight: height,
-          }]}
-        >
-        
+          }]}>
           {Children}
-          
         </Animated.View>
-        
       </View>
-      </GestureRecognizer>
+    </GestureRecognizer>
   )
 }
 
@@ -113,13 +108,13 @@ export const useCenterModal = (value = false) => {
   return { Modal, openModal, closeModal, modalVisible }
 }
 export const useResizableDrawUpModal = (value = false) => {
-  const maxHeight = Dimensions.get('window').height * 0.85;
-  const minHeight = maxHeight * 0.35;
+  const maxHeight = Dimensions.get('window').height * 0.90;
+  const minHeight = maxHeight * 0.4;
   const initialState = {
-    modalVisible: value, isCollapsed: true
+    modalVisible: value, isCollapsed: false
   }
   const [state, setState] = useState(initialState);
-  const y = useRef( new Animated.Value(minHeight)).current;
+  const y = useRef( new Animated.Value(maxHeight)).current;
   const alterAnimationValue = (value, isCollapsed) => {
     Animated.timing(y, {
       toValue: value,
@@ -138,7 +133,6 @@ export const useResizableDrawUpModal = (value = false) => {
   const openModal = () => {
     setState(initialState);
     alterAnimationValue(minHeight);
-    
   }
   const closeModal=() => {
     alterAnimationValue(-20);

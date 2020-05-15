@@ -4,19 +4,19 @@ import { FontAwesome5, MaterialIcons, MaterialCommunityIcons, Ionicons } from '@
 import io from 'socket.io-client';
 import { Screen, Section } from '../Wrapper';
 import { styles, colors } from '../styles';
-import { Button, Utils, Form, Modal, Animations, Spinners, FilePicker } from '../../components';
+import { Button, Utils, Form, Modal, Animations, Spinners, FilePicker, Media } from '../../components';
 
 const { chat: { OnlineIndicator }, formatting: { dateTimeFormat_12hr, durationTimeFormat } } = Utils;
 const { ChatFormInput, useFormInput } = Form;
 const { useSpinner } = Spinners;
 const { AudioRecording } = FilePicker;
+const { AudioMessage } = Media;
 const ENDPOINT = 'localhost:8080';
 
 const messageStructure = {
   user: 'Charles',
   message: 'message',
   timestamp: '5',
-
 }
 
 const useMessages = (username) => {
@@ -24,89 +24,103 @@ const useMessages = (username) => {
     {
       user: username,
       id: `${Math.random() * Math.random()}`,
+      type: 'text',
       message: "I'll get back to you when I've decide",
       timestamp: '2020-05-07T08:11:19.531Z',
     },
     {
       user: 'Charles',
       id: `${Math.random() * Math.random()}`,
+      type: 'text',
       message: 'Are you there? Well I would love to let you know that I  have been planning for a meeting',
       timestamp: '2020-05-07T08:13:49.415Z',
     },
     {
       user: username,
       id: `${Math.random() * Math.random() + 1}`,
+      type: 'text',
       message: "I'll get back to you when I've decide",
       timestamp: '2020-05-07T08:11:19.531Z',
     },
     {
       user: 'Charles',
       id: `${Math.random() * Math.random()}`,
+      type: 'text',
       message: 'Are you there? Well I would love to let you know that I  have been planning for a meeting',
       timestamp: '2020-05-07T08:13:49.415Z',
     },
     {
       user: username,
       id: `${Math.random() * Math.random()}`,
+      type: 'text',
       message: "I'll get back to you when I've decide",
       timestamp: '2020-05-07T08:11:19.531Z',
     },
     {
       user: 'Charles',
       id: `${Math.random() * Math.random()}`,
+      type: 'text',
       message: 'Are you there? Well I would love to let you know that I  have been planning for a meeting',
       timestamp: '2020-05-07T08:13:49.415Z',
     },
     {
       user: username,
       id: `${Math.random() * Math.random()}`,
+      type: 'text',
       message: "I'll get back to you when I've decide",
       timestamp: '2020-05-07T08:11:19.531Z',
     },
     {
       user: 'Charles',
       id: `${Math.random() * Math.random()}`,
+      type: 'text',
       message: 'Are you there? Well I would love to let you know that I  have been planning for a meeting',
       timestamp: '2020-05-07T08:13:49.415Z',
     },
     {
       user: username,
       id: `${Math.random() * Math.random()}`,
+      type: 'text',
       message: "I'll get back to you when I've decide",
       timestamp: '2020-05-07T08:11:19.531Z',
     },
     {
       user: 'Charles',
       id: `${Math.random() * Math.random()}`,
+      type: 'text',
       message: 'Are you there? Well I would love to let you know that I  have been planning for a meeting',
       timestamp: '2020-05-07T08:13:49.415Z',
     },
     {
       user: username,
       id: `${Math.random() * Math.random()}`,
+      type: 'text',
       message: "I'll get back to you when I've decide",
       timestamp: '2020-05-07T08:11:19.531Z',
     },
     {
       user: 'Charles',
       id: `${Math.random() * Math.random()}`,
+      type: 'text',
       message: 'Are you there? Well I would love to let you know that I  have been planning for a meeting',
       timestamp: '2020-05-07T08:13:49.415Z',
     },
     {
       user: username,
       id: `${Math.random() * Math.random()}`,
+      type: 'text',
       message: "I'll get back to you when I've decide",
       timestamp: '2020-05-07T08:11:19.531Z',
     },
     {
       user: 'Charles',
       id: `${Math.random() * Math.random()}`,
+      type: 'text',
       message: 'Are you there? Well I would love to let you know that I  have been planning for a meeting',
       timestamp: '2020-05-07T08:13:49.415Z',
     },
-    
   ]);
+  console.log(messages);
   return { messages, setMessages};
 }
 const Chat = React.memo(({ navigation, route: { params } } ) => {
@@ -128,7 +142,7 @@ const Chat = React.memo(({ navigation, route: { params } } ) => {
         <View style={[styles.marginRight_md, {borderRadius: 15}]}>
           <Button style={[styles.flexCenter, {width: 30, height: 30, borderRadius: 15}]}
             action={() => console.log('drawer requested')}>
-            <FontAwesome5 name="bars" size={16} />
+            <FontAwesome5 name="ellipsis-v" size={16} />
           </Button>
         </View>
       )
@@ -138,7 +152,6 @@ const Chat = React.memo(({ navigation, route: { params } } ) => {
     const timeout = setTimeout(() => setAnimating(false), 500);
     return () => clearTimeout(timeout);
   }, []);
-  const scrollRef = React.useRef();
   if(animating) return Spinner;
   console.log('something changed')
   return (
@@ -153,10 +166,9 @@ const Chat = React.memo(({ navigation, route: { params } } ) => {
           renderItem={({ item, index, separators }) => {
             console.log('rendered')
             const { timestamp, message, user } = item;
-            return <ChatItem timestamp={timestamp} message={message} isCustomer={user === username} />
+            return <ChatItem chat={item} isCustomer={user === username} />
             
           }}
-          ref={scrollRef}
           keyExtractor={(item) => item.id}
           showsVerticalScrollIndicator={true}
         />
@@ -166,23 +178,27 @@ const Chat = React.memo(({ navigation, route: { params } } ) => {
       </View>
     </Screen>
   )
-}, (prev, next) => prev !== next)
-const SenderChat = ({message, timestamp}) => {
+}, (prev, next) => prev !== next);
+
+const SenderChat = ({message, timestamp, type}) => {
   const { width } = Dimensions.get('window');
   return (
     <View style={[styles.marginBottom_sm, styles.alignItems_end,]}>
       <View style={[styles.alignItems_end,{width: width / 2 + 100}]}>
-        <Animations.FadeIn style={[styles.borderPoint_right, styles.bg_color1, styles.padding_md, styles.marginBottom_xsm]}>
-          <Text style={[styles.color_white, styles.font_md, {fontWeight: '600'}]}>{message}</Text>
-        </Animations.FadeIn>
+        {type === 'text' ? (
+          <Animations.FadeIn style={[styles.borderPoint_right, styles.bg_color1, styles.padding_md, styles.marginBottom_xsm]}>
+            <Text style={[styles.color_white, styles.font_md, {fontWeight: '600'}]}>{message}</Text>
+          </Animations.FadeIn>
+        ) : (
+          <AudioMessage asset={message} />
+        )}
         <Time time={dateTimeFormat_12hr(new Date(timestamp))} />
       </View>
     </View>
   )
 }
 
-
-const ReceiverChat = ({message, timestamp}) => {
+const ReceiverChat = ({message, timestamp, type}) => {
   const { width } = Dimensions.get('window');
   return (
     <View style={[styles.row, styles.alignItems_end, styles.marginBottom_sm]}>
@@ -190,9 +206,13 @@ const ReceiverChat = ({message, timestamp}) => {
         <Image source={require('../../assets/avatar.jpg')} style={{flex: 1, width: '100%', borderRadius: 17.5}} />
       </View>
       <View style={[{width: width / 2 + 80}]}>
-        <Animations.FadeIn style={[styles.borderPoint_left, styles.bg_gray, styles.padding_md]}>
-          <Text style={[styles.font_md, {fontWeight: '600'}]}>{message}</Text>
-        </Animations.FadeIn>
+        {type === 'text' ? (
+          <Animations.FadeIn style={[styles.borderPoint_left, styles.bg_gray, styles.padding_md]}>
+            <Text style={[styles.font_md, {fontWeight: '600'}]}>{message}</Text>
+          </Animations.FadeIn>
+        ) : (
+          <AudioMessage asset={message} />
+        )}
         <Time time={dateTimeFormat_12hr(new Date(timestamp))} />
       </View>
     </View>
@@ -205,10 +225,10 @@ class ChatItem extends React.PureComponent {
     this.state = {  }
   }
   render() {
-    const { timestamp, message, isCustomer } = this.props;
+    const { isCustomer, chat: { timestamp, message, type } } = this.props;
     return isCustomer
-    ? <ReceiverChat timestamp={timestamp} message={message} />
-    : <SenderChat timestamp={timestamp} message={message}/>
+    ? <ReceiverChat timestamp={timestamp} message={message} type={type}  />
+    : <SenderChat timestamp={timestamp} message={message} type={type} />
   }
 }
 
@@ -223,27 +243,46 @@ const Time = ({time}) => {
 
 const ComposeMessage = ({setMessages}) => {
   const { input: message, handleUserInput: setMessage } = useFormInput('Message');
-  const { startRecording, stopRecording, recordingStatus } = AudioRecording();
-  const { isDoneRecording, isRecording, durationMillis  } = recordingStatus;
+  const { startRecording, cancelRecording, doneRecording, recordingStatus } = AudioRecording();
+  const { isDoneRecording, isRecording, durationMillis } = recordingStatus;
+  const opacity = React.useRef(new Animated.Value(1)).current;
+  React.useEffect(() => {
+    Animated.loop(opacity, {
+      toValue: 1,
+      iterations: -1,
+      useNativeDrawer: true,
+      isInteraction: false
+    })
+  }, [])
   console.log(recordingStatus);
   const sendMessage = async (type = 'text', message) => {
     const newMessage = {
       user: 'Charles',
       message,
+      type,
       id: `${Math.random() * Math.random()}`,
       timestamp: new Date(),
     }
     setMessages(prev => [newMessage, ...prev])
-    setMessage('')
+    if(type === 'text') setMessage('')
+  }
+  const sendRecording = async () => {
+    const URI = await doneRecording();
+    sendMessage('audio', URI);
   }
   return (
     <Section style={[styles.row, styles.alignItems_end, styles.justifyContent_between]}>
     {isRecording ? (
-      <View style={[styles.row, styles.alignItems_center]}>
-        <Button action={stopRecording} style={[chatStyle.composeButton, styles.marginRight_md]}>
-          <FontAwesome5 name="times" size={25} />
+      <View style={[styles.row, styles.alignItems_center, styles.justifyContent_between, styles.slimBorder, styles.paddingVertical_sm, styles.paddingHorizontal_sm, styles.border_r_10, {flex: 1}]}>
+        <View style={[styles.row, styles.alignItems_center]}>
+          <Animated.View style={[styles.marginRight_sm, {opacity}]}>
+            <FontAwesome5 name="microphone" size={20} color={colors.danger} />
+          </Animated.View>
+          <Text style={[styles.font_md]}>{durationTimeFormat(durationMillis / 1000)}</Text>
+        </View>
+        <Button style={[]} action={cancelRecording}>
+          <Text style={[styles.font_md, styles.fontWeight_700, styles.color_danger]}>{'CANCEL'}</Text>
         </Button>
-        <Text style={[styles.font_md, {marginBottom: 5}]}>{durationTimeFormat(durationMillis/ 1000)}</Text>
       </View>
     ) : (
       <>
@@ -263,8 +302,7 @@ const ComposeMessage = ({setMessages}) => {
       {message.length > 0 || isRecording ? (
        <Animations.FadeIn style={[styles.marginRight_xsm]}>
           <Button
-            buttonProps={{disabled: !message.length > 0 || isRecording}}
-            action={() => isRecording ? stopRecording() : sendMessage('text', message)}
+            action={() => isRecording ? sendRecording() : sendMessage('text', message)}
             style={[chatStyle.composeButton]}>
             <MaterialIcons name="send" size={30} color={colors.color1} />
           </Button>
@@ -280,13 +318,6 @@ const ComposeMessage = ({setMessages}) => {
   )
 }
 
-const RecordingProgress = () => {
-  return (
-    <View style={[]}>
-
-    </View>
-  )
-}
 
 const chatStyle = StyleSheet.create({
   composeButton: {
