@@ -2,21 +2,27 @@ import React from 'react';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import Settings from './Settings';
 import Currencies from './Currencies';
-import PrivacySettings from './PrivacySettings';
+import PrivacySettings from './Privacy';
 import ProfileUpdate from './ProfileUpdate';
 import VerificationProof from './VerificationProof';
 import Languages from './Languages';
+import NotificationSettings from './Notification';
+import Password from './Password';
+import PaymentMethod from './PaymentMethod';
 import { NavigationBars } from '../../components'
 const SettingsStack = createStackNavigator();
 const SettingsStackScreen = () => {
   return (
-    <SettingsStack.Navigator initilRouteName="Settings" screenOptions={{
+    <SettingsStack.Navigator initialRouteName="Settings" screenOptions={{
       cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
     }}>
       <SettingsStack.Screen name="Settings" component={Settings} />
       <SettingsStack.Screen name="Currencies" component={Currencies} />
       <SettingsStack.Screen name="PrivacySettings" component={PrivacySettings} />
       <SettingsStack.Screen name="Languages" component={Languages} />
+      <SettingsStack.Screen name="PaymentMethod" component={PaymentMethod} />
+      <SettingsStack.Screen name="Password" component={Password} />
+      <SettingsStack.Screen name="NotificationSettings" component={NotificationSettings} />
       <SettingsStack.Screen name="ProfileUpdate" initialParams={{uploadedDocuments: []}} component={ProfileUpdate}
         options={{
           title: "Personal Information",

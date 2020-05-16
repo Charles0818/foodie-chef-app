@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, TextInput, Picker } from 'react-native';
+import { Text, View, StyleSheet, TextInput, Picker as RNPicker } from 'react-native';
 import { styles, colors } from '../styles';
-import { Picker as RNPicker, PickerIOS } from '@react-native-community/picker';
+// import { Picker as RNPicker, PickerIOS } from '@react-native-community/picker';
 import { Button } from '../Buttons';
-import { FontAwesome5, MaterialIcons, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
+import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 export const FormInput = ({placeholder, value, onChange, err, label, ...rest}) => {
   return (
     <View style={[styles.marginBottom_sm]}>

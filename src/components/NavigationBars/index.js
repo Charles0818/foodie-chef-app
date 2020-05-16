@@ -95,49 +95,44 @@ export const  DrawerContent = (props) => {
     <DrawerContentScrollView {...props}>
       <ProfileView />
       <DrawerSection>
-        <Item navigateTo={"Home"}
-          iconLibary={MaterialCommunityIcons} icon="bell"
-          label="Notification"
-          iconViewColor={colors.color1}
-        />
-        <Item navigateTo={"Home"}
+        <Item navigateTo={["Settings", {screen: 'PaymentMethod'}]}
           iconLibary={FontAwesome5} icon="credit-card"
           label="Payment Method"
           iconViewColor={"#00aff0"}
         />
-        <Item navigateTo={"Home"}
+        <Item navigateTo={["Home"]}
           iconLibary={FontAwesome5} icon="crown"
           label="Reward Credits"
           iconViewColor={"#5717de"}
         />
-        <Item navigateTo={"Home"}
+        <Item navigateTo={["Home"]}
           iconLibary={MaterialIcons} icon="dialpad"
           label="My Promo code"
           iconViewColor={"#f0b100"}
         />
       </DrawerSection>
       <DrawerSection>
-        <Item navigateTo={"Settings"}
+        <Item navigateTo={["Settings", {screen: 'Settings'}]}
           iconLibary={MaterialIcons} icon="settings"
           label="Settings"
           iconViewColor={colors.dark}
         />
-        <Item navigateTo={"Invite"}
+        <Item navigateTo={["Invite"]}
           iconLibary={FontAwesome5} icon="user-plus"
           label="Invite Friends"
           iconViewColor={colors.google_green}
         />
-        <Item navigateTo={"Home"}
+        <Item navigateTo={["Home"]}
           iconLibary={MaterialCommunityIcons} icon="help-circle"
           label="Help center"
           iconViewColor={colors.google_yellow}
         />
-        <Item navigateTo={"Home"}
+        <Item navigateTo={["Home"]}
           iconLibary={FontAwesome5} icon="info-circle"
           label="About us"
           iconViewColor={colors.facebook}
         />
-        <Item navigateTo={"Home"}
+        <Item navigateTo={["Home"]}
           iconLibary={MaterialIcons} icon="feedback"
           label="Feedback"
           iconViewColor={colors.color1}
@@ -150,7 +145,7 @@ export const  DrawerContent = (props) => {
 const Item = ({iconLibary: IconLibrary, icon, label, iconViewColor, navigateTo}) => {
   const navigation = useNavigation()
   return (
-    <Button action={() => navigation.navigate(navigateTo)}>
+    <Button action={() => navigation.navigate(...navigateTo)}>
       <View style={[styles.row, styles.padding_md, styles.nowrap, { width: '100%', flex: 1 }, styles.alignItems_center, styles.justifyContent_between,]}>
         <View style={[styles.row, styles.alignItems_center]}>
           <View style={[styles.border_r_5, styles.marginRight_md, styles.flexCenter, { width: 30, height: 30, backgroundColor: iconViewColor }]}>

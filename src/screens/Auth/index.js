@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
-import ConfirmEmail from './confirmEmail';
+import ConfirmEmail from './ConfirmEmail';
 import Login from './Login';
 import SignUp from './SignUp';
 import LoginOptions from './LoginOptions';

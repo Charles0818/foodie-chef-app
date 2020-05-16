@@ -6,9 +6,13 @@ import { ScaleToSize, FadeIn } from '../Animations/index';
 import { service } from '../Utils';
 import { Button } from '../Buttons';
 import { colors } from '../../styles';
+import { useNavigation } from '@react-navigation/core';
 const { DisplayRating } = service;
 export const SquareServiceCard = (props) => {
-  const { service, navigation } = props;
+  const { navigation } = props;
+  const service = {
+    name: "Ruth's Chris Steak house"
+  }
   // const { id, name, price, thumbnail } = service;
   return (
     <ScaleToSize
@@ -32,7 +36,7 @@ export const SquareServiceCard = (props) => {
           </View>
         </View>
       </View>
-      <Button action={() => navigation.navigate("Service", { service })}>
+      <Button action={() => navigation.navigate("CookBook", { screen: 'ServiceDetails', params: { service } })}>
         <ImageBackground
           source={{uri: 'https://res.cloudinary.com/dx5lp5drd/image/upload/v1586035953/igbo-abacha-ncha_oeiamp.jpg'}}
           resizeMode="cover" resizeMethod="scale"
@@ -55,10 +59,14 @@ export const SquareServiceCard = (props) => {
   )
 }
 
-export const ListServiceCard = ({navigation})=> {
+export const ListServiceCard = ()=> {
+  const { navigate } = useNavigation();
+  const service = {
+    name: 'Little Creatures - Club Street'
+  }
   return (
     <FadeIn style={[cardStyle.container, styles.marginBottom_md, styles.boxShadow_md]}>
-      <Button style={[styles.padding_md]} activeOpacity={.6} action={() => navigation.navigate('ServiceRequest')}>
+      <Button style={[styles.padding_md]} activeOpacity={.6} action={() => navigate('CookBook', {screen: 'ServiceDetails', params: { service }})}>
         <View style={[styles.row]}>
           <View style={[styles.border_r_5, styles.overflow_h, styles.marginRight_sm, {width: 100, height: 100}]}>
             <Image source={{uri: 'https://res.cloudinary.com/dx5lp5drd/image/upload/v1586035953/igbo-abacha-ncha_oeiamp.jpg'}}

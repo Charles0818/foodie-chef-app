@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { Button } from '../Buttons';
 import { useNavigation } from '@react-navigation/core';
-import { FontAwesome5, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome5, AntDesign, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import styles, { colors } from '../../styles';
 
 const badgeCount =  108;
@@ -40,7 +40,7 @@ export const GoBackButton = ({content = 'dark'}) => {
   const { goBack } = useNavigation()
   return (
     <Button action={goBack} style={[styles.flexCenter, {width: 40, height: 40, borderRadius: 25}]}>
-      <FontAwesome5 name="arrow-left" size={25} color={content === 'light' ? colors.white : colors.dark} />
+      <AntDesign name="arrowleft" size={20} color={content === 'light' ? colors.white : colors.dark} />
     </Button>
   )
 }

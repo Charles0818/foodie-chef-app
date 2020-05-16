@@ -8,7 +8,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { Ionicons, FontAwesome5, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -16,7 +16,7 @@ import {
   Home, AuthStack, OnboardScreen, Earnings,
   SettingsStackScreen, ServiceRequest, Chat,
   Chats, IncomingRequest, Bookings, EarningsStackScreen,
-  Invite
+  Invite, Notifications, CookBook
 } from './src/screens/index';
 import { NavigationBars } from './src/components/index';
 import { store, actions } from './src/helpers/index';
@@ -41,7 +41,7 @@ const HomeTabScreen = () => {
       />
        <Tab.Screen
         name="CookBook"
-        component={Home}
+        component={CookBook}
         options={{
           tabBarLabel: 'Cook Book',
           icon: "store",
@@ -146,9 +146,12 @@ const App = () => {
               component={Chat}
             />
             <Stack.Screen
+              name="Chats"
+              component={Chats}
+            />
+            <Stack.Screen
               name="Notifications"
-              component={Home}
-             
+              component={Notifications}
             />
             <Stack.Screen
               name="Onboard"
