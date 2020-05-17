@@ -16,7 +16,7 @@ import {
   Home, AuthStack, OnboardScreen, Earnings,
   SettingsStackScreen, ServiceRequest, Chat,
   Chats, IncomingRequest, Bookings, EarningsStackScreen,
-  Invite, Notifications, CookBook
+  Invite, Notifications, CookBook, AboutUs, Feedback, HelpCenter
 } from './src/screens/index';
 import { NavigationBars } from './src/components/index';
 import { store, actions } from './src/helpers/index';
@@ -90,7 +90,7 @@ const DrawerNavigation = () => {
       hideStatusBar={false}
       minimumSwipeDistance={40}
       overlayColor={colors.dark_opacity}
-      drawerStyle={isLargeScreen ? null : { width: '100%' }}
+      drawerStyle={isLargeScreen ? null : { width: '80%' }}
       drawerContentOptions={{
         activeBackgroundColor: colors.bg_gray
       }}>
@@ -98,6 +98,9 @@ const DrawerNavigation = () => {
       <Drawer.Screen name="Settings" component={SettingsStackScreen} />
       <Drawer.Screen name="Earnings" component={Earnings} />
       <Drawer.Screen name="Invite" component={Invite} />
+      <Drawer.Screen name="About" component={AboutUs} />
+      <Drawer.Screen name="Feedback" component={Feedback} />
+      <Drawer.Screen name="HelpCenter" component={HelpCenter} />
     {/* screens */}
     </Drawer.Navigator>
   )

@@ -3,6 +3,7 @@ import { StatusBar } from 'react-native';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import Transactions from './Transactions';
 import Wallet from './Wallet';
+import Rewards from './Rewards';
 import { colors, styles } from '../styles'
 const EarningsStack = createStackNavigator();
 export default EarningsStackScreen = ({navigation}) => {
@@ -20,6 +21,7 @@ export default EarningsStackScreen = ({navigation}) => {
       <EarningsStack.Screen name="Wallet" component={Wallet} options={{
         headerShown: false,
       }} />
+      <EarningsStack.Screen name="Rewards" component={Rewards} />
       <EarningsStack.Screen name="Transactions" component={Transactions} options={{
         headerStatusBarHeight: 80,
         headerStyle: [{backgroundColor: colors.color1,}],

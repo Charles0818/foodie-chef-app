@@ -18,11 +18,17 @@ const SettingsStackScreen = () => {
     }}>
       <SettingsStack.Screen name="Settings" component={Settings} />
       <SettingsStack.Screen name="Currencies" component={Currencies} />
-      <SettingsStack.Screen name="PrivacySettings" component={PrivacySettings} />
+      <SettingsStack.Screen name="PrivacySettings" component={PrivacySettings} options={{
+        headerTitle: 'Privacy Settings'
+      }} />
       <SettingsStack.Screen name="Languages" component={Languages} />
-      <SettingsStack.Screen name="PaymentMethod" component={PaymentMethod} />
+      <SettingsStack.Screen name="PaymentMethod" component={PaymentMethod} options={{
+        headerTitle: 'Payment Method'
+      }} />
       <SettingsStack.Screen name="Password" component={Password} />
-      <SettingsStack.Screen name="NotificationSettings" component={NotificationSettings} />
+      <SettingsStack.Screen name="NotificationSettings" component={NotificationSettings} options={{
+        headerTitle: 'Notification Settings'
+      }} />
       <SettingsStack.Screen name="ProfileUpdate" initialParams={{uploadedDocuments: []}} component={ProfileUpdate}
         options={{
           title: "Personal Information",

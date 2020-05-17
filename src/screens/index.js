@@ -12,9 +12,12 @@ import EarningsStackScreen from './Earnings';
 import Invite from './Invite';
 import Notifications from './Notifications';
 import CookBook from './CookBook';
+import AboutUs from './About';
+import Feedback from './Feedback';
+import HelpCenter from './HelpCenter';
 export {
   AuthStack, Home, OnboardScreen, SettingsStackScreen,
   SplashScreen, ServiceRequest, Chat, Chats, Invite,
   Earnings, IncomingRequest, Bookings, EarningsStackScreen,
-  Notifications, CookBook
+  Notifications, CookBook, AboutUs, Feedback, HelpCenter
 };

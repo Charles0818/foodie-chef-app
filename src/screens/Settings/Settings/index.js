@@ -16,7 +16,7 @@ const Settings = () => {
           <Text style={[styles.fontWeight_700, styles.marginBottom_sm, styles.paddingLeft_sm, styles.font_md]}>Account</Text>
           <ListItemWithIcon iconLibary={FontAwesome5} icon="lock" label="Change Password" navigateTo={["Home"]} />
           <ListItemWithIcon iconLibary={MaterialCommunityIcons} icon="bell" label="Notifications" navigateTo={["Home",{ screen: "Notification"}]} />
-          <ListItemWithIcon iconLibary={MaterialCommunityIcons} icon="security" label="Privacy Settings" navigateTo={["PrivacyPolicy"]} />
+          <ListItemWithIcon iconLibary={MaterialCommunityIcons} icon="security" label="Privacy Settings" navigateTo={["PrivacySettings"]} />
           <ListItemWithIcon iconLibary={FontAwesome5} icon="user" label="Personal Information" navigateTo={["ProfileUpdate"]} />
           <ListItemWithIcon iconLibary={FontAwesome5} icon="sign-out-alt" label="Sign Out" navigateTo={["Home"]} />
         </View>

@@ -5,7 +5,6 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { styles, colors } from '../styles';
 import { Button } from '../Buttons';
 import { useNavigation } from '@react-navigation/core';
-
 export const BottomBar = ({ state, descriptors, navigation }) => {
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('tabLongPress', e => {
@@ -100,7 +99,7 @@ export const  DrawerContent = (props) => {
           label="Payment Method"
           iconViewColor={"#00aff0"}
         />
-        <Item navigateTo={["Home"]}
+        <Item navigateTo={["Earnings", {screen: 'Rewards'}]}
           iconLibary={FontAwesome5} icon="crown"
           label="Reward Credits"
           iconViewColor={"#5717de"}
@@ -122,17 +121,17 @@ export const  DrawerContent = (props) => {
           label="Invite Friends"
           iconViewColor={colors.google_green}
         />
-        <Item navigateTo={["Home"]}
+        <Item navigateTo={["HelpCenter"]}
           iconLibary={MaterialCommunityIcons} icon="help-circle"
           label="Help center"
           iconViewColor={colors.google_yellow}
         />
-        <Item navigateTo={["Home"]}
+        <Item navigateTo={["About"]}
           iconLibary={FontAwesome5} icon="info-circle"
           label="About us"
           iconViewColor={colors.facebook}
         />
-        <Item navigateTo={["Home"]}
+        <Item navigateTo={["Feedback"]}
           iconLibary={MaterialIcons} icon="feedback"
           label="Feedback"
           iconViewColor={colors.color1}
@@ -153,7 +152,6 @@ const Item = ({iconLibary: IconLibrary, icon, label, iconViewColor, navigateTo})
           </View>
           <Text numberOfLines={1} style={[styles.font_md, styles.fontWeight_700]}>{label}</Text>
         </View>
-        <FontAwesome5 name="greater-than" size={10} color={colors.gray_color} />
       </View>
     </Button>
   )
@@ -179,7 +177,6 @@ const ProfileView = () => {
               <Text numberOfLines={1} style={[styles.font_xsm, styles.color_white, styles.capitalize]}>VIP member</Text>
             </View>
           </View>
-          <FontAwesome5 name="greater-than" size={8} color={colors.color_gray} />
         </View>
       </View>
     </View>

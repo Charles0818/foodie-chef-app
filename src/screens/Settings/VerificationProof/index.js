@@ -12,7 +12,7 @@ const { dataConstants: { availableDocuments } } = Utils;
 const DocumentInstruction = ({title, instruction}) => {
   return (
     <View style={[styles.marginBottom_md]}>
-      <Text numberOfLines={2} style={[styles.font_lg, styles.fontWeight_700, styles.marginBottom_xsm]}>{title}</Text>
+      <Text numberOfLines={2} style={[styles.font_lg, styles.fontWeight_700, styles.marginBottom_xsm, styles.capitalize]}>{title}</Text>
       <Text style={[styles.font_sm, styles.marginBottom_xsm]}>{instruction}</Text>
     </View>
   )

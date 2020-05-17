@@ -19,7 +19,6 @@ const ProfileUpdate = ({ navigation, route: { params } }) => {
   const dropdownItems = availableDocuments.map(document => {
     return { label: document.title, value: document.title }
   });
-  console.log('this is', uploadedDocuments)
   const { Picker, selectedValue } = usePicker(dropdownItems)
   const { input: firstName, handleUserInput: setFirstName, error: firstNameErr, isValid: firstNameIsValid } = useFormInput('Name');
   const { input: lastName, handleUserInput: setLastName, error: lastNameErr, isValid: lastNameIsValid } = useFormInput('Name');
