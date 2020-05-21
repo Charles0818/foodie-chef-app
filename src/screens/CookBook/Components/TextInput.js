@@ -33,9 +33,12 @@ export default FormInput = ({label, value, onChange, err, textInputStyles = [], 
           outputRange: [14, 0],
         })
       },
-      isFieldActive || value ? (styles.font_xsm) : styles.font_md,
+      isFieldActive || value ? styles.font_xsm : styles.font_md,
     ]
   }
+  React.useEffect(() => {
+    returnAnimatedTitleStyles()
+  }, [value])
   return (
     <View style={[styles.marginBottom_sm]}>
       <View style = {[inputStyles.container, styles.bg_white, styles.slimBorderBottom, styles.fontWeight_bold]}>

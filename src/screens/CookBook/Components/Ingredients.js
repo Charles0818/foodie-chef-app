@@ -7,12 +7,11 @@ import { styles, colors } from '../../styles';
 import FormInput from './TextInput';
 const { useFormInput } = Form;
 
-export default Ingredients = () => {
-  const [ingredients, setIngredients] = React.useState([])
+export default Ingredients = ({ ingredients, setIngredients }) => {
   return (
     <Section>
       <View style={[styles.bg_color1, styles.paddingVertical_sm, styles.paddingHorizontal_sm, styles.marginBottom_xsm]}> 
-        <Text style={[styles.font_lg, styles.color_white, styles.fontWeight_700]}>Ingredients</Text>
+        <Text style={[styles.font_lg, styles.color_white, styles.fontWeight_700]}>Special Ingredient(s)</Text>
       </View>
       {ingredients.map((ingredient, index) => (
         <Ingredient index={index} key={index}

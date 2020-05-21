@@ -12,7 +12,7 @@ const CookBook = ({navigation}) => {
       cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
     }}>
       <CookBookStack.Screen name="CreateService" component={CreateService}
-        initialParams={{thumbnail: null}}
+        initialParams={{dish: {}, searchText: ''}}
         options={{
           headerTitle: 'Create Dish',
         }} />
