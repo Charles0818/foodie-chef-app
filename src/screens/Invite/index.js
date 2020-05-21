@@ -7,25 +7,19 @@ import { Screen, Section } from '../Wrapper';
 import { styles, colors } from '../styles';
 const { NavigationIcons: { GoBackButton } } = Utils;
 
-const Header = () => {
-  return (
-    <View style={[styles.row, styles.alignItems_end, styles.justifyContent_between, styles.bg_white, styles.boxShadowGray_sm, {height: 80}]}>
-      <View style={[styles.row, styles.alignItems_center, styles.justifyContent_between, styles.paddingHorizontal_sm]}>
-        <GoBackButton />
-        <View style={[{flex: 4}]}>
-          <Text style={[,styles.fontWeight_700, styles.text_center, styles.font_md]}>Invite & Earn</Text>
-        </View>
-        <Button style={[styles.flexCenter, {width: 40, height: 40, borderRadius: 20, flex: .5}]}>
-          <MaterialIcons name="help-outline" size={16} />
+const Invite = ({navigation}) => {
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Button style={[styles.flexCenter, styles.marginRight_sm, {width: 45, height: 45, borderRadius: 22.5, flex: .5}]}>
+          <MaterialIcons name="help-outline" size={20} />
         </Button>
-      </View>
-    </View>
-  )
-}
-const Invite = () => {
+      )
+    })
+  })
   return (
     <Screen>
-      <Header />
+      {/* <Header /> */}
       <Section style={[styles.marginTop_md, {flex: 1}]}>
         <View style={[styles.flexCenter, styles.marginBottom_md]}>
           <Text style={[styles.marginBottom_sm,styles.fontWeight_700, styles.font_md]}>Friend Stranded in a lockdown</Text>

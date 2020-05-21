@@ -1,3 +1,4 @@
-import Header from './Header';
+import CoverPhoto from './CoverPhoto';
 import ProfileStats from './ProfileStats';
-export { Header, ProfileStats }
+import Header from './Header';
+export { CoverPhoto, ProfileStats, Header }

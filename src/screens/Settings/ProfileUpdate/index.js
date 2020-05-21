@@ -26,7 +26,7 @@ const ProfileUpdate = ({ navigation, route: { params } }) => {
   const validate = firstNameIsValid && lastNameIsValid && emailIsValid
   return (
     <Screen>
-      <Section style={[styles.paddingHorizontal_md, {flex: 1}]}>
+      <Section style={[styles.paddingHorizontal_md, styles.paddingTop_md, {flex: 1}]}>
         <ScrollView>
           <FormInput value={firstName} placeholder="Enter your first name" label="First name" onChange={setFirstName} err={firstNameErr} />
           <FormInput value={lastName} placeholder="Enter your last name (surname)" label="Last name" onChange={setLastName} err={lastNameErr} />

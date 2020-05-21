@@ -47,3 +47,21 @@ export const bookingStatus = [
     color: colors.facebook,
   },
 ]
+
+export const bookingStatusUpdates = [
+  {
+    name: "Received",
+    description: 'We have received and confirmed your booking',
+    tick: true,
+  },
+  {
+    name: "Dispatched",
+    description:"The Chef is on his eay to your house",
+    tick: true
+  },
+  {
+    name: "Served",
+    description: 'Meal has been served as confirmed by you',
+    tick: false
+  },
+]

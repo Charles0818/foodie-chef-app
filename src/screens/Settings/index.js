@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
+import { createStackNavigator, CardStyleInterpolators, HeaderBackButton } from '@react-navigation/stack';
 import Settings from './Settings';
 import Currencies from './Currencies';
 import PrivacySettings from './Privacy';
@@ -11,12 +11,17 @@ import Password from './Password';
 import PaymentMethod from './PaymentMethod';
 import { NavigationBars } from '../../components'
 const SettingsStack = createStackNavigator();
-const SettingsStackScreen = () => {
+const SettingsStackScreen = ({navigation, route}) => {
+ 
+  const navRoutes = navigation.dangerouslyGetParent();
+  console.log('previous', navRoutes)
   return (
     <SettingsStack.Navigator initialRouteName="Settings" screenOptions={{
       cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
     }}>
-      <SettingsStack.Screen name="Settings" component={Settings} />
+      <SettingsStack.Screen name="Settings" component={Settings} options={{
+        headerLeft: () => <HeaderBackButton onPress={() => navigation.goBack()} />
+      }}/>
       <SettingsStack.Screen name="Currencies" component={Currencies} />
       <SettingsStack.Screen name="PrivacySettings" component={PrivacySettings} options={{
         headerTitle: 'Privacy Settings'

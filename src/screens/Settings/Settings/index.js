@@ -11,20 +11,20 @@ const Settings = () => {
   const { ToggleButton: PhoneCallSwitch } = useToggleButton();
   return (
     <Screen>
-      <Section>
+      <Section style={[styles.paddingTop_md]}>
         <View style={[styles.marginBottom_md]}>
           <Text style={[styles.fontWeight_700, styles.marginBottom_sm, styles.paddingLeft_sm, styles.font_md]}>Account</Text>
-          <ListItemWithIcon iconLibary={FontAwesome5} icon="lock" label="Change Password" navigateTo={["Home"]} />
-          <ListItemWithIcon iconLibary={MaterialCommunityIcons} icon="bell" label="Notifications" navigateTo={["Home",{ screen: "Notification"}]} />
+          <ListItemWithIcon iconLibary={FontAwesome5} icon="lock" label="Change Password" navigateTo={["Password"]} />
+          <ListItemWithIcon iconLibary={MaterialCommunityIcons} icon="bell" label="Notifications" navigateTo={["NotificationSettings"]} />
           <ListItemWithIcon iconLibary={MaterialCommunityIcons} icon="security" label="Privacy Settings" navigateTo={["PrivacySettings"]} />
           <ListItemWithIcon iconLibary={FontAwesome5} icon="user" label="Personal Information" navigateTo={["ProfileUpdate"]} />
           <ListItemWithIcon iconLibary={FontAwesome5} icon="sign-out-alt" label="Sign Out" navigateTo={["Home"]} />
         </View>
         <View style={[]}>
           <Text style={[styles.fontWeight_700, styles.marginBottom_sm, styles.paddingLeft_sm, styles.font_md]}>More Options</Text>
-          <ListItemWithSwitch label="Newsletter" navigateTo="Home" switch={NewsLetterSwitch} />
-          <ListItemWithSwitch label="Text Messages" navigateTo="Home" switch={TextMessageSwitch} />
-          <ListItemWithSwitch label="Phone Calls" navigateTo="Home" switch={PhoneCallSwitch} />
+          <ListItemWithSwitch label="Newsletter" switch={NewsLetterSwitch} />
+          <ListItemWithSwitch label="Text Messages" switch={TextMessageSwitch} />
+          <ListItemWithSwitch label="Phone Calls" switch={PhoneCallSwitch} />
           <ListItemWithValue label="Currency" navigateTo="Currencies" value="$-USD" />
           <ListItemWithValue label="Language" navigateTo="Languages" value="English" />
           <ListItemWithValue label="Linked Accounts" navigateTo="Home" value="Facebook, Google" />
@@ -40,25 +40,23 @@ const ListItemWithIcon = ({iconLibary: IconLibrary, icon, label, navigateTo }) =
   return (
     <View style={[styles.slimBorderBottom,]}>
       <Button action={() => navigation.navigate(...navigateTo)}>
-        <View style={[styles.row, styles.nowrap, styles.paddingVertical_sm, styles.paddingHorizontal_sm, styles.alignItems_center, styles.justifyContent_between,]}>
+        <View style={[styles.paddingVertical_sm, styles.paddingHorizontal_sm,]}>
           <View style={[styles.row, styles.alignItems_center, ]}>
             <View style={[styles.border_r_5, styles.bg_color1, styles.marginRight_md, styles.flexCenter, { width: 30, height: 30 }]}>
               <IconLibrary  name={icon} style={[]} color={colors.white} size={16} />
             </View>
             <Text numberOfLines={1} style={[styles.font_md, styles.fontWeight_700]}>{label}</Text>
           </View>
-          <FontAwesome5 name="greater-than" size={10} color={colors.gray_color} />
         </View>
       </Button>
     </View>
   )
 }
 
-const ListItemWithSwitch = ({switch: Switch, label, navigateTo}) => {
-  const navigation = useNavigation()
+const ListItemWithSwitch = ({switch: Switch, label}) => {
   return (
     <View style={[styles.slimBorderBottom]}>
-      <Button action={() => navigation.navigate(navigateTo)}>
+      <Button >
         <View style={[styles.row, styles.alignItems_center, styles.paddingVertical_sm, styles.paddingHorizontal_sm, styles.justifyContent_between]}>
           <Text numberOfLines={1} style={[styles.font_md, styles.fontWeight_700]}>{label}</Text>
           {Switch}
@@ -77,7 +75,6 @@ const ListItemWithValue = ({label, value, navigateTo}) => {
           <Text numberOfLines={1} style={[styles.font_md, styles.fontWeight_700]}>{label}</Text>
           <View style={[styles.row, styles.alignItems_center]}>
             <Text numberOfLines={1} style={[styles.font_md, styles.color_gray, styles.fontWeight_700, styles.marginRight_sm]}>{value}</Text>
-            <FontAwesome5 name="greater-than" size={10} color={colors.gray_color} />
           </View>
         </View>
       </Button>

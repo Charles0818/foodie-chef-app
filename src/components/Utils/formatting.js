@@ -13,21 +13,20 @@ export const quantifier = (qty, name) => {
 export const stringifyDate = (timestamp) => {
   const date = new Date(timestamp);
   const currentDate = new Date();
-  const contentDay = date.getDay();
+  const publishedDay = date.getDay();
   const currentDay = currentDate.getDay()
   const differenceInDays =( currentDate.getTime() - date.getTime()) / (1000 * 60 * 60 * 24);
 
   switch(differenceInDays) {
-    case (differenceInDays === 1 && currentDay - contentDay === 1) :
+    case (differenceInDays === 1 && currentDay - publishedDay === 1) :
       return `yesterday at ${dateTimeFormat_12hr(date)}`
-    case (differenceInDays === 0 && currentDay === contentDay) :
+    case (differenceInDays === 0 && currentDay === publishedDay) :
       return `today at ${dateTimeFormat_12hr(date)}`
     case (differenceInDays > 1):
       return `${getWeekDay(date.getDay())}`
     default:
       return `${getMonthName(date.getMonth())} ${date.getDate()} at ${dateTimeFormat_12hr(date)}`
   }
-    
 }
 
 export const dateTimeFormat_12hr = (date = new Date()) => {

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { styles } from './styles';
 export const Screen = ({children, style}) => {
   return (
-    <SafeAreaView style={[styles.screen, styles.paddingTop_md, style ? style : null]}>
+    <SafeAreaView style={[styles.screen, style ? style : null]}>
       {children}
     </SafeAreaView>
   )

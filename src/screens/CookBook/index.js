@@ -3,18 +3,24 @@ import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/
 import CreateService from './CreateService';
 import AllServices from './AllServices';
 import ServiceDetails from './ServiceDetails';
+import SelectCookThumbnail from './SelectCookThumbnail';
 import { NavigationBars } from '../../components';
 const CookBookStack = createStackNavigator();
-const CookBook = () => {
+const CookBook = ({navigation}) => {
   return (
     <CookBookStack.Navigator initialRouteName="AllServices" screenOptions={{
       cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
     }}>
-      <CookBookStack.Screen name="CreateService" component={CreateService} options={{
-        headerTitle: 'Create Service'
-      }} />
+      <CookBookStack.Screen name="CreateService" component={CreateService}
+        initialParams={{thumbnail: null}}
+        options={{
+          headerTitle: 'Create Dish',
+        }} />
       <CookBookStack.Screen name="AllServices" component={AllServices} options={{
         headerTitle: 'All Services'
+      }} />
+      <CookBookStack.Screen name="SelectCookThumbnail" component={SelectCookThumbnail} options={{
+        headerTitle: false,
       }} />
       <CookBookStack.Screen name="ServiceDetails" component={ServiceDetails} options={{
         headerTitle: 'Pizza'

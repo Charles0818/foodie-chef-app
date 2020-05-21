@@ -16,7 +16,8 @@ import {
   Home, AuthStack, OnboardScreen, Earnings,
   SettingsStackScreen, ServiceRequest, Chat,
   Chats, IncomingRequest, Bookings, EarningsStackScreen,
-  Invite, Notifications, CookBook, AboutUs, Feedback, HelpCenter
+  Invite, Notifications, CookBook, AboutUs, Feedback,
+  HelpCenter, PromoCode, CompletedRequest
 } from './src/screens/index';
 import { NavigationBars } from './src/components/index';
 import { store, actions } from './src/helpers/index';
@@ -97,10 +98,6 @@ const DrawerNavigation = () => {
       <Drawer.Screen name="Home" component={HomeTabScreen} />
       <Drawer.Screen name="Settings" component={SettingsStackScreen} />
       <Drawer.Screen name="Earnings" component={Earnings} />
-      <Drawer.Screen name="Invite" component={Invite} />
-      <Drawer.Screen name="About" component={AboutUs} />
-      <Drawer.Screen name="Feedback" component={Feedback} />
-      <Drawer.Screen name="HelpCenter" component={HelpCenter} />
     {/* screens */}
     </Drawer.Navigator>
   )
@@ -137,11 +134,30 @@ const App = () => {
               }}
             />
             <Stack.Screen
+              name="Invite"
+              component={Invite}
+              options={{
+                headerTitle: 'Invite & Earn',
+                headerTitleAlign: 'center'
+              }}
+            />
+            <Stack.Screen name="About" component={AboutUs} />
+            <Stack.Screen name="Feedback" component={Feedback} />
+            <Stack.Screen name="HelpCenter" component={HelpCenter} />
+            <Stack.Screen name="PromoCode" component={PromoCode} />
+            <Stack.Screen
               name="IncomingRequest"
               component={IncomingRequest}
               options={{
                 headerShown: false,
                 
+              }}
+            />
+            <Stack.Screen
+              name="CompletedRequest"
+              component={CompletedRequest} 
+              options={{
+                headerTitle: 'Booking Details'
               }}
             />
             <Stack.Screen
@@ -155,6 +171,7 @@ const App = () => {
             <Stack.Screen
               name="Notifications"
               component={Notifications}
+              
             />
             <Stack.Screen
               name="Onboard"

@@ -9,7 +9,7 @@ export const useFormInput = (name, value) => {
     setInput(value);
     setIsValid(FormValidation(name, value, setError))
   };
-  return { input, handleUserInput, error, isValid }
+  return { input, handleUserInput, error, isValid, setError }
 }
 
 export const useFileInput = () => {

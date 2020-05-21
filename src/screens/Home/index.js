@@ -4,7 +4,7 @@ import { Cards, Carousels, Button, useToggleButton, Spinners } from '../../compo
 import { Screen, Section } from '../Wrapper';
 import { styles, colors } from '../styles';
 import { useNavigation } from '@react-navigation/core';
-import { Header, ProfileStats } from './Components';
+import { CoverPhoto, ProfileStats, Header } from './Components';
 const { SquareServiceCard, ListServiceCard } = Cards;
 const { ComponentCarousel } = Carousels;
 const { useSpinner } = Spinners;
@@ -23,9 +23,9 @@ const Home = ({navigation}) => {
   if(animating) return Spinner;
   return (
     <Screen>
-      {/* <StatusBar barStyle="light-content"/> */}
+      <Header />
       <ScrollView>
-        <Header navigation={navigation} />
+        <CoverPhoto navigation={navigation} />
         <ProfileStats />
         <NotificationToggle />
         <Tabs />

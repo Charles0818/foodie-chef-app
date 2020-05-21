@@ -8,23 +8,23 @@ import { WalletDashboard } from '../Components'
 
 const { NavigationIcons: { NotificationBell } } = Utils;
 export default Wallet = ({navigation}) => {
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => <NotificationBell style={[styles.marginRight_sm]} />,
+      headerLeft: () => (
+        <View style={[styles.marginLeft_sm]}>
+          <Button action={() => navigation.openDrawer()} style={[styles.flexCenter, {height: 45, width: 45, borderRadius: 22.5}]}>
+            <FontAwesome5 name="bars" size={16} />
+          </Button>
+        </View>
+      )
+    })
+  })
   return (
     <Screen>
       <ScrollView>
-        <View style={[styles.bg_color1, styles.paddingHorizontal_sm, styles.paddingTop_lg, styles.paddingBottom_md, styles.marginBottom_md, {borderBottomRightRadius: 30, borderBottomLeftRadius: 30}]}>
-          <View style={[styles.row, styles.alignItems_center, styles.justifyContent_between, styles.marginBottom_md]}>
-            <View style={[styles.row, styles.alignItems_center]}>
-              <View style={[styles.marginRight_md]}>
-                <Button action={() => navigation.openDrawer()} style={[]}>
-                  <FontAwesome5 name="bars" size={16} color={colors.white} />
-                </Button>
-              </View>
-              <Text numberOfLines={1} style={[styles.font_lg, styles.fontWeight_700, styles.color_white,]}>Dashboard</Text>
-            </View>
-            <View style={[styles.bg_white, styles.flexCenter, {width: 40, height: 40, borderRadius: 40 / 2}]}>
-              <NotificationBell />
-            </View>
-          </View>
+        <View style={[styles.bg_color1, styles.paddingHorizontal_sm, styles.paddingTop_sm, styles.paddingBottom_md, styles.marginBottom_md, {borderBottomRightRadius: 30, borderBottomLeftRadius: 30}]}>
+          
           <WalletDashboard navigate={navigation.navigate} />
         </View>
         <Section>

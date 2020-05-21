@@ -4,8 +4,10 @@ import { View, Text, Dimensions, Image } from 'react-native';
 import { Button } from '../../../components';
 import { Section } from '../../Wrapper';
 import { styles, colors } from '../../styles';
+import { useNavigation } from '@react-navigation/core';
 
 const ProfileStats = () => {
+  const { navigate } = useNavigation();
   return (
     <Section style={[{transform: [{translateY: -30}] }]}>
       <View style={[styles.bg_white, styles.border_r_5, styles.boxShadowDark_sm, styles.padding_sm]}>
@@ -23,8 +25,8 @@ const ProfileStats = () => {
           </View>
           <View style={[styles.row, styles.alignItems_center, {height: 30}]}>
             <View style={[styles.marginRight_sm]}>
-              <Button action={() =>  pickImage()} style={[styles.flexCenter, styles.bg_color1Opacity, {width: 25, height: 25, borderRadius: 12.5,}]}
-                action={() => console.log('Button clicked')}>
+              <Button action={() =>  navigate('Settings', {screen: 'Settings'})}
+                style={[styles.flexCenter, styles.bg_color1Opacity, {width: 25, height: 25, borderRadius: 12.5,}]}>
                 <FontAwesome5 name="user-cog" size={10} color={colors.color1} />
               </Button>
             </View>

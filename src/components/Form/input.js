@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import { Text, View, StyleSheet, TextInput, Picker as RNPicker } from 'react-native';
+import React from 'react';
+import { Text, View, StyleSheet, TextInput } from 'react-native';
 import { styles, colors } from '../styles';
-// import { Picker as RNPicker, PickerIOS } from '@react-native-community/picker';
 import { Button } from '../Buttons';
 import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 export const FormInput = ({placeholder, value, onChange, err, label, ...rest}) => {
@@ -12,6 +11,23 @@ export const FormInput = ({placeholder, value, onChange, err, label, ...rest}) =
         placeholder={placeholder}
         onChangeText={text => onChange(text)}
         value={value}
+        {...rest}
+      />
+      <Text style={[styles.color_danger, styles.font_sm]}>{err}</Text>
+    </View>
+  )
+}
+
+export const TextArea = ({ placeholder, value, onChange, err, label, ...rest }) => {
+  return (
+    <View style={[styles.marginBottom_sm]}>
+      <Text style={[styles.fontWeight_bold, styles.font_sm, styles.marginBottom_xsm]}>{label}</Text>
+      <TextInput style={[formStyles.input, styles.slimBorder, styles.padding_md, styles.marginBottom_xsm, {height: 150}]}
+        placeholder={placeholder}
+        onChangeText={text => onChange(text)}
+        value={value}
+        multiline={true}
+        textAlignVertical="top"
         {...rest}
       />
       <Text style={[styles.color_danger, styles.font_sm]}>{err}</Text>
@@ -73,29 +89,6 @@ export const useCheckBox = (value = false) => {
     </Button>
   );
   return { CustomCheckBox, isChecked: isChecked, toggleCheckBox }
-}
-
-const CustomPicker = ({ labels, onChange, value, ...rest }) => {
-  return (
-    <View style={[styles.slimBorder]}>
-    <RNPicker
-      selectedValue={value}
-      style={[{height: 50, width: '100%'}]}
-      onValueChange={(value, index) => onChange(value)}
-      {...rest}
-    >
-      {labels.map((item, index) => <RNPicker.Item style={[styles.capitalize]} key={index} label={item.label} value={item.value} />)}
-    </RNPicker>
-    </View>
-  )
-}
-
-export const usePicker = (labels = []) => {
-  const [selectedValue, setSelectedValue] = useState(labels[0]);
-  const Picker = ({...props}) => {
-    return <CustomPicker labels={labels} value={selectedValue} onChange={setSelectedValue} {...props} />
-  }
-  return { selectedValue, Picker }
 }
 
 const formStyles = StyleSheet.create({

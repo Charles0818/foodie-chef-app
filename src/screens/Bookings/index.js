@@ -1,12 +1,12 @@
 import React from 'react';
-import { View, Text, FlatList, Dimensions } from 'react-native';
+import { View, Text, FlatList, Dimensions, ScrollView } from 'react-native';
 import { Screen } from '../Wrapper';
 import { styles } from '../styles';
-import { Utils, Cards} from '../../components';
+import { Utils, Cards, Button} from '../../components';
 
 const { dataConstants: { bookingStatus }, NavigationIcons: {  NotificationBell } } = Utils;
 const { BookingCard } = Cards;
-const bookings = [
+const allBookings = [
   {
     name: 'Charles Willson',
     isNew: true,
@@ -171,25 +171,29 @@ const Header = () => {
   )
 }
 const Bookings = ({ navigation }) => {
+  const [bookings, setBookings] = React.useState(allBookings);
+  const filterByStatus = (status) => setBookings(allBookings.filter(el => el.status === status))
   return (
     <Screen style={[styles.paddingTop_sm,  styles.paddingBottom_sm, styles.bg_white]}>
       <Header />
+      <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{height: 50}}
+        style={[styles.marginBottom_sm, styles.marginTop_sm, styles.paddingHorizontal_sm, ]}>
+        <Button action={() => setBookings(allBookings)} style={[styles.marginRight_xsm, styles.flexCenter, styles.padding_md, styles.border_r_5, styles.bg_gray, { height: 40 }]}>
+          <Text style={[styles.font_sm]}>All</Text>
+        </Button>
+        {bookingStatus.map((el, key) => (
+          <Button key={key} action={() => filterByStatus(el.name)} style={[styles.marginRight_xsm, styles.flexCenter, styles.padding_md, styles.border_r_5, {backgroundColor: el.color, height: 40 }]}>
+            <Text style={[styles.color_white, styles.font_sm]}>{el.name}</Text>
+          </Button>
+        ))}
+      </ScrollView>
       <FlatList
         data={bookings}
-        ListHeaderComponent={() =>(
-        <View style={[styles.row, styles.alignItems_center, styles.marginBottom_sm, styles.marginTop_sm, styles.paddingHorizontal_sm]}>
-          {bookingStatus.map((el, key) => (
-             <View key={key} style={[styles.marginRight_xsm, styles.padding_sm, styles.border_r_5, {backgroundColor: el.color }]}>
-              <Text style={[styles.color_white, styles.font_sm]}>{el.name}</Text>
-            </View>
-          ))}
-        </View>
-      )}
         renderItem={({ item, index, separators }) => <BookingCard key={index} booking={item} />}
         keyExtractor={(item, index) => index.toString()}
         showsVerticalScrollIndicator={false}
         initialNumToRender={30}
-        contentContainerStyle={[styles.flexCenter, {width: Dimensions.get('window').width}]}
+        contentContainerStyle={[styles.flexCenter, styles.paddingTop_sm, {width: Dimensions.get('window').width}]}
       />
     </Screen>
   )

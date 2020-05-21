@@ -1,19 +1,14 @@
 import React from 'react';
-import { View, Text, ImageBackground, Image, Dimensions, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, Text, ImageBackground, Dimensions, ActivityIndicator, StyleSheet } from 'react-native';
 import { FontAwesome, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
-import { styles } from '../styles';
-import { ScaleToSize, FadeIn } from '../Animations/index';
-import { service } from '../Utils';
-import { Button } from '../Buttons';
-import { colors } from '../../styles';
-import { useNavigation } from '@react-navigation/core';
-const { DisplayRating } = service;
-export const SquareServiceCard = (props) => {
+import { ScaleToSize } from '../../Animations';
+import { Button } from '../../Buttons';
+import { styles, colors } from '../../styles';
+export default SquareServiceCard = (props) => {
   const { navigation } = props;
   const service = {
     name: "Ruth's Chris Steak house"
   }
-  // const { id, name, price, thumbnail } = service;
   return (
     <ScaleToSize
       style={[cardStyle.container, styles.paddingVertical_sm,  styles.marginRight_sm, styles.marginBottom_sm]}>
@@ -23,7 +18,6 @@ export const SquareServiceCard = (props) => {
           <View style={[styles.row, styles.alignItems_center, styles.marginRight_sm]}>
             <MaterialIcons name="location-on" color={colors.gray_color} size={16} style={[styles.marginRight_xsm]} />
             <Text style={[styles.color_gray, styles.fontWeight_700, styles.font_xsm,]}>Salt lake city</Text>
-            {/* country flag*/}
           </View>
           <View style={[styles.row, styles.alignItems_center]}>
             <FontAwesome5 name="clock" color={colors.gray_color} size={16} style={[styles.marginRight_sm]} />
@@ -36,7 +30,7 @@ export const SquareServiceCard = (props) => {
           </View>
         </View>
       </View>
-      <Button action={() => navigation.navigate("CookBook", { screen: 'ServiceDetails', params: { service } })}>
+      <Button action={() => navigation.navigate("ServiceRequest")}>
         <ImageBackground
           source={{uri: 'https://res.cloudinary.com/dx5lp5drd/image/upload/v1586035953/igbo-abacha-ncha_oeiamp.jpg'}}
           resizeMode="cover" resizeMethod="scale"
@@ -59,39 +53,6 @@ export const SquareServiceCard = (props) => {
   )
 }
 
-export const ListServiceCard = ()=> {
-  const { navigate } = useNavigation();
-  const service = {
-    name: 'Little Creatures - Club Street'
-  }
-  return (
-    <FadeIn style={[cardStyle.container, styles.marginBottom_md, styles.boxShadow_md]}>
-      <Button style={[styles.padding_md]} activeOpacity={.6} action={() => navigate('CookBook', {screen: 'ServiceDetails', params: { service }})}>
-        <View style={[styles.row]}>
-          <View style={[styles.border_r_5, styles.overflow_h, styles.marginRight_sm, {width: 100, height: 100}]}>
-            <Image source={{uri: 'https://res.cloudinary.com/dx5lp5drd/image/upload/v1586035953/igbo-abacha-ncha_oeiamp.jpg'}}
-              resizeMethod="scale" style={[{width: '100%', flex: 1}]}
-            />
-          </View>
-          <View style={[styles.justifyContent_between, {flex: 1}]}>
-            <Text numberOfLines={2} style={[styles.font_lg, styles.fontWeight_700, styles.capitalize, styles.marginBottom_xsm]}>Little Creatures - Club Street</Text>
-            <View>
-              <View style={[styles.row, styles.alignItems_center, styles.marginBottom_sm]}>
-                <MaterialIcons name="location-on" color={colors.gray_color} size={16} style={[styles.marginRight_xsm]} />
-                <Text numberOfLines={1} style={[styles.color_gray, styles.font_xsm,]}>856 Esta Underpass</Text>
-              </View>
-              <View style={[styles.row, styles.justifyContent_between, styles.alignItems_center]}>
-                <DisplayRating averageRating={4.8} totalRatings={233} />
-                <Text numberOfLines={1} style={[styles.fontWeight_700, styles.color1]}>$ 67.00</Text>
-              </View>
-            </View>
-          </View>
-        </View>
-      </Button>
-    </FadeIn>
-  )
-}
-
 const cardStyle = StyleSheet.create({
   container: {
     width: (Dimensions.get('window').width) - 45,
@@ -106,13 +67,5 @@ const cardStyle = StyleSheet.create({
     borderTopRightRadius: 5,
     borderTopLeftRadius: 5,
     overflow: 'hidden',
-  },
-  desc: {
-    width: '100%',
-    maxHeight: 35,
-    justifyContent:'flex-end',
-    flex: 1,
-    position: 'absolute',
-    bottom: 0,
   }
 });

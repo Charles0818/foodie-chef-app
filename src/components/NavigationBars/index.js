@@ -104,7 +104,7 @@ export const  DrawerContent = (props) => {
           label="Reward Credits"
           iconViewColor={"#5717de"}
         />
-        <Item navigateTo={["Home"]}
+        <Item navigateTo={["PromoCode"]}
           iconLibary={MaterialIcons} icon="dialpad"
           label="My Promo code"
           iconViewColor={"#f0b100"}

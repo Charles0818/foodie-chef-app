@@ -1,33 +1,26 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
-import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
+import { createStackNavigator, CardStyleInterpolators, HeaderBackButton } from '@react-navigation/stack';
 import Transactions from './Transactions';
 import Wallet from './Wallet';
 import Rewards from './Rewards';
 import { colors, styles } from '../styles'
 const EarningsStack = createStackNavigator();
 export default EarningsStackScreen = ({navigation}) => {
-    React.useEffect(() => {
-      const navlistener = navigation.addListener('didFocus', () => {
-        StatusBar.setBarStyle('light-content', true);
-      StatusBar.setBackgroundColor(colors.color1, true);
-    });
-    return () => navigation.removeListener(navlistener)
-  }, [])
   return (
     <EarningsStack.Navigator initialRouteName="Wallet" screenOptions={{
       cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
     }}>
       <EarningsStack.Screen name="Wallet" component={Wallet} options={{
-        headerShown: false,
+        headerTitle: 'Dashboard'
       }} />
-      <EarningsStack.Screen name="Rewards" component={Rewards} />
+      <EarningsStack.Screen name="Rewards" component={Rewards}  />
       <EarningsStack.Screen name="Transactions" component={Transactions} options={{
         headerStatusBarHeight: 80,
         headerStyle: [{backgroundColor: colors.color1,}],
         headerTitleStyle: {color: colors.white, fontSize: 24},
         headerTitleAllowFontScaling: true,
-        headerBackTitleStyle: colors.white,
+        headerTintColor: colors.white,
       }} />
     </EarningsStack.Navigator>
   )

@@ -60,7 +60,7 @@ const UploadArea = ({documentSide, image, setImage, accessCamera}) => {
           <FontAwesome5 name="trash-alt" size={16} color={colors.color1} />
         </Button>
       </View>
-      <ImageBackground source={{uri: image}} style={[compStyles.uploadArea]}>
+      <ImageBackground source={image ? {uri: image} : null} style={[compStyles.uploadArea]}>
         {!image ? (
         <Button action={accessCamera} style={[compStyles.cameraIcon]}>
           <Feather name="camera" size={30} color={colors.gray_color} />
