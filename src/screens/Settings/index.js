@@ -7,7 +7,7 @@ import ProfileUpdate from './ProfileUpdate';
 import VerificationProof from './VerificationProof';
 import Languages from './Languages';
 import NotificationSettings from './Notification';
-import Password from './Password';
+import ChangePassword from './Password';
 import PaymentMethod from './PaymentMethod';
 import { NavigationBars } from '../../components'
 const SettingsStack = createStackNavigator();
@@ -30,7 +30,7 @@ const SettingsStackScreen = ({navigation, route}) => {
       <SettingsStack.Screen name="PaymentMethod" component={PaymentMethod} options={{
         headerTitle: 'Payment Method'
       }} />
-      <SettingsStack.Screen name="Password" component={Password} />
+      <SettingsStack.Screen name="ChangePassword" component={ChangePassword} />
       <SettingsStack.Screen name="NotificationSettings" component={NotificationSettings} options={{
         headerTitle: 'Notification Settings'
       }} />

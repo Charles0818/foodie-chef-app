@@ -72,3 +72,11 @@ export const retrieveToken = async () => {
     console.log(error)
   }
 }
+
+export const clearStorage = async () => {
+  try {
+    await AsyncStorage.multiRemove(['userToken', 'isFirstTime'])
+  } catch (error) {
+    console.log(error)
+  }
+}

@@ -31,13 +31,16 @@ const Login = ({navigation}) => {
             <Text numberOfLines={1} style={[styles.color2, styles.font_sm]}>Login your account.</Text>
           </View>
           <View style={[styles.marginBottom_sm]}>
-            <FormInput2 icon={"at"} value={email} onChange={setEmail} err={emailErr} placeholder="Email Address" keyboardType="email-address" />
-            <FormInput2 icon={"lock"} value={password} onChange={setPassword} err={passwordErr} placeholder="Password" />
+            <FormInput2 icon={"at"} value={email} onChange={setEmail} err={emailErr} placeholder="Email Address" keyboardType="email-address" textContentType="emailAddress" />
+            <FormInput2 icon={"lock"} value={password} onChange={setPassword} err={passwordErr} placeholder="Password" textContentType="password" />
             <Button action={handleLogin}
               style={[styles.bg_danger, styles.flexCenter, { height: 50, width: '100%' }]}>
               <Text numberOfLines={1} style={[styles.font_md, styles.color_white, styles.fontWeight_700, styles.text_center]}>LOGIN</Text>
             </Button>
           </View>
+          <Button action={() => navigation.navigate("ForgotPassword")}>
+            <Text numberOfLines={1} style={[styles.color_white, styles.font_md, styles.text_center, styles.fontWeight_700, styles.marginBottom_sm]}>Forgot Password ?</Text>
+          </Button>
           <Button action={() => navigation.navigate("LoginOptions")}>
             <Text numberOfLines={1} style={[styles.color_white, styles.font_md, styles.text_center, styles.fontWeight_700]}>Go back to login options</Text>
           </Button>

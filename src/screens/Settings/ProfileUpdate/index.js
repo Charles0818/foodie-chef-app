@@ -26,7 +26,7 @@ const ProfileUpdate = ({ navigation, route: { params } }) => {
   const { input: city, handleUserInput: setCity, error: cityErr, isValid: cityIsValid } = useFormInput('City');
   const { input: state, handleUserInput: setState, error: stateErr, isValid: stateIsValid } = useFormInput('State');
   const { input: country, handleUserInput: setCountry, error: countryErr, isValid: countryIsValid } = useFormInput('Country');
-  const validate = firstNameIsValid && lastNameIsValid && addressIsValid
+  const validate = firstNameIsValid && lastNameIsValid && addressIsValid && cityIsValid && stateIsValid && countryIsValid
   return (
     <Screen>
       <Section style={[styles.paddingHorizontal_md, styles.paddingTop_md, {flex: 1}]}>
@@ -60,7 +60,6 @@ const ProfileUpdate = ({ navigation, route: { params } }) => {
             </Button>
           </View>
         </ScrollView>
-        
       </Section>
     </Screen>
   )

@@ -48,17 +48,16 @@ export const ChatFormInput = ({ value, onChange, ...rest }) => {
     </View>
   )
 }
-export const FormInput2 = ({ placeholder, value, onChange, err, icon, ...rest }) => {
+export const FormInput2 = ({ placeholder, value, onChange, err, icon, iconLibrary: IconLibrary = FontAwesome5, ...rest }) => {
   return (
     <View style={[styles.marginBottom_xsm,]}>
       <View
         style={[styles.position_relative,
-        
         styles.marginBottom_xsm,
-        styles.bg_darkOpacity,
-        { borderColor: colors.white, borderWidth: 1 }]}
+        styles.border_r_5,
+        styles.bg_darkOpacity,]}
       >
-        <TextInput style={[formStyles.input, styles.paddingHorizontal_sm, styles.font_sm, styles.color_white, styles.fontWeight_700,]}
+        <TextInput style={[formStyles.input, styles.paddingHorizontal_sm, styles.paddingVertical_sm, styles.font_md, styles.color_white, styles.fontWeight_700,]}
           placeholder={placeholder}
           onChangeText={text => onChange(text)}
           value={value}
@@ -66,7 +65,7 @@ export const FormInput2 = ({ placeholder, value, onChange, err, icon, ...rest })
           {...rest}
         />
         <View style={[formStyles.icon, styles.position_absolute]}>
-          <FontAwesome5 size={16} color={colors.white} name={icon} />
+          <IconLibrary size={20} color={colors.white} name={icon} />
         </View>
       </View>
       <Text style={[styles.color_danger, styles.font_sm]}>{err}</Text>
@@ -94,12 +93,12 @@ export const useCheckBox = (value = false) => {
 const formStyles = StyleSheet.create({
   input: {
     width: '100%',
-    height: 40,
+    height: 50,
     paddingBottom: 10,
-    paddingRight: 25,
+    paddingRight: 30,
   },
   icon: {
-    right: 4,
+    right: 10,
     top: '30%'
   }
 });

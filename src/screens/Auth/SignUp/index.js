@@ -28,9 +28,9 @@ const SignUp = ({navigation}) => {
             <Text numberOfLines={1} style={[styles.color2, styles.font_sm]}>Register with your email to get started.</Text>
           </View>
           <View style={[styles.marginBottom_sm]}>
-            <FormInput2 icon={"user"} value={name} onChange={setName} err={nameErr} placeholder="Full Name" />
-            <FormInput2 icon={"at"} value={email} onChange={setEmail} err={emailErr} placeholder="Email Address" keyboardType="email-address" />
-            <FormInput2 icon={"lock"} value={password} onChange={setPassword} err={passwordErr} placeholder="Password" />
+            <FormInput2 icon={"user"} value={name} onChange={setName} err={nameErr} placeholder="Full Name" textContentType="name" />
+            <FormInput2 icon={"at"} value={email} onChange={setEmail} err={emailErr} placeholder="Email Address" keyboardType="email-address" textContentType="emailAddress" />
+            <FormInput2 icon={"lock"} value={password} onChange={setPassword} err={passwordErr} placeholder="Password" textContentType="newPassword" />
             <FormInput2 icon={"lock"} value={password2} onChange={setPassword2} err={validatePassword} placeholder="Password Confirmation" />
             <Button action={() => navigation.navigate("Login")}
               style={[styles.bg_danger, styles.flexCenter, { height: 50, width: '100%' }]}>

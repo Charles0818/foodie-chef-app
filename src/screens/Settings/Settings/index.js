@@ -14,7 +14,7 @@ const Settings = () => {
       <Section style={[styles.paddingTop_md]}>
         <View style={[styles.marginBottom_md]}>
           <Text style={[styles.fontWeight_700, styles.marginBottom_sm, styles.paddingLeft_sm, styles.font_md]}>Account</Text>
-          <ListItemWithIcon iconLibary={FontAwesome5} icon="lock" label="Change Password" navigateTo={["Password"]} />
+          <ListItemWithIcon iconLibary={FontAwesome5} icon="lock" label="Change Password" navigateTo={["ChangePassword"]} />
           <ListItemWithIcon iconLibary={MaterialCommunityIcons} icon="bell" label="Notifications" navigateTo={["NotificationSettings"]} />
           <ListItemWithIcon iconLibary={MaterialCommunityIcons} icon="security" label="Privacy Settings" navigateTo={["PrivacySettings"]} />
           <ListItemWithIcon iconLibary={FontAwesome5} icon="user" label="Personal Information" navigateTo={["ProfileUpdate"]} />

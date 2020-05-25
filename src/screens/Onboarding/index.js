@@ -24,16 +24,17 @@ const useOnboardScreen = (indicatorWidth) => {
 };
 
 const OnboardScreen = ({ navigation }) => {
-  const slides = onboardSlides({ action });
-  const indicatorWidth = progressBarWidth / slides.length
-  const { updateIndex, index: selectedIndex, setIndex } = useOnboardScreen(indicatorWidth);
-  console.log(selectedIndex);
   const action = () => {
     storeFirstTimeKey();
     navigation.replace("Auth", {screen: "LoginOptions"})
   }
+  const slides = onboardSlides({ action });
+  const indicatorWidth = progressBarWidth / slides.length
+  const { updateIndex, index: selectedIndex, setIndex } = useOnboardScreen(indicatorWidth);
+  console.log(selectedIndex);
+
   return (
-    <Screen style={[styles.paddingBottom_md]}>
+    <Screen style={[styles.paddingBottom_md, styles.paddingTop_md]}>
       <View style={[styles.alignItems_end, styles.paddingHorizontal_sm]}>
         <Button action={action}
           style={[styles.marginBottom_md]}>

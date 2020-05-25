@@ -65,6 +65,13 @@ const font = {
   },
   text_center: {
     textAlign: 'center',
+  },
+  text: {
+    lineHeight: 22
+  },
+  heading: {
+    letterSpacing: 2,
+    fontWeight: '700'
   }
 };
 
@@ -293,6 +300,9 @@ const styles = StyleSheet.create({
   bg_whiteOpacity: {
     backgroundColor: colors.opacity_white,
   },
+  bg_dark: {
+    backgroundColor: colors.dark,
+  },
   bg_darkOpacity: {
     backgroundColor: colors.dark_opacity,
   },
@@ -390,11 +400,22 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   boxShadow_md: {
-    shadowColor: colors.gray_color2,
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,  
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
     elevation: 5,
+  },
+  boxShadow_lg: {
+    shadowColor: colors.gray_color2,
+    shadowOffset: { width: 0, height: 3,},
+    shadowOpacity: 0.29,
+    shadowRadius: 4.65,
+    elevation: 7,
   },
   avatar: {
     width: 70,

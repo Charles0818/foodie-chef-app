@@ -26,7 +26,7 @@ library.add(fab, fas);
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-const { authActions: { getFirstTimeKey, retrieveToken } } = actions;
+const { authActions: { getFirstTimeKey, retrieveToken, clearStorage } } = actions;
 enableScreens ();
 const HomeTabScreen = () => {
   return (
@@ -111,6 +111,7 @@ const App = () => {
     const getDataFromStorage  = async () => {
       const isFirstTime = await getFirstTimeKey();
       const token = await retrieveToken();
+      await clearStorage();
       setState({isFirstTime, token, isLoading: false})
     }
     getDataFromStorage()
@@ -123,7 +124,7 @@ const App = () => {
       <Provider store={store}>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName={initialRouteName} screenOptions={{
+            initialRouteName={'Onboard'} screenOptions={{
               cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
             }}>
             <Stack.Screen
