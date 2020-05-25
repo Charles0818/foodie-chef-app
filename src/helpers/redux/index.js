@@ -4,7 +4,7 @@ import createSagaMiddleware from 'redux-saga';
 import { allReducers } from './reducers';
 import * as types from './actions/types';
 import * as actions from './actions/index';
-import rootSaga from './saga';
+import rootSaga from './sagas';
 const sagaMiddleWare = createSagaMiddleware();
 
 

@@ -2,39 +2,58 @@ import { call, put, takeEvery, takeLatest, spawn} from 'redux-saga/effects';
 import { AsyncStorage }  from 'react-native';
 import { auth } from '../actions/types';
 import { authActions } from '../actions';
-const { RESTORE_TOKEN, RESTORE_TOKEN_REQUEST, RESTORE_TOKEN_SUCCESS, SIGN_IN, SIGN_IN_REQUEST, SIGN_OUT_REQUEST, SIGN_OUT_SUCCESS } = auth;
-const { signInSuccess, signOutSuccess, restoreTokenSuccess } = authActions;
 import { sendData, getData, deleteData, apiKey } from './ajax';
+
+const {
+  RESTORE_TOKEN, RESTORE_TOKEN_REQUEST, RESTORE_TOKEN_SUCCESS,
+  SIGN_IN, SIGN_IN_REQUEST, SIGN_OUT_REQUEST, SIGN_UP_REQUESTED,
+  SIGN_OUT_SUCCESS
+} = auth;
+const {
+  signInSuccess, signOutSuccess,
+  restoreTokenSuccess, saveToken
+} = authActions;
 
 
 // ALl httpRequest functions
 const authDBCalls = {
   signIn: async (data) => {
-    // const response = await sendData(`${apiKey}`, data);
+    const response = await sendData(`${apiKey}/chef/login/`, data);
+    console.log('signIn', response)
     const token = '45566tyHjgnkn6'
-    await AsyncStorage.setItem('token', token)
+    await saveToken(token)
     return  { token }
   },
   signOut: async () => {
     const response = await AsyncStorage.removeItem('token')
     return response
   },
+  signUp: async (data) => {
+    const response = await sendData(`${apiKey}/chef/signup`, data);
+    return response;
+  },
   restoreToken: async () => {
     const response = await AsyncStorage.getItem('token')
     return response
-    
   }
 }
 
 // All generators*
 function* signIn({ payload }) {
+  const { data, setAnimating, setAjaxStatus, goHome } = payload;
+  const message = 'Welcome back';
   try {
-   
-    const response = yield call(authDBCalls.signIn, payload)
+    setAnimating(true);
+    const response = yield call(authDBCalls.signIn, data);
     yield put(signInSuccess(response.token));
+    setAnimating(false);
+    setAjaxStatus('success', message);
+    goHome();
     console.log('done')
   } catch (err) {
     console.log(err)
+    setAnimating(false);
+    setAjaxStatus('error', `${err}`)
   }
 }
 
@@ -47,6 +66,18 @@ function* signOut() {
   }
 }
 
+function* signUp({ payload }) {
+  const { data, setAnimating, setAjaxStatus, loginScreen } = payload;
+  setAnimating(true)
+  try {
+    const response = yield call(authDBCalls.signUp, data);
+    console.log('signUp', response);
+  } catch (err) {
+    console.log(err);
+    setAnimating(false);
+    setAjaxStatus('error', `${err}`)
+  }
+}
 function* restoreToken() {
   try {
     const response = yield call(authDBCalls.restoreToken);
@@ -67,9 +98,13 @@ export function* signOutRequest() {
 export function* restoreTokenRequest() {
   yield takeLatest(RESTORE_TOKEN_REQUEST, restoreToken)
 }
+export function* signUpRequest() {
+  yield takeLatest(SIGN_UP_REQUESTED, signUp)
+}
 
 export default function* authSagas() {
   yield spawn(signInRequest)
   yield spawn(signOutRequest)
   yield spawn(restoreTokenRequest)
+  yield spawn(signUpRequest)
 }

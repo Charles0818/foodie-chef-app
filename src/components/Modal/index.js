@@ -1,9 +1,8 @@
-import React, { useState, useRef, memo } from "react";
+import React, { useState, useRef } from "react";
 import {
   StyleSheet,
   View,
   Animated,
-  PanResponder,
   Dimensions,
 } from "react-native";
 import Modal from 'react-native-modal';

@@ -13,6 +13,7 @@ export const serviceRequest = {
 }
 
 export const auth = {
+  SIGN_UP_REQUESTED: 'SIGN_UP_REQUESTED',
   SIGN_IN: 'SIGN_IN',
   SIGN_IN_REQUEST: 'SIGNIN_REQUEST',
   SIGN_IN_SUCCESS: 'SIGN_IN_SUCCESS',

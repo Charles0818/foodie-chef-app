@@ -1,24 +1,28 @@
 import React from 'react';
 import { View, Text, ImageBackground, Dimensions, StyleSheet } from 'react-native';
+import { bindActionCreators, Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { Screen, Section } from '../../Wrapper';
-import { Form, Button, } from '../../../components';
+import { Form, Button, Spinners} from '../../../components';
 import { styles, colors } from '../../styles';
-import { actions } from '../../../helpers'
+import { ajax, actions } from '../../../helpers'
 
-const { authActions: { saveToken } } = actions;
+const { authActions: { saveToken, signInRequest } } = actions;
 const { FormInput2, useFormInput } = Form;
-const Login = ({navigation}) => {
-  const handleLogin = () => {
-    saveToken('token');
-    navigation.replace("Drawer", {screen: 'Home'})
-  }
+const { useSpinner, ButtonSpinner } = Spinners;
+const { useAjaxStatus } = ajax
+const Login = ({navigation: { navigate, replace }, signInRequest}) => {
+  const { setAjaxStatus, AjaxStatus } = useAjaxStatus();
+  const { setAnimating, Spinner, animating } = ButtonSpinner()
   const { input: email, handleUserInput: setEmail, error: emailErr, isValid: emailIsValid,  } = useFormInput("email");
-  const { input: password, handleUserInput: setPassword, error: passwordErr } = useFormInput("password");
-  const { input: password2, handleUserInput: setPassword2 } = useFormInput("password");
-  const { input: name, handleUserInput: setName, error: nameErr, isValid: nameIsValid } = useFormInput("name");
-  const validatePassword = password !== password2 ? 'Passwords do not match' : '';
-  const validateAllField = emailIsValid && password === password2 && nameIsValid;
-  console.log(validateAllField)
+  const { input: password, handleUserInput: setPassword, error: passwordErr, isValid: passwordIsValid } = useFormInput("password");
+  const validateAllField = emailIsValid && passwordIsValid;
+  const handleLogin = () => {
+    const goHome = () => replace("Drawer", {screen: 'Home'})
+    signInRequest({email, password}, setAnimating, setAjaxStatus, goHome)
+    // saveToken('token');
+    // navigation.replace("Drawer", {screen: 'Home'})
+  }
   return (
   <Screen>
     <ImageBackground
@@ -33,20 +37,22 @@ const Login = ({navigation}) => {
           <View style={[styles.marginBottom_sm]}>
             <FormInput2 icon={"at"} value={email} onChange={setEmail} err={emailErr} placeholder="Email Address" keyboardType="email-address" textContentType="emailAddress" />
             <FormInput2 icon={"lock"} value={password} onChange={setPassword} err={passwordErr} placeholder="Password" textContentType="password" />
-            <Button action={handleLogin}
-              style={[styles.bg_danger, styles.flexCenter, { height: 50, width: '100%' }]}>
-              <Text numberOfLines={1} style={[styles.font_md, styles.color_white, styles.fontWeight_700, styles.text_center]}>LOGIN</Text>
+            <Button action={handleLogin} buttonProps={{disabled: !validateAllField || animating}}
+              style={[styles.row, styles.alignItems_center, styles.bg_danger, styles.flexCenter, { height: 50, width: '100%' }]}>
+              <Text numberOfLines={1} style={[styles.font_md, styles.color_white, styles.fontWeight_700, styles.text_center, styles.marginRight_md]}>LOGIN</Text>
+              {Spinner}
             </Button>
           </View>
-          <Button action={() => navigation.navigate("ForgotPassword")}>
+          <Button action={() => navigate("ForgotPassword")}>
             <Text numberOfLines={1} style={[styles.color_white, styles.font_md, styles.text_center, styles.fontWeight_700, styles.marginBottom_sm]}>Forgot Password ?</Text>
           </Button>
-          <Button action={() => navigation.navigate("LoginOptions")}>
+          <Button action={() => navigate("LoginOptions")}>
             <Text numberOfLines={1} style={[styles.color_white, styles.font_md, styles.text_center, styles.fontWeight_700]}>Go back to login options</Text>
           </Button>
         </View>
       </View>
     </ImageBackground>
+    <AjaxStatus />
   </Screen>
   )
 }
@@ -62,4 +68,7 @@ const formStyles = StyleSheet.create({
   }
 })
 
-export default Login;
+const mapDispatchToProps = dispatch => 
+  bindActionCreators({ signInRequest }, dispatch);
+
+export default connect(null, mapDispatchToProps)(Login);
