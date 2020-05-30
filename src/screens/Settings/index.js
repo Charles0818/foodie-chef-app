@@ -3,7 +3,7 @@ import { createStackNavigator, CardStyleInterpolators, HeaderBackButton } from '
 import Settings from './Settings';
 import Currencies from './Currencies';
 import PrivacySettings from './Privacy';
-import ProfileUpdate from './ProfileUpdate';
+import ChefUpdate from './ChefUpdate';
 import VerificationProof from './VerificationProof';
 import Languages from './Languages';
 import NotificationSettings from './Notification';
@@ -34,7 +34,7 @@ const SettingsStackScreen = ({navigation, route}) => {
       <SettingsStack.Screen name="NotificationSettings" component={NotificationSettings} options={{
         headerTitle: 'Notification Settings'
       }} />
-      <SettingsStack.Screen name="ProfileUpdate" initialParams={{uploadedDocuments: []}} component={ProfileUpdate}
+      <SettingsStack.Screen name="ChefUpdate" initialParams={{uploadedDocuments: []}} component={ChefUpdate}
         options={{
           title: "Personal Information",
           headerTitleStyle: {

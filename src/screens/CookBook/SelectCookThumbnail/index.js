@@ -3,7 +3,7 @@ import { View, Text, ImageBackground, Image, StyleSheet, FlatList, Animated, Tex
 import { Foundation, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 import { Animations, Button } from '../../../components';
 import { styles, colors } from '../../styles';
-import { Section, Screen } from '../../Wrapper';
+import { Section, Screen, NetworkInfo } from '../../Wrapper';
 import { useNavigation } from '@react-navigation/core';
 const { FadeIn } = Animations;
 
@@ -50,18 +50,20 @@ export default SelectCookThumbnail = ({navigation, route: { params }}) => {
     setThumbnails(items.filter(el => el.title.search(params.searchText) >= 0))
   }, [])
   return (
-    <Screen>
-      {thumbnails.length > 0 ? (
-      <Animated.FlatList
-        data={thumbnails}
-        renderItem={({ item, index, separators }) => <DropdownItem dish={item} />}
-        keyExtractor={(item, index) => index.toString()}
-        showsVerticalScrollIndicator={false}
-        initialNumToRender={30}
-        contentContainerStyle={[styles.flexCenter, styles.paddingTop_sm, {width: Dimensions.get('window').width}]}
-      />
-      ): <EmptyDropdown />}
-    </Screen>
+    <NetworkInfo>
+      <Screen>
+        {thumbnails.length > 0 ? (
+        <Animated.FlatList
+          data={thumbnails}
+          renderItem={({ item, index, separators }) => <DropdownItem dish={item} />}
+          keyExtractor={(item, index) => index.toString()}
+          showsVerticalScrollIndicator={false}
+          initialNumToRender={30}
+          contentContainerStyle={[styles.flexCenter, styles.paddingTop_sm, {width: Dimensions.get('window').width}]}
+        />
+        ): <EmptyDropdown />}
+      </Screen>
+    </NetworkInfo>
   )
 }
 

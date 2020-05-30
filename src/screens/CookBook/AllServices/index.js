@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, Text, FlatList, Dimensions, ScrollView } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-import { Screen, Section } from '../../Wrapper';
+import { Screen, Section, NetworkInfo } from '../../Wrapper';
 import { Cards, Button }  from '../../../components';
 import { styles, colors } from '../../styles';
 import { service } from '../../../components/Utils';
@@ -54,27 +54,29 @@ const AllServices = ({ navigation }) => {
     })
   })
   return (
-    <Screen>
-      <Section>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={[styles.paddingHorizontal_sm, styles.paddingVertical_sm]}>
-         {services.map((service, key) => (
-            <Button key={key} action={() => console.log('an attemt to filter dishes')} style={[styles.border_r_10, styles.padding_md, styles.bg_color1, styles.marginRight_sm]}>
-              <Text style={[styles.font_sm, styles.uppercase, styles.color_white]}>{service.tags}</Text>
-            </Button>
-         ))}
-        </ScrollView>
-        <FlatList
-          data={services}
-          renderItem={({ item, index, separators }) => <PortraitServiceCard /> }
-          keyExtractor={(item, index) => index.toString()}
-          numColumns={2}
-          showsVerticalScrollIndicator={false}
-          columnWrapperStyle={[{justifyContent: 'flex-start'}]}
-          initialNumToRender={30}
-          contentContainerStyle={[styles.justifyContent_center, styles.marginTop_sm]}
-        />
-      </Section>
-    </Screen>
+    <NetworkInfo>
+      <Screen>
+        <Section>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={[styles.paddingHorizontal_sm, styles.paddingVertical_sm]}>
+          {services.map((service, key) => (
+              <Button key={key} action={() => console.log('an attemt to filter dishes')} style={[styles.border_r_10, styles.padding_md, styles.bg_color1, styles.marginRight_sm]}>
+                <Text style={[styles.font_sm, styles.uppercase, styles.color_white]}>{service.tags}</Text>
+              </Button>
+          ))}
+          </ScrollView>
+          <FlatList
+            data={services}
+            renderItem={({ item, index, separators }) => <PortraitServiceCard /> }
+            keyExtractor={(item, index) => index.toString()}
+            numColumns={2}
+            showsVerticalScrollIndicator={false}
+            columnWrapperStyle={[{justifyContent: 'flex-start'}]}
+            initialNumToRender={30}
+            contentContainerStyle={[styles.justifyContent_center, styles.marginTop_sm]}
+          />
+        </Section>
+      </Screen>
+    </NetworkInfo>
   )
 }
 

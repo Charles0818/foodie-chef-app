@@ -1,36 +1,41 @@
 import { call, put, takeEvery, takeLatest, spawn} from 'redux-saga/effects';
 import { AsyncStorage }  from 'react-native';
+// import CookieManager from '@react-native-community/cookies';
 import { auth } from '../actions/types';
-import { authActions } from '../actions';
+import { authActions, userActions} from '../actions';
 import { sendData, getData, deleteData, apiKey } from './ajax';
-
+// const RCTNetworking = require('react-native/Libraries/Network/RCTNetworking');
 const {
   RESTORE_TOKEN, RESTORE_TOKEN_REQUEST, RESTORE_TOKEN_SUCCESS,
   SIGN_IN, SIGN_IN_REQUEST, SIGN_OUT_REQUEST, SIGN_UP_REQUESTED,
   SIGN_OUT_SUCCESS
 } = auth;
+
 const {
   signInSuccess, signOutSuccess,
-  restoreTokenSuccess, saveToken
+  restoreTokenSuccess, saveToken, removeToken
 } = authActions;
-
+const { restoreUserDetails } = userActions;
 
 // ALl httpRequest functions
 const authDBCalls = {
   signIn: async (data) => {
+    // RCTNetworking.clearCookies(() => {});
     const response = await sendData(`${apiKey}/chef/login/`, data);
+    const { user: { token, user } } = response;
     console.log('signIn', response)
-    const token = '45566tyHjgnkn6'
     await saveToken(token)
-    return  { token }
+    return { token, user }
   },
   signOut: async () => {
-    const response = await AsyncStorage.removeItem('token')
-    return response
+    // RCTNetworking.clearCookies(() => {});
+    await removeToken()
   },
   signUp: async (data) => {
-    const response = await sendData(`${apiKey}/chef/signup`, data);
-    return response;
+    console.log(data);
+    // RCTNetworking.clearCookies(() => {});
+    const { message } = await sendData(`${apiKey}/chef/signup/`, data);
+    return message;
   },
   restoreToken: async () => {
     const response = await AsyncStorage.getItem('token')
@@ -45,15 +50,18 @@ function* signIn({ payload }) {
   try {
     setAnimating(true);
     const response = yield call(authDBCalls.signIn, data);
+    console.log(response)
     yield put(signInSuccess(response.token));
-    setAnimating(false);
-    setAjaxStatus('success', message);
+    yield put(restoreUserDetails(response.user));
     goHome();
-    console.log('done')
   } catch (err) {
-    console.log(err)
+    console.log('an error', err)
     setAnimating(false);
-    setAjaxStatus('error', `${err}`)
+    const { non_field_errors } = err;
+    const errorMessage = non_field_errors
+      ? non_field_errors[0]
+      : 'Unable to login, please check your internet connection'
+    setAjaxStatus('error', `${errorMessage}`)
   }
 }
 
@@ -67,15 +75,17 @@ function* signOut() {
 }
 
 function* signUp({ payload }) {
-  const { data, setAnimating, setAjaxStatus, loginScreen } = payload;
+  const { data, setAnimating, setAjaxStatus, replace } = payload;
   setAnimating(true)
   try {
-    const response = yield call(authDBCalls.signUp, data);
-    console.log('signUp', response);
+    const message = yield call(authDBCalls.signUp, data);
+    replace('ConfirmEmail', { message })
   } catch (err) {
     console.log(err);
+    const { email } = err;
+    const errorMessage = email ? email[0] : 'Unable to sign up. Please check your internet connection'
     setAnimating(false);
-    setAjaxStatus('error', `${err}`)
+    setAjaxStatus('error', `${errorMessage}`)
   }
 }
 function* restoreToken() {

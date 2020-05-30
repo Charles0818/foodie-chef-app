@@ -17,7 +17,7 @@ const Settings = () => {
           <ListItemWithIcon iconLibary={FontAwesome5} icon="lock" label="Change Password" navigateTo={["ChangePassword"]} />
           <ListItemWithIcon iconLibary={MaterialCommunityIcons} icon="bell" label="Notifications" navigateTo={["NotificationSettings"]} />
           <ListItemWithIcon iconLibary={MaterialCommunityIcons} icon="security" label="Privacy Settings" navigateTo={["PrivacySettings"]} />
-          <ListItemWithIcon iconLibary={FontAwesome5} icon="user" label="Personal Information" navigateTo={["ProfileUpdate"]} />
+          <ListItemWithIcon iconLibary={FontAwesome5} icon="user" label="Personal Information" navigateTo={["ChefUpdate"]} />
           <ListItemWithIcon iconLibary={FontAwesome5} icon="sign-out-alt" label="Sign Out" navigateTo={["Home"]} />
         </View>
         <View style={[]}>

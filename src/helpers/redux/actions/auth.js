@@ -13,10 +13,10 @@ export const signInRequest = (data, setAnimating, setAjaxStatus, goHome) => {
   }
 }
 
-export const signUpRequest = (data, setAnimating, setAjaxStatus) => {
+export const signUpRequest = (data, setAnimating, setAjaxStatus, replace) => {
   return {
     type: SIGN_UP_REQUESTED,
-    payload: { data, setAnimating, setAjaxStatus }
+    payload: { data, setAnimating, setAjaxStatus, replace }
   }
 }
 
@@ -67,8 +67,7 @@ export const getFirstTimeKey = async () => {
 
 export const saveToken = async (token) => {
   try {
-    await AsyncStorage.setItem('userToken', JSON.stringify(token));
-    console.log('heyyyy')
+    await AsyncStorage.setItem('userToken', token, () => console.log('token saved successfully'));
   } catch (error) {
     console.log(error);
   }
@@ -83,6 +82,13 @@ export const retrieveToken = async () => {
   }
 }
 
+export const removeToken = async () => {
+  try {
+    await AsyncStorage.removeItem('userToken')
+  } catch (error) {
+    console(error)
+  }
+}
 export const clearStorage = async () => {
   try {
     await AsyncStorage.multiRemove(['userToken', 'isFirstTime'])

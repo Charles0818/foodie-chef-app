@@ -31,21 +31,25 @@ export const declineRequestReasons = [
 
 export const bookingStatus = [
   {
-    name: 'Delivered',
+    name: 'completed',
     color: colors.green,
   },
   {
-    name: 'Progress',
+    name: 'ongoing',
     color: colors.google_yellow,
   },
   {
-    name: 'Cancelled',
-    color: colors.danger,
-  },
-  {
-    name: 'Pending',
+    name: 'accepted',
     color: colors.facebook,
   },
+  {
+    name: 'cancel',
+    color: colors.danger
+  },
+  {
+    name: 'paid',
+    color: colors.google_green
+  }
 ]
 
 export const bookingStatusUpdates = [
@@ -63,5 +67,16 @@ export const bookingStatusUpdates = [
     name: "Served",
     description: 'Meal has been served as confirmed by you',
     tick: false
+  },
+]
+
+export const accountType = [
+  {
+    label: "Account type (Individual)",
+    value: "individual"
+  },
+  {
+    label: "Account type (Restaurant)",
+    value: "restaurant"
   },
 ]

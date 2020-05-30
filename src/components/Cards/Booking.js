@@ -12,7 +12,7 @@ const { bookingStatus } = dataConstants;
 export default BookingCard = ({booking})=> {
   const { navigate } = useNavigation();
   let { items, duration, isNew, status, subtotal, address } = booking;
-  status = bookingStatus.find(el => el.name === status);
+  if(status !== 'new' ) status = bookingStatus.find(el => el.name === status);
   return (
     <FadeIn style={[cardStyle.container, styles.marginBottom_md, styles.boxShadow_md]}>
       <Button style={[styles.padding_md]} activeOpacity={.6} action={() => navigate('ServiceRequest')}>
@@ -20,15 +20,15 @@ export default BookingCard = ({booking})=> {
           <View style={[styles.border_r_5, styles.marginRight_sm, {width: 100, height: 100}]}>
             <ImageBackground source={{uri: 'https://res.cloudinary.com/dx5lp5drd/image/upload/v1586035953/igbo-abacha-ncha_oeiamp.jpg'}}
               resizeMethod="scale" style={[styles.border_r_5, styles.overflow_h, {width: '100%', flex: 1, position: 'relative'}]}>
-              {isNew ?
+              {status === 'new' ?
               <View style={[styles.bg_color1, styles.flexCenter, styles.border_r_5,{width: 50, height: 20, }]}>
                 <Text style={[styles.color_white, styles.fontWeight_700]}>{'new'}</Text>
               </View> : null }
             </ImageBackground>
-            <View
+            {status !== 'new' ? <View
               style={[styles.marginRight_sm, styles.flexCenter, { width: 30, height: 30, borderRadius: 15.5, borderColor: '#fff', backgroundColor: status.color, position: 'absolute', bottom: 3, right: -17 }]}>
-              <Text style={[styles.font_lg, styles.fontWeight_700, styles.color_white]}>{status.name.slice(0, 1)}</Text>
-            </View>
+              <Text style={[styles.font_lg, styles.fontWeight_700, styles.capitalize, styles.color_white]}>{status.name.slice(0, 1)}</Text>
+            </View> : null }
           </View>
           <View style={[styles.justifyContent_between, styles.marginRight_md, {flex: 1.5}]}>
             <Text numberOfLines={2} style={[styles.font_md, styles.fontWeight_700, styles.capitalize, styles.marginBottom_xsm]}>{items[0].name}</Text>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Text, View, StyleSheet, TextInput } from 'react-native';
 import { styles, colors } from '../styles';
 import { Button } from '../Buttons';
@@ -16,7 +16,7 @@ export const FormInput = ({placeholder, value, onChange, err, label, ...rest}) =
       <Text style={[styles.color_danger, styles.font_sm]}>{err}</Text>
     </View>
   )
-}
+};
 
 export const TextArea = ({ placeholder, value, onChange, err, label, ...rest }) => {
   return (
@@ -33,7 +33,7 @@ export const TextArea = ({ placeholder, value, onChange, err, label, ...rest }) 
       <Text style={[styles.color_danger, styles.font_sm]}>{err}</Text>
     </View>
   )
-}
+};
 
 export const ChatFormInput = ({ value, onChange, ...rest }) => {
   return (
@@ -71,7 +71,7 @@ export const FormInput2 = ({ placeholder, value, onChange, err, icon, iconLibrar
       <Text style={[styles.color_danger, styles.font_sm]}>{err}</Text>
     </View>
   )
-}
+};
 
 export const useCheckBox = (value = false) => {
   const [isChecked, setIsCheked] = React.useState(value);

@@ -1,20 +1,22 @@
 import * as React from 'react';
 import { View, Text, Dimensions, ImageBackground, Image, StyleSheet, ScrollView } from 'react-native'
 import { FontAwesome5 } from '@expo/vector-icons';
-import { Screen, Section } from '../Wrapper';
+import { Screen, Section, NetworkInfo } from '../Wrapper';
 import { styles, colors } from '../styles';
 import { Button, Utils } from '../../components';
 
 const { dataConstants: { bookingStatusUpdates } } = Utils;
 export default CompletedRequest = () => {
   return (
-    <Screen style={[]}>
-      <ScrollView>
-        <Header />
-        <Profile />
-        <StatusUpdates />
-      </ScrollView>
-    </Screen>
+    <NetworkInfo>
+      <Screen style={[]}>
+        <ScrollView>
+          <Header />
+          <Profile />
+          <StatusUpdates />
+        </ScrollView>
+      </Screen>
+    </NetworkInfo>
   )
 }
 

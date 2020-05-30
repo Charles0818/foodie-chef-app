@@ -1,53 +1,82 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import { bindActionCreators } from 'redux';
+import { connect, useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { Cards, Carousels, Button, useToggleButton, Spinners } from '../../components';
-import { Screen, Section } from '../Wrapper';
+import { Screen, Section, NetworkInfo } from '../Wrapper';
 import { styles, colors } from '../styles';
 import { useNavigation } from '@react-navigation/core';
-import { CoverPhoto, ProfileStats, Header } from './Components';
+import { CoverPhoto, ProfileStats, Header, BookingTabs } from './Components';
+import { actions, ajax } from '../../helpers';
+import useNetworkError from '../NetworkError';
 const { SquareServiceCard, ListServiceCard } = Cards;
+const { useAjaxStatus } = ajax;
 const { ComponentCarousel } = Carousels;
 const { useSpinner } = Spinners;
+const { homeActions: { getBookingAndChefInfo }, chefInfoActions: { chefInfoPartialUpdateRequest } } = actions;
 
-const Home = ({navigation}) => {
+const Home = React.memo(({navigation, getData}) => {
   const { Spinner, setAnimating, animating } = useSpinner(true);
+  const { AjaxStatus, setAjaxStatus } = useAjaxStatus();
+  const dispatch = React.useCallback(
+    () => getData(setAnimating, setDisplayErrorScreen),
+  []);
+  const {
+    NetworkErrorScreen, displayErrorScreen, setDisplayErrorScreen
+  } = useNetworkError(dispatch);
   React.useLayoutEffect(() => {
     navigation.setOptions({
       drawerLockMode: 'locked-closed',
     })
   })
   React.useEffect(() => {
-    const timeout = setTimeout(() => setAnimating(false), 500)
-    return ()=> clearTimeout(timeout);
+    let isSubscribed = true;
+    console.log('effect ran')
+    dispatch();
+    return () => isSubscribed = false;
   }, []);
   if(animating) return Spinner;
+  if(displayErrorScreen) return NetworkErrorScreen
   return (
-    <Screen>
-      <Header />
-      <ScrollView>
-        <CoverPhoto navigation={navigation} />
-        <ProfileStats />
-        <NotificationToggle />
-        <Tabs />
-      </ScrollView>
-    </Screen>
+      <Screen>
+        <Header />
+        <NetworkInfo>
+          <ScrollView>
+            <CoverPhoto />
+            <ProfileStats />
+            <AcceptingRequest setAjaxStatus={setAjaxStatus} />
+            <BookingTabs />
+          </ScrollView>
+        </NetworkInfo>
+        <AjaxStatus />
+      </Screen>
   )
+})
+const mapActiveToProps = state => {
+  return { active: state.chefInfoReducer.active }
 }
-
-const NotificationToggle = () => {
-  const { ToggleButton } = useToggleButton(true);
+const mapIsActiveUpdate = dispatch => 
+  bindActionCreators({ updateIsActive: chefInfoPartialUpdateRequest }, dispatch)
+const AcceptingRequest = connect( mapActiveToProps, mapIsActiveUpdate )(({active, updateIsActive, setAjaxStatus}) => {
+  // const { AjaxStatus, setAjaxStatus } = useAjaxStatus();
+  console.log('rendered and active is', active)
+  const toggleCallback = 
+    (active) => updateIsActive({ active }, () => {}, setAjaxStatus, )
+  const { ToggleButton, isActive } = useToggleButton(active, toggleCallback);
+  console.log('isActive', isActive)
   return (
     <Section style={[styles.row, styles.justifyContent_between, styles.alignItems_center]}>
       <View style={[]}>
         <Text numberOfLines={1} style={[styles.fontWeight_700, styles.font_lg,]}>Accepting request</Text>
         <Text numberOfLines={1} style={[styles.fontWeight_700, styles.color_gray, styles.font_sm,]}>
-         Active in accepting request on my cookbook
+         {isActive ? 'Active' : 'Not active'} in accepting request on my cookbook
          </Text>
       </View>
       {ToggleButton}
+     
     </Section>
   )
-}
+})
 
 const Recent = () => {
   return (
@@ -142,4 +171,7 @@ const CategorizeServices = () => {
   )
 }
 
-export default Home;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ getData: getBookingAndChefInfo }, dispatch)
+
+export default connect(null, mapDispatchToProps)(Home);

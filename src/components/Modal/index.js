@@ -6,7 +6,7 @@ import {
   Dimensions,
 } from "react-native";
 import Modal from 'react-native-modal';
-import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+import GestureRecognizer from 'react-native-swipe-gestures';
 const DrawUpModal = ({children: Children, close, backdropOpacity, closeOnBackdropPress, isVisible, enableSwipe, ...rest}) => {
 
   const swipeProps = {

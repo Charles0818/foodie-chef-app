@@ -10,7 +10,7 @@ const allBookings = [
   {
     name: 'Charles Willson',
     isNew: true,
-    status: 'Pending',
+    status: 'accepted',
     duration: {
       start: '11:15 PM',
       end: '1:45 PM',
@@ -31,7 +31,7 @@ const allBookings = [
   {
     name: 'Baby Dee',
     isNew: true,
-    status: 'Pending',
+    status: 'new',
     duration: {
       start: '10:45 AM',
       end: '1:45 PM',
@@ -52,7 +52,7 @@ const allBookings = [
   {
     name: 'Charles Willson',
     isNew: false,
-    status: 'Delivered',
+    status: 'paid',
     duration: {
       start: 'Mon',
       end: '1:45 PM',
@@ -73,7 +73,7 @@ const allBookings = [
   {
     name: 'Hiliary Clington',
     isNew: false,
-    status: 'Progress',
+    status: 'ongoing',
     duration: {
       start: 'Mon',
       end: '1:45 PM',
@@ -94,7 +94,7 @@ const allBookings = [
   {
     name: 'Chucks Obinna',
     isNew: false,
-    status: 'Progress',
+    status: 'ongoing',
     duration: {
       start: 'Mon',
       end: '1:45 PM',
@@ -115,7 +115,7 @@ const allBookings = [
   {
     name: 'Charles Willson',
     isNew: false,
-    status: 'Pending',
+    status: 'accepted',
     duration: {
       start: 'June 12',
       end: '1:45 PM',
@@ -136,7 +136,7 @@ const allBookings = [
   {
     name: 'Iyobosa Evbayowieru',
     isNew: false,
-    status: 'Cancelled',
+    status: 'cancel',
     duration: {
       start: 'June 12',
       end: '1:45 PM',

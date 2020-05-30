@@ -40,7 +40,9 @@ const AddIngredient = ({setIngredients}) => {
   };
   return (
     <View>
-      <FormInput value={input} label="Ingredient(s)" onChange={handleUserInput} err={error} textInputStyles={[styles.paddingRight_lg]} multiline={true} />
+      <FormInput value={input} label="Ingredient(s)" onChange={handleUserInput}
+        err={error} textInputStyles={[styles.paddingRight_lg]} multiline={true} 
+        maxLength={200} minLength={1} />
       <Button action={addIngredient} buttonProps={{disabled: !isValid}}
         style={[styles.flexCenter, styles.bg_color1, {width: 30, height: 30, borderRadius: 15, position: 'absolute', right: 5, top: 5,}]}>
         <AntDesign name="plus" color={colors.white} size={16} />

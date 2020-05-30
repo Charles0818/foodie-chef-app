@@ -3,7 +3,7 @@ import { View, Text, Animated, StyleSheet, TextInput } from 'react-native';
 import { string, func, object, number } from 'prop-types';
 import { styles, colors } from '../../styles';
 
-export default FormInput = ({label, value, onChange, err, textInputStyles = [], ...rest }) => {
+export default FormInput = React.memo(({label, value, onChange, err, textInputStyles = [], ...rest }) => {
   const [isFieldActive, setIsFieldActive] = React.useState(false);
   const position = React.useRef(new Animated.Value(value ? 1 : 0)).current
   const handleFocus = () => {
@@ -61,7 +61,7 @@ export default FormInput = ({label, value, onChange, err, textInputStyles = [], 
       <Text style={[styles.color_danger, styles.font_sm]}>{err}</Text>  
     </View>
   )
-}
+}, (prev, next) => prev.value !== next.value)
 
 const inputStyles = StyleSheet.create({
   container: {

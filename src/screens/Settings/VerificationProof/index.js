@@ -19,8 +19,8 @@ const DocumentInstruction = ({title, instruction}) => {
 }
 const VerificationProof = ({navigation, route: { params }}) => {
   const { document } = params;
-  const { accessCamera: captureBackView, image: backView, setImage: setFrontView } = usePermission('camera');
-  const { accessCamera: captureFrontView, image: frontView, setImage: setBackView } = usePermission('camera');
+  const { accessCamera: captureBackView, image: backView, setImage: setFrontView } = usePermission({type: 'camera'});
+  const { accessCamera: captureFrontView, image: frontView, setImage: setBackView } = usePermission({type: 'camera'});
   const { title, instruction} = availableDocuments.find(el => el.title === document)
   const uploadedDocuments = [
     {
@@ -39,7 +39,7 @@ const VerificationProof = ({navigation, route: { params }}) => {
           <DocumentInstruction title={title} instruction={instruction} />
           <UploadArea documentSide="front" image={frontView} setImage={setFrontView} accessCamera={captureFrontView} />
           <UploadArea documentSide="back" image={backView} setImage={setBackView} accessCamera={captureBackView}/>
-          <Button action={() => navigation.navigate('ProfileUpdate', {uploadedDocuments})} style={[styles.bg_color1, styles.flexCenter, styles.border_r_35, styles.padding_md]}>
+          <Button action={() => navigation.navigate('ChefUpdate', {uploadedDocuments})} style={[styles.bg_color1, styles.flexCenter, styles.border_r_35, styles.padding_md]}>
             <View style={[styles.row, styles.alignItems_center]}>
               <Text style={[styles.color_white, styles.fontWeight_700, styles.font_md, styles.marginRight_sm]}>SAVE CAPTURES</Text>
               <FontAwesome5 name="image" icon={16} color={colors.white} />

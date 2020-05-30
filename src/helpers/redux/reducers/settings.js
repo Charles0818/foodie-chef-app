@@ -1,7 +1,7 @@
 import { settings } from '../actions/types';
 
 const { SET_CURRENCY, SET_PAYMENT_METHOD, ENABLE_NEWSLETTER, ENABLE_PHONE_CALLS, ENABLE_TEXT_MESSAGES, TOGGLE_PUSH_NOTIFICATION, UPDATE_COORDINATES } = settings;
-export const settingsReducer = (prevState = { }, { type, payload }) => {
+export const settingsReducer = ( prevState = { }, { type, payload }) => {
   switch(type) {
     case SET_CURRENCY:
       const { currency } = payload;

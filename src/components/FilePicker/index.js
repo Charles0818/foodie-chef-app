@@ -1,10 +1,13 @@
 import * as React from 'react';
+import { Platform } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 import { Audio, Video } from 'expo-av';
-export const usePermission  = (type = 'camera') => {
-  const [image, setImage] = React.useState(null);
+import { getNativeSourceAndFullInitialStatusForLoadAsync } from 'expo-av/build/AV';
+export const usePermission = ({initialImage = null, type = 'camera'}) => {
+  const [image, setImage] = React.useState(initialImage);
+  const [imageBlob, setImageBlob] = React.useState('');
   const detectPermission = React.useCallback((type) => {
     switch(type) {
       case 'camera':
@@ -16,6 +19,9 @@ export const usePermission  = (type = 'camera') => {
     }
   }, [type])
   React.useEffect(() => {
+    setImage(initialImage)
+  }, [initialImage])
+  React.useEffect(() => {
     const getPermissionAsync = async () => {
       if (Constants.platform.ios) {
         const { status } = await Permissions.askAsync(detectPermission(type));
@@ -26,7 +32,7 @@ export const usePermission  = (type = 'camera') => {
     };
     getPermissionAsync();
   }, []);
-  const pickImage = async (type = 'Images') => {
+  const pickImage = async (type = 'Images', action = setImage) => {
     try {
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions[type],
@@ -35,14 +41,14 @@ export const usePermission  = (type = 'camera') => {
         quality: 1,
       });
       if (!result.cancelled) {
-        setImage(result.uri);
+        action(result.uri);
       }
       console.log(result);
     } catch (E) {
       console.log(E);
     }
   };
-  const accessCamera = async (type = 'Images') => {
+  const accessCamera = async (type = 'Images', action = setImage) => {
     try {
       let result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions[type],
@@ -51,14 +57,26 @@ export const usePermission  = (type = 'camera') => {
         quality: 1,
       });
       if (!result.cancelled) {
-        setImage(result.uri);
+        action(result.uri);
       }
       console.log(result);
     } catch (E) {
       console.log(E);
     }
   };
-  return { pickImage, image, setImage, accessCamera }
+
+  const parseFileForUpload = (uri) => {
+    // let filename = uri.split('/').pop();
+    // let match = /\.(\w+)$/.exec(filename);
+    // let type = match ? `image/${match[1]}` : `image`;
+    // let formData = new FormData();
+    // formData.append('photo', { uri, name: filename, type });
+    return {
+      uri: Platform.OS === 'android' ? uri : uri.replace('file://',''),
+      type: 'file',
+    }
+  }
+  return { pickImage, image, parseFileForUpload, imageBlob, setImage, accessCamera }
 }
 
 export const AudioRecording = () => {

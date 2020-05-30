@@ -94,3 +94,49 @@ const CheckBoxPickerItem = React.memo(({item, onChange, closeModal }) => {
     </View>
   )
 })
+
+export const useRadioPicker = (labels = []) => {
+  const [selectedValue, setSelectedValue] = React.useState(labels[0]);
+  const Picker = ({...props}) => {
+    return <RadioPicker labels={labels} selectedValue={selectedValue} onChange={setSelectedValue} {...props} />
+  }
+  return { selectedValue: selectedValue.value, Picker }
+}
+
+const RadioPicker = React.memo(({ selectedValue, onChange, labels }) => {
+  const { openModal, closeModal, Modal, modalVisible } = useCenterModal();
+  return (
+    <View>
+      <Button action={openModal} style={[styles.row, styles.border_r_5, styles.alignItems_center, styles.bg_darkOpacity, styles.justifyContent_between, styles.marginBottom_md, styles.paddingHorizontal_sm, {height: 50}]}>
+        <Text numberOfLines={1} style={[styles.font_md, styles.color_white, styles.fontWeight_700]}>{selectedValue.label}</Text>
+        <FontAwesome5 name="arrow-down" size={12} color={colors.white} />
+      </Button>
+      {modalVisible && <Modal enableSwipe={false}>
+        {labels.map((item, index) => <RadioPickerItem isSelected={selectedValue.value === item.value} style={[styles.capitalize]} key={index} item={item} closeModal={closeModal} onChange={onChange} />)}
+      </Modal>}
+    </View>
+  )
+})
+
+
+const RadioPickerItem = ({ item, closeModal, onChange, isSelected }) => {
+  const {value} = item;
+  const action = () => {
+    onChange(item);
+    closeModal();
+  }
+  return  (
+    <Button rippleColor={colors.color1_opacity} action={action}
+      style={[styles.row, styles.padding_md, styles.alignItems_center, styles.justifyContent_between]}>
+      <Text numberOfLines={1} style={[styles.font_md, styles.fontWeight_700, styles.capitalize]}>{value}</Text>
+      <Button
+        style={[styles.flexCenter, {width: 35, height: 35, borderRadius: 17.5 }]}
+        action={action}
+        rippleColor={colors.color1_opacity}
+      >
+        <Ionicons size={25} name={isSelected ? "md-radio-button-on" : "md-radio-button-off" }
+          color={isSelected ? colors.color1 : colors.gray_color} />
+      </Button>
+    </Button>
+  )
+}

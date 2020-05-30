@@ -5,7 +5,7 @@ const initialState = {
   isLoggedIn: false,
   userToken: null,
 }
-export const AuthReducer = (prevState = initialState, { type, payload }) => {
+export const authReducer = (prevState = initialState, { type, payload }) => {
   switch (type) {
     case RESTORE_TOKEN:
       return {

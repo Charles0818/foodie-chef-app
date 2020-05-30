@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, ImageBackground, Dimensions, StyleSheet } from 'react-native';
-import { bindActionCreators, Dispatch } from 'redux';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Screen, Section } from '../../Wrapper';
 import { Form, Button, Spinners} from '../../../components';
@@ -15,10 +15,10 @@ const Login = ({navigation: { navigate, replace }, signInRequest}) => {
   const { setAjaxStatus, AjaxStatus } = useAjaxStatus();
   const { setAnimating, Spinner, animating } = ButtonSpinner()
   const { input: email, handleUserInput: setEmail, error: emailErr, isValid: emailIsValid,  } = useFormInput("email");
-  const { input: password, handleUserInput: setPassword, error: passwordErr, isValid: passwordIsValid } = useFormInput("password");
+  const { input: password, handleUserInput: setPassword, error: passwordErr, isValid: passwordIsValid } = useFormInput("password ");
   const validateAllField = emailIsValid && passwordIsValid;
   const handleLogin = () => {
-    const goHome = () => replace("Drawer", {screen: 'Home'})
+    const goHome = () => navigate("Drawer", {screen: 'Home'})
     signInRequest({email, password}, setAnimating, setAjaxStatus, goHome)
     // saveToken('token');
     // navigation.replace("Drawer", {screen: 'Home'})
@@ -36,7 +36,7 @@ const Login = ({navigation: { navigate, replace }, signInRequest}) => {
           </View>
           <View style={[styles.marginBottom_sm]}>
             <FormInput2 icon={"at"} value={email} onChange={setEmail} err={emailErr} placeholder="Email Address" keyboardType="email-address" textContentType="emailAddress" />
-            <FormInput2 icon={"lock"} value={password} onChange={setPassword} err={passwordErr} placeholder="Password" textContentType="password" />
+            <FormInput2 icon={"lock"} value={password} onChange={setPassword} err={passwordErr} placeholder="Password" textContentType="password" secureTextEntry={true} />
             <Button action={handleLogin} buttonProps={{disabled: !validateAllField || animating}}
               style={[styles.row, styles.alignItems_center, styles.bg_danger, styles.flexCenter, { height: 50, width: '100%' }]}>
               <Text numberOfLines={1} style={[styles.font_md, styles.color_white, styles.fontWeight_700, styles.text_center, styles.marginRight_md]}>LOGIN</Text>

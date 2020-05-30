@@ -11,7 +11,7 @@ const Auth = createStackNavigator();
 
 const AuthStack = () => {
   return (
-    <Auth.Navigator initialRouteName="ForgotPassword" screenOptions={{
+    <Auth.Navigator initialRouteName="LoginOptions" screenOptions={{
       cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       headerShown: false,
     }}>

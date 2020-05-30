@@ -26,7 +26,7 @@ library.add(fab, fas);
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-const { authActions: { getFirstTimeKey, retrieveToken, clearStorage } } = actions;
+const { authActions: { getFirstTimeKey, retrieveToken, clearStorage, removeToken } } = actions;
 enableScreens ();
 const HomeTabScreen = () => {
   return (
@@ -103,15 +103,17 @@ const DrawerNavigation = () => {
   )
 }
 
-const App = () => {
+const MainApplication = () => {
   const [state, setState] = React.useState({
     isFirstTime: null, token: null, isLoading: true
   })
   React.useEffect(() => {
     const getDataFromStorage  = async () => {
       const isFirstTime = await getFirstTimeKey();
+      // await clearStorage();
+      // await removeToken()
       const token = await retrieveToken();
-      await clearStorage();
+      console.log('this is my token', token)
       setState({isFirstTime, token, isLoading: false})
     }
     getDataFromStorage()
@@ -120,83 +122,89 @@ const App = () => {
   const initialRouteName = isFirstTime ? "Onboard" : token ? 'Drawer' : 'Auth';
   if(isLoading) return null;
   return (
+    <NavigationContainer>
+      <Stack.Navigator
+        initialRouteName={initialRouteName} screenOptions={{
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}>
+        <Stack.Screen
+          name="ServiceRequest"
+          component={ServiceRequest}
+          options={{
+            headerTitle: 'Details',
+          }}
+        />
+        <Stack.Screen
+          name="Invite"
+          component={Invite}
+          options={{
+            headerTitle: 'Invite & Earn',
+            headerTitleAlign: 'center'
+          }}
+        />
+        <Stack.Screen name="About" component={AboutUs} />
+        <Stack.Screen name="Feedback" component={Feedback} />
+        <Stack.Screen name="HelpCenter" component={HelpCenter} />
+        <Stack.Screen name="PromoCode" component={PromoCode} />
+        <Stack.Screen
+          name="IncomingRequest"
+          component={IncomingRequest}
+          options={{
+            headerShown: false,
+            
+          }}
+        />
+        <Stack.Screen
+          name="CompletedRequest"
+          component={CompletedRequest} 
+          options={{
+            headerTitle: 'Booking Details'
+          }}
+        />
+        <Stack.Screen
+          name="Chat"
+          component={Chat}
+        />
+        <Stack.Screen
+          name="Chats"
+          component={Chats}
+        />
+        <Stack.Screen
+          name="Notifications"
+          component={Notifications}
+          
+        />
+        <Stack.Screen
+          name="Onboard"
+          component={OnboardScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Drawer"
+          component={DrawerNavigation}
+          options={{
+            headerShown: false,
+          }}
+        />
+          <Stack.Screen
+          name="Auth"
+          component={AuthStack}
+          options={{
+            headerShown: false,
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  )
+}
+
+const App = () => {
+  return (
     <SafeAreaProvider>
       <Provider store={store}>
-        <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName={'Onboard'} screenOptions={{
-              cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-            }}>
-            <Stack.Screen
-              name="ServiceRequest"
-              component={ServiceRequest}
-              options={{
-                headerTitle: 'Details',
-              }}
-            />
-            <Stack.Screen
-              name="Invite"
-              component={Invite}
-              options={{
-                headerTitle: 'Invite & Earn',
-                headerTitleAlign: 'center'
-              }}
-            />
-            <Stack.Screen name="About" component={AboutUs} />
-            <Stack.Screen name="Feedback" component={Feedback} />
-            <Stack.Screen name="HelpCenter" component={HelpCenter} />
-            <Stack.Screen name="PromoCode" component={PromoCode} />
-            <Stack.Screen
-              name="IncomingRequest"
-              component={IncomingRequest}
-              options={{
-                headerShown: false,
-                
-              }}
-            />
-            <Stack.Screen
-              name="CompletedRequest"
-              component={CompletedRequest} 
-              options={{
-                headerTitle: 'Booking Details'
-              }}
-            />
-            <Stack.Screen
-              name="Chat"
-              component={Chat}
-            />
-            <Stack.Screen
-              name="Chats"
-              component={Chats}
-            />
-            <Stack.Screen
-              name="Notifications"
-              component={Notifications}
-              
-            />
-            <Stack.Screen
-              name="Onboard"
-              component={OnboardScreen}
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="Drawer"
-              component={DrawerNavigation}
-              options={{
-                headerShown: false,
-              }}
-            />
-             <Stack.Screen
-              name="Auth"
-              component={AuthStack}
-              options={{
-                headerShown: false,
-              }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
+        <MainApplication />
       </Provider>
     </SafeAreaProvider>
   );

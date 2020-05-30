@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { colors, styles } from '../styles';
-export const Button = ({ activeOpacity = .8, rippleColor, buttonProps = {} , action = () => console.log('button clicked'), children, style }) => {
+export const Button = ({ activeOpacity = .8, rippleColor, buttonProps = {} , action, children, style }) => {
  
   switch(Platform.OS) {
     case "ios": {
@@ -27,6 +27,7 @@ export const Button = ({ activeOpacity = .8, rippleColor, buttonProps = {} , act
           delayPressIn={0}
           delayPressOut={0}
           background={TouchableNativeFeedback.Ripple(rippleColor, false)}
+          useForeground={TouchableNativeFeedback.canUseNativeForeground()}
           onPress={action}
           {...buttonProps} >
           <View style={[style]}>
@@ -61,26 +62,30 @@ Button.defaultPropTypes = {
 }
 
 const SwitchButton = ({isActive, setIsActive}) => {
+  console.log('was isActive rendered?', isActive)
   return (
-    <TouchableWithoutFeedback onPress={setIsActive}>
+    <TouchableNativeFeedback onPress={ () => setIsActive(!isActive)}>
       <View style={[toggleStyle.viewToggle, 
         !isActive ? {backgroundColor: colors.gray_color} : { backgroundColor: colors.google_green,  alignItems: 'flex-end'}]}>
         <View style={toggleStyle.circleToggle}></View>
       </View>
-    </TouchableWithoutFeedback>
+    </TouchableNativeFeedback>
   )
 }
 
-export const useToggleButton = (value) => {
-  const [isActive, setIsActive] = React.useState(value ? value : false);
-  const handleChange = () => {
+export const useToggleButton = (value = false, callback) => {
+  const [isActive, setIsActive] = React.useState(value);
+  React.useEffect(() => {
+    setIsActive(value)
+  }, [value])
+  const handleChange = React.useCallback((value) => {
     if (Platform.OS === "android") {
       UIManager.setLayoutAnimationEnabledExperimental &&
       UIManager.setLayoutAnimationEnabledExperimental(true);
     }
     LayoutAnimation.configureNext(LayoutAnimation.Presets.spring)
-    setIsActive(prev => !prev )
-  }
+    callback ? callback(value) : setIsActive(value)
+  }, [value])
   const ToggleButton = <SwitchButton setIsActive={handleChange} isActive={isActive} />
   return { isActive, handleChange, ToggleButton }
 }
