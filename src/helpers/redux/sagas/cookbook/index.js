@@ -1,7 +1,7 @@
 import { call, put, takeEvery, takeLatest, spawn} from 'redux-saga/effects';
 import { AsyncStorage }  from 'react-native';
 import { cookbook } from '../../actions/types';
-import { cookBookActions } from '../../actions';
+import { cookBookActions, retrieveToken } from '../../actions';
 import { sendData, getData, deleteData, apiKey } from '../ajax';
 
 const {
@@ -16,14 +16,19 @@ const {
 // ALl httpRequest functions
 const cookBookDBCalls = {
   createDish: async (data) => {
-    const response = await sendData(`${apiKey}/chef/cookbook/`, data);
+    const token = await retrieveToken()
+    const response = await sendData(`${apiKey}/chef/cookbook/`, data, token);
     console.log('createDish', response)
-    const token = '45566tyHjgnkn6'
-    await saveToken(token)
-    return  { token }
+    return response;
   },
   getAllDishes: async () => {
-    const response = await getData(`${apiKey}/chef/cookbook/`);
+    const token = await retrieveToken()
+    const response = await getData(`${apiKey}/chef/cookbook/`, token);
+    return response.results
+  },
+  filterDishes: async () => {
+    const token = await retrieveToken();
+    const response = await getData(`${apiKey}/chef/cookbook/`, token);
     return response.results
   },
   searchDishes: async (searchQuery, pageNum) => {
@@ -31,7 +36,7 @@ const cookBookDBCalls = {
     return response;
   },
   updateDish: async (data) => {
-    const response = await sendData(`${apiKey}/chef/cookbook`, data);
+    const response = await sendData(`${apiKey}/chef/cookbook/`, data);
     return response;
   },
   deleteDish: async (id) => {
@@ -42,23 +47,29 @@ const cookBookDBCalls = {
 
 // All generators*
 function* createDish({ payload }) {
-  const { data, setAnimating, setAjaxStatus } = payload;
-  const message = 'Welcome back';
+  const { data, setAnimating, setAjaxStatus, resetFields } = payload;
+  const message = 'Dish successfully created';
   try {
     setAnimating(true);
     const response = yield call(cookBookDBCalls.createDish, data);
-    yield put(createDishSuccess(response.token));
-    setAnimating(false);
+    yield put(createDishSuccess(response));
     setAjaxStatus('success', message);
+    resetFields()
     console.log('done')
   } catch (err) {
     console.log(err)
+    const { non_field_errors } = err;
+    const errorMessage = non_field_errors
+      ? non_field_errors[0]
+      : 'Unable to create dish. Please check your internet connection'
+    setAjaxStatus('error', `${errorMessage}`)
+  } finally {
     setAnimating(false);
-    setAjaxStatus('error', `${err}`)
   }
 }
 
-function* getAllDishes() {
+function* getAllDishes({ payload }) {
+  const { pageNum, setAnimating, setAjaxStatus } = payload;
   try {
     const dishes = yield call(cookBookDBCalls.getAllDishes)
     yield put(getAllDishesSuccess(dishes))
@@ -67,6 +78,13 @@ function* getAllDishes() {
   }
 }
 
+function* filterDishes({ payload }) {
+  try {
+    const dishes = yield call(cookBookDBCalls.filterDishes)
+  } catch (err) {
+    console.log(err);
+  }
+}
 function* searchDishes({ payload }) {
   const { searchQuery, pageNum, setAnimating, setState, setAjaxStatus } = payload;
   try {

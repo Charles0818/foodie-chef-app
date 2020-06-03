@@ -104,7 +104,7 @@ const Map = ({ positions }) => {
       <MapViewDirections
         origin={{latitude: 37.3318456, longitude: -122.0296002}}
         destination={{latitude: 37.771707, longitude: -122.4053769}}
-        apikey={apiKey}
+        apikey={null}
         strokeWidth={5}
         strokeColor={colors.color1}
         timePrecision="now"

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FadeIn } from '../../Animations';
@@ -8,7 +8,7 @@ import { colors, styles } from '../../styles';
 import { useNavigation } from '@react-navigation/core';
 const { DisplayRating } = service;
 
-export default ListServiceCard = ()=> {
+export default ListServiceCard = memo(()=> {
   const { navigate } = useNavigation();
   const service = {
     name: 'Little Creatures - Club Street'
@@ -39,7 +39,7 @@ export default ListServiceCard = ()=> {
       </Button>
     </FadeIn>
   )
-}
+})
 
 const cardStyle = StyleSheet.create({
   container: {

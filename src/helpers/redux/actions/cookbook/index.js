@@ -7,10 +7,10 @@ const {
   SEARCH_DISHES_REQUEST
 } = cookbook;
 
-export const getAllDishesRequest = (setIsAnimating) => {
+export const getAllDishesRequest = (setAnimating) => {
   return {
     type: GET_ALL_DISHES_REQUEST,
-    payload: { setIsAnimating }
+    payload: { setAnimating }
   }
 }
 
@@ -31,10 +31,10 @@ export const searchDishesRequest = (
     }
   }
 }
-export const createDishRequest = (dish, setIsAnimating) => {
+export const createDishRequest = (data, setAnimating, setAjaxStatus, resetFields) => {
   return {
     type: CREATE_DISH_REQUEST,
-    payload: { dish, setIsAnimating }
+    payload: { data, setAnimating, setAjaxStatus, resetFields }
   }
 }
 
@@ -45,10 +45,10 @@ export const createDishSuccess = (dish) => {
   }
 }
 
-export const updateDishRequest = (dish, id, setIsAnimating) => {
+export const updateDishRequest = (dish, id, setAnimating) => {
   return {
     type: UPDATE_DISH_REQUEST,
-    payload: { dish, id, setIsAnimating }
+    payload: { dish, id, setAnimating }
   }
 }
 
@@ -59,10 +59,10 @@ export const updateDishSuccess = (dish, id) => {
   }
 }
 
-export const deleteDishRequest = (id, setIsAnimating) => {
+export const deleteDishRequest = (id, setAnimating) => {
   return {
     type: DELETE_DISH_REQUEST,
-    payload: { id, setIsAnimating }
+    payload: { id, setAnimating }
   }
 }
 

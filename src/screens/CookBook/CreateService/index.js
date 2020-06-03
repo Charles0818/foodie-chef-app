@@ -24,9 +24,15 @@ const CreateService = ({navigation, route: { params }, createDishRequest}) => {
   const [tags, setTags] = React.useState(dish.tags ? dish.tags : []);
   const validateAllFields = descIsValid && titleIsValid && cookingTimeIsValid
     && special_recipe.length > 0 && tags.length > 0;
+  const resetFields = () => {
+    navigation.setParams({dish: {}});
+    setDesc('');
+    setTitle('');
+    setCookingTime('');
+  }
   const createDish = () => useCallback(createDishRequest(
-    { title, description, cooking_time, special_recipe, tags,  },
-    setAnimating, setAjaxStatus
+    { title, description, cooking_time, special_recipe, tags, dish: dish.id },
+    setAnimating, setAjaxStatus, resetFields
   ), [createDishRequest])
   React.useEffect(() => {
     setTags(dish.tags ? dish.tags : []);

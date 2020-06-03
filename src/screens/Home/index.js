@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { bindActionCreators } from 'redux';
-import { connect, useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { connect } from 'react-redux';
 import { Cards, Carousels, Button, useToggleButton, Spinners } from '../../components';
 import { Screen, Section, NetworkInfo } from '../Wrapper';
 import { styles, colors } from '../styles';

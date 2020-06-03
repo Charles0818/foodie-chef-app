@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { View, Text, ImageBackground, Dimensions, ActivityIndicator, StyleSheet } from 'react-native';
 import { FontAwesome, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 import { ScaleToSize, FadeIn } from '../../Animations';
@@ -6,7 +6,7 @@ import { Button } from '../../Buttons';
 import useRating from '../../Rating';
 import { styles ,colors } from '../../styles';
 
-export default PortraitServiceCard = () => {
+export default PortraitServiceCard = memo(() => {
   const { CustomRating } = useRating(4)
   return (
     <FadeIn style={[cardStyle.container, styles.boxShadow_md, styles.marginRight_sm, styles.marginBottom_sm]}>
@@ -20,7 +20,7 @@ export default PortraitServiceCard = () => {
       </Button>
     </FadeIn>
   )
-}
+})
 
 
 const cardStyle = StyleSheet.create({

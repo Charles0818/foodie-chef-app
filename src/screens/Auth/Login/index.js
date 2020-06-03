@@ -18,10 +18,8 @@ const Login = ({navigation: { navigate, replace }, signInRequest}) => {
   const { input: password, handleUserInput: setPassword, error: passwordErr, isValid: passwordIsValid } = useFormInput("password ");
   const validateAllField = emailIsValid && passwordIsValid;
   const handleLogin = () => {
-    const goHome = () => navigate("Drawer", {screen: 'Home'})
+    const goHome = () => replace("Drawer", {screen: 'Home'})
     signInRequest({email, password}, setAnimating, setAjaxStatus, goHome)
-    // saveToken('token');
-    // navigation.replace("Drawer", {screen: 'Home'})
   }
   return (
   <Screen>
