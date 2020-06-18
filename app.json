@@ -1,0 +1,45 @@
+{
+  "expo": {
+    "name": "Cuisingo-chef",
+    "slug": "Cuisingo-chef",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/cuisingo-logo.png",
+    "splash": {
+      "image": "./assets/cuisingo-logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "config": {
+        "googleMapsApiKey": "AIzaSyBYIFaxOv30mg4BGTGqupfozClUNaLOTkg"
+      }
+    },
+    "android": {
+      "package": "com.cuisingo.mobile_chef",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAOJL3z7h8HO952_hvr0D3dKBJYZyG_K9I"
+        }
+      },
+      "permissions": [
+        "ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION",
+        "CAMERA",
+        "RECORD_AUDIO",
+        "READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE"
+      ]
+    }
+  }
+}
